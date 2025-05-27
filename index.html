@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KIIT IQAC - Driving Excellence & Quality</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <style>
+    :root {
+      /* User Provided Palette */
+      --ui-bg-light: #e4edf2; /* UI Color 1 */
+      --ui-bg-dark: #223d51;  /* UI Color 2 */
+      --ui-accent: #1fc166;   /* UI Color 3 */
+
+      --solid-primary: #17d059;     /* Solid Color 1 */
+      --solid-primary-darker: #0ca750; /* Solid Color 5 (darker green) */
+      --solid-dark: #223d51;      /* Solid Color 2 (same as ui-bg-dark) */
+      --solid-white: #ffffff;      /* Solid Color 3 */
+      --solid-black: #000000;      /* Solid Color 4 */
+
+      --theme-green-1: #17d059; /* Theme Color 1 */
+      --theme-green-2: #11c77e; /* Theme Color 2 */
+      --theme-teal-1: #0cbfa3;  /* Theme Color 3 */
+      --theme-cyan-1: #06b6c8;  /* Theme Color 4 */
+      --theme-cyan-2: #00aded;  /* Theme Color 5 */
+      --theme-text-dark: #444444;/* Theme Color 6 */
+      --theme-bg-light: #f7f7f7; /* Theme Color 7 */
+
+      /* Gradient */
+      --gradient-start: var(--solid-primary);
+      --gradient-end: var(--theme-cyan-2);
+
+      /* Semantic Colors */
+      --background-body: var(--theme-bg-light);
+      --text-primary: var(--theme-text-dark);
+      --text-secondary: #555e68; /* Slightly lighter than primary text */
+      --text-on-dark: var(--ui-bg-light);
+      --accent-color: var(--solid-primary);
+      --accent-color-hover: var(--solid-primary-darker);
+      --card-bg: var(--solid-white);
+      --border-color: #dee2e6;
+      --hero-overlay-start: rgba(23, 208, 89, 0.6); /* From --solid-primary with alpha */
+      --hero-overlay-end: rgba(0, 173, 237, 0.8); /* From --theme-cyan-2 with alpha */
+      --hero-overlay-dark-start: rgba(34, 61, 81, 0.85); /* From --ui-bg-dark with alpha */
+      --hero-overlay-dark-end: rgba(34, 61, 81, 0.95);   /* From --ui-bg-dark with alpha */
+    }
+
+    .font-bebas {
+      font-family: "Bebas Neue", cursive, sans-serif;
+    }
+    .font-poppins {
+      font-family: "Poppins", sans-serif;
+    }
+
+    body {
+      background-color: var(--background-body);
+      color: var(--text-primary);
+      font-family: "Poppins", sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    .navbar-custom {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: saturate(180%) blur(12px);
+      -webkit-backdrop-filter: saturate(180%) blur(12px);
+      border-bottom: 1px solid transparent; /* Initially transparent */
+      padding-top: 0.75rem;
+      padding-bottom: 0.75rem;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+      z-index: 1000;
+      transition: all 0.3s ease-in-out;
+    }
+    .navbar-custom.scrolled {
+      padding-top: 0.5rem;
+      padding-bottom: 0.5rem;
+      background: rgba(255, 255, 255, 0.98);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+      border-bottom-color: var(--border-color);
+    }
+
+    .nav-link {
+      position: relative;
+      color: var(--solid-dark);
+      font-weight: 500;
+      transition: color 0.3s ease;
+      padding: 0.5rem 0.25rem; /* Adjusted for better click area */
+      letter-spacing: 0.3px;
+    }
+    .nav-link::after {
+      content: "";
+      position: absolute;
+      width: 0;
+      height: 3px; /* Slightly thicker for gradient visibility */
+      /* background: var(--accent-color); Old solid color */
+      background: linear-gradient(90deg, var(--gradient-start), var(--gradient-end));
+      bottom: -8px; /* Adjusted position */
+      left: 0;
+      border-radius: 3px;
+      transition: width 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+    .nav-link:hover,
+    .nav-link.active {
+      color: var(--accent-color); /* Keep text color change consistent */
+    }
+    .nav-link:hover::after,
+    .nav-link.active::after {
+      width: 100%;
+    }
+
+    .external-button {
+      background: linear-gradient(90deg, var(--gradient-start), var(--theme-cyan-1));
+      color: var(--solid-white);
+      font-weight: 500;
+      padding: 0.5rem 1.25rem;
+      border-radius: 0.375rem; /* Tailwind's 'rounded-md' */
+      box-shadow: 0 4px 10px rgba(0,0,0, 0.1);
+      transition: all 0.3s ease;
+    }
+    .external-button:hover {
+      background: linear-gradient(90deg, var(--accent-color-hover), var(--gradient-start));
+      transform: translateY(-2px);
+      box-shadow: 0 6px 15px rgba(23, 208, 89, 0.3);
+    }
+
+    .dropdown .dropdown-menu {
+      display: none;
+      position: absolute;
+      top: calc(100% + 12px);
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: var(--solid-white);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+      border-radius: 0.5rem;
+      padding: 0.5rem 0;
+      min-width: 220px;
+      opacity: 0;
+      visibility: hidden;
+      transform-origin: top center;
+      animation: fadeInDown 0.3s ease-out forwards;
+      z-index: 999;
+      border: 1px solid var(--border-color);
+    }
+    .dropdown:hover .dropdown-menu {
+      display: block; opacity: 1; visibility: visible;
+    }
+    @keyframes fadeInDown {
+      0% { opacity: 0; transform: translateX(-50%) translateY(-10px); }
+      100% { opacity: 1; transform: translateX(-50%) translateY(0); }
+    }
+    .dropdown-menu a {
+      display: block; padding: 0.7rem 1.2rem; white-space: nowrap;
+      font-weight: 500; color: var(--text-primary);
+      transition: background-color 0.2s ease, color 0.2s ease;
+    }
+    .dropdown-menu a:hover {
+      background-color: var(--accent-color); color: var(--solid-white);
+    }
+    .dropdown-menu a:not(:last-child) {
+      border-bottom: 1px solid var(--ui-bg-light);
+    }
+
+    .gallery-hover .gallery-preview {
+      display: none; position: absolute; top: calc(100% + 12px); left: 50%;
+      transform: translateX(-50%); background-color: var(--solid-white); padding: 1rem;
+      border-radius: 0.5rem; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+      gap: 0.75rem; z-index: 999; opacity: 0; visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease; flex-wrap: nowrap;
+      animation: fadeInDown 0.3s ease-out forwards; border: 1px solid var(--border-color);
+    }
+    .gallery-hover:hover .gallery-preview {
+      display: flex; opacity: 1; visibility: visible;
+    }
+    .gallery-preview img {
+      width: 120px; height: 80px; object-fit: cover; border-radius: 0.375rem;
+      transition: transform 0.3s ease, box-shadow 0.3s ease; border: 2px solid transparent;
+    }
+    .gallery-preview img:hover {
+      transform: scale(1.08); box-shadow: 0 5px 12px rgba(0,0,0,0.2); border-color: var(--accent-color);
+    }
+
+    .hero-section {
+      position: relative;
+      min-height: 95vh; /* Slightly less than full viewport height */
+      background-attachment: fixed;
+      display: flex; /* For centering content */
+      align-items: center; /* For centering content */
+      justify-content: center; /* For centering content */
+    }
+    .hero-section::before { /* Darker translucent overlay */
+        content: '';
+        position: absolute;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: linear-gradient(135deg, var(--hero-overlay-dark-start) 0%, var(--hero-overlay-dark-end) 100%);
+        /* background: linear-gradient(135deg, rgba(34, 61, 81, 0.7), rgba(34, 61, 81, 0.9)); */
+        z-index: 1;
+    }
+    .hero-section .content-wrapper {
+      position: relative; z-index: 2; /* Above overlay */
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center; color: var(--solid-white); padding: 1.5rem;
+    }
+    .hero-section h1 {
+      font-size: 3rem; /* Base */
+      text-shadow: 0px 3px 8px rgba(0, 0, 0, 0.5);
+      letter-spacing: 1.5px; /* Bebas Neue benefits from slight spacing */
+      line-height: 1.2;
+    }
+    .hero-section p.subtitle {
+      font-size: 1.1rem; /* Base */
+      max-width: 700px; text-shadow: 0px 2px 5px rgba(0, 0, 0, 0.4);
+      font-weight: 300; opacity: 0.95;
+      line-height: 1.6;
+    }
+    .hero-cta-button {
+      margin-top: 2.5rem; background-color: var(--solid-white); color: var(--accent-color);
+      font-weight: 600; padding: 0.9rem 2.2rem; border-radius: 0.375rem;
+      font-size: 1rem; box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      text-transform: uppercase; letter-spacing: 1px;
+      display: inline-flex; align-items: center; gap: 0.6rem;
+    }
+    .hero-cta-button:hover {
+      background-color: var(--ui-bg-light); color: var(--accent-color-hover);
+      transform: translateY(-3px) scale(1.03);
+      box-shadow: 0 10px 22px rgba(0,0,0,0.2);
+    }
+    .hero-cta-button svg { width: 1.3em; height: 1.3em; }
+
+    .site-footer {
+      background-color: var(--ui-bg-dark); color: var(--text-on-dark);
+      padding-top: 4rem; padding-bottom: 2rem;
+    }
+    .site-footer h3 { color: var(--solid-white); font-weight: 600; margin-bottom: 1.25rem; }
+    .site-footer a { color: var(--ui-bg-light); transition: color 0.3s ease; }
+    .site-footer a:hover { color: var(--accent-color); text-decoration: underline; }
+    .site-footer .copyright-section {
+      border-top: 1px solid rgba(255,255,255,0.15); /* Lighter border on dark bg */
+      padding-top: 2rem; margin-top: 3rem;
+      font-size: 0.9rem; text-align: center;
+    }
+    .site-footer .copyright-section p { margin-bottom: 0.25rem; }
+    .site-footer .designer { color: #a0aec0; /* Tailwind gray-500 */}
+
+    @media (min-width: 640px) { /* sm */
+      .hero-section h1 { font-size: 3.8rem; } .hero-section p.subtitle { font-size: 1.2rem; }
+    }
+    @media (min-width: 768px) { /* md */
+      .hero-section h1 { font-size: 4.5rem; }
+    }
+    @media (min-width: 1024px) { /* lg */
+      .hero-section h1 { font-size: 5rem; }
+    }
+
+    #mobile-nav-menu {
+      display: none; position: absolute; top: 100%; left: 0; right: 0;
+      background: var(--solid-white); box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+      z-index: 995; padding: 1rem; max-height: 0; opacity: 0;
+      transform: translateY(-10px); overflow-y: auto;
+      transition: max-height 0.4s ease-out, opacity 0.3s ease-out, transform 0.3s ease-out;
+    }
+    #mobile-nav-menu.menu-open {
+      display: block; max-height: 80vh; opacity: 1; transform: translateY(0);
+    }
+    #mobile-nav-menu a, #mobile-nav-menu .mobile-dropdown-toggle {
+      display: block; padding: 0.8rem 1rem; color: var(--text-primary);
+      font-weight: 500; border-bottom: 1px solid var(--ui-bg-light);
+      transition: background-color 0.2s ease, color 0.2s ease;
+    }
+    #mobile-nav-menu a:last-child, #mobile-nav-menu div:last-child .mobile-dropdown-toggle { border-bottom: none; }
+    #mobile-nav-menu a:hover, #mobile-nav-menu .mobile-dropdown-toggle:hover {
+      background-color: var(--accent-color); color: var(--solid-white);
+    }
+    .mobile-dropdown-content { display: none; padding-left: 1.5rem; background-color: #f8f9fa; }
+    .mobile-dropdown-content.open { display: block; }
+    .mobile-dropdown-content a { font-size: 0.9rem; border-top: 1px solid var(--ui-bg-light); border-bottom: none; }
+    .mobile-dropdown-content a:first-child { border-top: none; }
+
+    .section-title {
+      font-family: "Bebas Neue", cursive, sans-serif;
+      color: var(--ui-bg-dark);
+      letter-spacing: 1px; /* Adjusted for Bebas Neue */
+      margin-bottom: 0.75rem; /* Reduced margin */
+    }
+    .section-subtitle {
+      color: var(--text-secondary);
+      max-width: 750px; /* Slightly wider */
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.7;
+      font-size: 1.05rem; /* Slightly larger */
+    }
+    .info-card {
+      background-color: var(--card-bg);
+      border-radius: 0.75rem; padding: 2rem;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.04); /* Softer shadow */
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      border: 1px solid var(--ui-bg-light);
+      display: flex; flex-direction: column; height: 100%; /* For equal height cards in grid */
+    }
+    .info-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.07);
+    }
+    .info-card h3.card-title { /* More specific selector */
+      color: var(--solid-dark); /* Darker title for better contrast */
+      font-weight: 600; /* Poppins bold */
+      margin-bottom: 0.75rem;
+      font-size: 1.3rem;
+    }
+     .info-card h3.card-title a:hover {
+        color: var(--accent-color);
+    }
+    .info-card p { color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6; }
+    .info-card .card-icon {
+        font-size: 2.5rem; /* Base size */
+        color: var(--accent-color);
+        margin-bottom: 1rem;
+        line-height: 1;
+    }
+    @media (min-width: 768px) { /* md */
+        .info-card .card-icon { font-size: 3rem; }
+    }
+
+
+    /* Modern Prompt Design for Documents */
+    .document-prompt-card {
+        background-color: var(--solid-white);
+        border-radius: 0.75rem;
+        padding: 1.75rem;
+        box-shadow: 0 6px 12px rgba(0,0,0,0.05);
+        transition: all 0.3s ease;
+        border-left: 5px solid var(--accent-color);
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        text-align: left;
+    }
+    .document-prompt-card:hover {
+        transform: translateY(-5px) scale(1.02);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+        border-left-color: var(--solid-primary-darker);
+    }
+    .document-prompt-card .icon-wrapper {
+        color: var(--accent-color);
+        margin-bottom: 1rem;
+    }
+    .document-prompt-card .icon-wrapper svg {
+        width: 2.5rem; height: 2.5rem;
+    }
+    .document-prompt-card h3 {
+        font-family: "Poppins", sans-serif;
+        color: var(--solid-dark);
+        font-weight: 600;
+        font-size: 1.2rem;
+        margin-bottom: 0.5rem;
+    }
+    .document-prompt-card p {
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+        margin-bottom: 1rem;
+        flex-grow: 1;
+    }
+    .document-prompt-card .view-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        background-color: var(--accent-color);
+        color: var(--solid-white);
+        padding: 0.6rem 1.2rem;
+        border-radius: 0.375rem;
+        font-weight: 500;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+        font-size: 0.9rem;
+    }
+    .document-prompt-card .view-link:hover {
+        background-color: var(--solid-primary-darker);
+    }
+    .document-prompt-card .view-link svg {
+        width: 1.1em; height: 1.1em;
+    }
+
+    .list-disc-colored li::marker {
+        color: var(--accent-color);
+    }
+    .highlight-text {
+        color: var(--accent-color);
+        font-weight: 600;
+    }
+    .stat-item {
+        background-color: var(--ui-bg-light);
+        padding: 1.5rem;
+        border-radius: 0.5rem;
+        text-align: center;
+        border: 1px solid var(--border-color);
+    }
+    .stat-item .stat-number {
+        font-family: "Bebas Neue", cursive, sans-serif;
+        font-size: 2.5rem;
+        color: var(--accent-color);
+        display: block;
+        line-height: 1;
+        margin-bottom: 0.25rem;
+    }
+    .stat-item .stat-label {
+        font-size: 0.9rem;
+        color: var(--text-secondary);
+    }
+
+  </style>
+</head>
+<body class="antialiased font-poppins">
+
+  <header class="navbar-custom sticky top-0 flex items-center justify-between px-4 sm:px-6 md:px-10 lg:px-16">
+    <div class="flex items-center gap-2 sm:gap-3">
+      <img src="logo.png" alt="KIIT IQAC Logo" class="h-10 md:h-12 transition-all duration-300" onerror="this.onerror=null; this.src='https://placehold.co/160x50/223d51/e4edf2?text=KIIT+IQAC&font=bebasneue';" />
+    </div>
+
+    <nav class="hidden lg:flex items-center gap-x-5 xl:gap-x-7 text-[15px] relative">
+      <a href="#" class="nav-link active">Home</a>
+      <a href="#about-kiit" class="nav-link">About KIIT</a>
+      <a href="#about-iqac" class="nav-link">About IQAC</a>
+      <div class="relative dropdown">
+        <a href="#documents" class="nav-link flex items-center gap-1">
+          Reports
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4 opacity-60">
+            <path fill-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+          </svg>
+        </a>
+        <div class="dropdown-menu">
+          <a href="#documents">Self Study Report (SSR)</a>
+          <a href="#documents">AQAR Reports</a>
+          <a href="#documents">Stakeholder Feedback</a>
+          <a href="#">NAAC Documents</a>
+          <a href="#">NIRF Data</a>
+        </div>
+      </div>
+      <a href="#news-events" class="nav-link">Events</a>
+      <a href="#accreditations" class="nav-link">Accreditations</a>
+      <a href="#team" class="nav-link">Our Team</a>
+      <a href="#contact" class="nav-link">Contact</a>
+    </nav>
+
+    <div class="flex items-center gap-2 sm:gap-3">
+      <a href="https://kiit.ac.in" target="_blank" class="external-button hidden sm:inline-flex items-center" rel="noopener noreferrer">
+        kiit.ac.in
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4 ml-1.5 opacity-80">
+          <path d="M12.232 4.232a2.5 2.5 0 0 1 3.536 3.536l-1.225 1.224a.75.75 0 0 0 1.061 1.06l1.224-1.224a4 4 0 0 0-5.656-5.656l-3 3a4 4 0 0 0 .225 5.88l.12.121a.75.75 0 0 0 1.06-1.06l-.12-.121a2.5 2.5 0 0 1-.142-3.665l3-3Z" />
+          <path d="M1.606 14.47a4 4 0 0 0 5.656 5.657l3-3a4 4 0 0 0-.225-5.881l-.12-.121a.75.75 0 0 0-1.06 1.06l.12.121a2.5 2.5 0 0 1 .142 3.665l-3 3a2.5 2.5 0 0 1-3.536-3.536l1.225-1.224a.75.75 0 0 0-1.06-1.06l-1.224 1.224Z" />
+        </svg>
+      </a>
+      <button id="mobile-menu-button" class="lg:hidden p-2 rounded-md hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-[var(--accent-color)] transition-colors">
+        <svg id="menu-icon-open" class="h-6 w-6 text-[var(--solid-dark)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+        </svg>
+        <svg id="menu-icon-close" class="h-6 w-6 text-[var(--solid-dark)] hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+  </header>
+  
+  <div id="mobile-nav-menu" class="lg:hidden">
+    <a href="#" class="nav-link active">Home</a>
+    <a href="#about-kiit" class="nav-link">About KIIT</a>
+    <a href="#about-iqac" class="nav-link">About IQAC</a>
+    <div>
+        <a href="#" class="mobile-dropdown-toggle nav-link flex justify-between items-center">
+            Reports
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4 opacity-60 transform transition-transform duration-200">
+                <path fill-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+            </svg>
+        </a>
+        <div class="mobile-dropdown-content">
+            <a href="#documents" class="nav-link">Self Study Report (SSR)</a>
+            <a href="#documents" class="nav-link">AQAR Reports</a>
+            <a href="#documents" class="nav-link">Stakeholder Feedback</a>
+            <a href="#" class="nav-link">NAAC Documents</a>
+            <a href="#" class="nav-link">NIRF Data</a>
+        </div>
+    </div>
+    <a href="#news-events" class="nav-link">Events</a>
+    <a href="#accreditations" class="nav-link">Accreditations</a>
+    <a href="#" class="nav-link">Gallery</a>
+    <a href="#contact" class="nav-link">Contact</a>
+    <a href="https://kiit.ac.in" target="_blank" class="nav-link mt-2 bg-[var(--ui-accent)] text-white text-center rounded-md hover:bg-[var(--solid-primary-darker)]" rel="noopener noreferrer">
+        KIIT Official Site
+    </a>
+  </div>
+
+  <main>
+    <section class="hero-section bg-cover bg-center" style="background-image: url('image.jpg');" onerror="this.style.backgroundImage='url(https://placehold.co/1920x1080/223d51/e4edf2?text=Campus+Background&font=poppins)';">
+      <div class="content-wrapper" data-aos="fade-up" data-aos-delay="200">
+        <h1 class="font-bebas uppercase">
+         <span class="text-[var(--theme-green-1)]">Internal Quality Assurance Cell</span>
+        </h1>
+        <p class="mt-5 sm:mt-6 subtitle drop-shadow-sm font-poppins">
+          Championing a culture of excellence, innovation, and continuous improvement across all facets of KIIT Deemed to be University. Ensuring quality and accountability for all stakeholders.
+        </p>
+        <a href="#about-iqac" class="hero-cta-button">
+          Discover IQAC
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+          </svg>
+        </a>
+      </div>
+    </section>
+
+    <section id="about-kiit" class="py-16 sm:py-24 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-12 sm:mb-16">
+                <h2 class="text-4xl sm:text-5xl section-title" data-aos="fade-up">About KIIT Deemed to be University</h2>
+                <p class="text-lg section-subtitle mt-3" data-aos="fade-up" data-aos-delay="100">
+                    A leading institution dedicated to academic excellence and innovation.
+                </p>
+            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 items-start">
+                <div class="info-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="card-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10 h-10"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21v-8.25M15.75 21v-8.25M8.25 21v-8.25M3 9l9-6 9 6m-1.5 12V10.332A48.36 48.36 0 0 0 12 9.75c-2.551 0-5.056.2-7.5.582V21M3 21h18M12 6.75h.008v.008H12V6.75Z" /></svg>
+                    </div>
+                    <h3 class="card-title">Kalinga Institute of Industrial Technology (KIIT)</h3>
+                    <p><strong class="text-[var(--solid-dark)]">Established:</strong> 1992</p>
+                    <p><strong class="text-[var(--solid-dark)]">Type:</strong> Private Deemed-to-be University</p>
+                    <p><strong class="text-[var(--solid-dark)]">Location:</strong> Bhubaneswar, Odisha, India</p>
+                    <p><strong class="text-[var(--solid-dark)]">Student Strength:</strong> Approx. 40,000 (UG & PG)</p>
+                    <p><strong class="text-[var(--solid-dark)]">Affiliations:</strong> UGC, NAAC, ACU</p>
+                    <a href="https://kiit.ac.in" target="_blank" rel="noopener noreferrer" class="mt-auto inline-block text-[var(--accent-color)] hover:text-[var(--accent-color-hover)] font-medium pt-3">Official Website: kiit.ac.in <span aria-hidden="true">&rarr;</span></a>
+                </div>
+
+                <div class="info-card" data-aos="fade-up" data-aos-delay="300">
+                     <div class="card-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10 h-10"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3v11.25A2.25 2.25 0 0 0 6 16.5h12A2.25 2.25 0 0 0 20.25 14.25V3M3.75 21h16.5M16.5 3.75h.008v.008H16.5V3.75Z" /></svg>
+                    </div>
+                    <h3 class="card-title">Rankings & Recognition</h3>
+                    <p><strong class="text-[var(--solid-dark)]">QS Asia University Ranking 2025:</strong> 257th</p>
+                    <p><strong class="text-[var(--solid-dark)]">NIRF Overall Ranking 2024:</strong> 28th</p>
+                    <p class="mt-2">KIIT is consistently ranked among India's top universities, reflecting its commitment to quality education, research, and holistic development.</p>
+                </div>
+
+                <div class="info-card" data-aos="fade-up" data-aos-delay="400">
+                    <div class="card-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10 h-10"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25" /></svg>
+                    </div>
+                    <h3 class="card-title">Commitment to Society</h3>
+                    <p>Beyond academics, KIIT is known for its significant contributions to social causes through its sister organizations, KISS (Kalinga Institute of Social Sciences), which provides free education from KG to PG for indigenous children.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about-iqac" class="py-16 sm:py-24 bg-[var(--ui-bg-light)]">
+      <div class="container mx-auto px-6">
+        <div class="text-center mb-12 sm:mb-16">
+            <h2 class="text-4xl sm:text-5xl section-title" data-aos="fade-up">IQAC at KIIT-DU</h2>
+            <p class="text-lg section-subtitle mt-3" data-aos="fade-up" data-aos-delay="100">
+              The Internal Quality Assurance Cell (IQAC) at KIIT Deemed to be University is the cornerstone of our commitment to continuous quality enhancement and institutional excellence.
+            </p>
+        </div>
+
+        <div class="grid md:grid-cols-1 lg:grid-cols-5 gap-8 items-center">
+            <div class="lg:col-span-2" data-aos="fade-right" data-aos-delay="200">
+                <h3 class="text-3xl font-bebas text-[var(--solid-dark)] mb-4 leading-tight">Our Vision</h3>
+                <p class="text-lg text-[var(--text-secondary)] mb-6">
+                    To ensure continuous improvement in the entire operations of the institution and assure stakeholders of the accountability of the institution for its own quality and probity.
+                </p>
+                 <a href="https://iqac.kiit.ac.in" target="_blank" rel="noopener noreferrer" class="inline-block bg-[var(--accent-color)] text-white font-semibold py-3 px-8 rounded-md hover:bg-[var(--accent-color-hover)] transition duration-300 text-md shadow-md hover:shadow-lg">
+                    Visit IQAC Website <span aria-hidden="true">&rarr;</span>
+                </a>
+            </div>
+            <div class="lg:col-span-3" data-aos="fade-left" data-aos-delay="300">
+                <div class="bg-white p-6 sm:p-8 rounded-lg shadow-lg border border-[var(--border-color)]">
+                    <h4 class="text-2xl font-bebas text-[var(--accent-color)] mb-4">Key Functions of IQAC:</h4>
+                    <ul class="space-y-3 list-disc list-inside list-disc-colored text-[var(--text-secondary)]">
+                        <li>Development and application of quality benchmarks.</li>
+                        <li>Facilitating the creation of a learner-centric environment.</li>
+                        <li>Arrangement for feedback responses from students, parents, and other stakeholders.</li>
+                        <li>Dissemination of information on various quality parameters.</li>
+                        <li>Organization of inter and intra-institutional workshops and seminars on quality-related themes.</li>
+                        <li>Documentation of various programs/activities leading to quality improvement.</li>
+                        <li>Acting as a nodal agency for coordinating quality-related activities.</li>
+                        <li>Preparation of the Annual Quality Assurance Report (AQAR) to be submitted to NAAC.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="documents" class="py-16 sm:py-24 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-12 sm:mb-16">
+                <h2 class="text-4xl sm:text-5xl section-title" data-aos="fade-up">Key IQAC Reports & Documents</h2>
+                <p class="text-lg section-subtitle mt-3" data-aos="fade-up" data-aos-delay="100">
+                    Access crucial documents that outline our quality initiatives, assessments, and enhancement measures.
+                </p>
+            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="document-prompt-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="icon-wrapper">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h4.5m-4.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" /></svg>
+                    </div>
+                    <h3>Self Study Report (SSR)</h3>
+                    <p>Comprehensive report detailing the institution's functioning and quality initiatives submitted for accreditation.</p>
+                    <a href="#" class="view-link mt-auto">
+                        View SSR
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m12.75 15 3-3m0 0-3-3m3 3h-7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" /></svg>
+                    </a>
+                </div>
+                <div class="document-prompt-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="icon-wrapper">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75c0 .621-.504 1.125-1.125 1.125h-2.25A1.125 1.125 0 0 1 3 19.875v-6.75ZM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V8.625ZM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V4.125Z" /></svg>
+                    </div>
+                    <h3>Annual Quality Assurance Reports (AQAR)</h3>
+                    <p>Yearly reports submitted to NAAC highlighting the quality enhancement measures undertaken by the institution.</p>
+                     <a href="#" class="view-link mt-auto">
+                        Access AQARs
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m12.75 15 3-3m0 0-3-3m3 3h-7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" /></svg>
+                    </a>
+                </div>
+                <div class="document-prompt-card" data-aos="fade-up" data-aos-delay="400">
+                    <div class="icon-wrapper">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M7.5 8.25h9m-9 3H12m-6.75 3h9m-9 3h9m-9 3H12m6.375-9.375c1.036 0 1.875.84 1.875 1.875v11.25c0 1.035-.84 1.875-1.875 1.875h-6.75C6.84 21 6 20.16 6 19.125V7.875c0-1.036.84-1.875 1.875-1.875h1.5c.414 0 .75.336.75.75v1.5c0 .414-.336.75-.75.75h-1.5a.375.375 0 0 0-.375.375v11.25c0 .207.168.375.375.375h6.75a.375.375 0 0 0 .375-.375V7.875a.375.375 0 0 0-.375-.375h-1.5a.75.75 0 0 1-.75-.75v-1.5c0-.414.336-.75.75-.75h1.5Z" /></svg>
+                    </div>
+                    <h3>Stakeholder Feedback Reports</h3>
+                    <p>Analysis of feedback from students, faculty, and other stakeholders to improve institutional processes.</p>
+                     <a href="#" class="view-link mt-auto">
+                        Read Feedback
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m12.75 15 3-3m0 0-3-3m3 3h-7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" /></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="news-events" class="py-16 sm:py-24 bg-[var(--ui-bg-light)]">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-12 sm:mb-16">
+                <h2 class="text-4xl sm:text-5xl section-title" data-aos="fade-up">Recent IQAC Initiatives & Events</h2>
+                <p class="text-lg section-subtitle mt-3" data-aos="fade-up" data-aos-delay="100">
+                    Stay updated with the latest workshops, seminars, and quality enhancement activities spearheaded by KIIT IQAC.
+                </p>
+            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="info-card" data-aos="fade-up" data-aos-delay="200">
+                    <img src="event1.jpg" alt="Faculty Enrichment Workshop" class="rounded-md mb-5 aspect-[16/10] object-cover">
+                    <span class="text-xs text-[var(--text-secondary)] uppercase font-medium">WORKSHOP • 22nd March 2025</span>
+                    <h3 class="card-title my-2 text-[var(--solid-dark)] hover:text-[var(--accent-color)] transition-colors"><a href="#">Faculty Enrichment: Digital Transformation & Emerging Technologies</a></h3>
+                    <p class="text-sm mb-3">A platform for knowledge sharing, skill development, and networking to harness digital transformation for enhanced teaching and research.</p>
+                    <a href="#" class="font-medium text-[var(--accent-color)] hover:text-[var(--accent-color-hover)] text-sm mt-auto pt-2">Learn More &rarr;</a>
+                </div>
+                <div class="info-card" data-aos="fade-up" data-aos-delay="300">
+                    <img src="event2.jpg" alt="Academic Empowerment Initiative" class="rounded-md mb-5 aspect-[16/10] object-cover">
+                    <span class="text-xs text-[var(--text-secondary)] uppercase font-medium">INITIATIVE • 9th May 2024</span>
+                    <h3 class="card-title my-2 text-[var(--solid-dark)] hover:text-[var(--accent-color)] transition-colors"><a href="#">Academic Empowerment Initiative 2023-24</a></h3>
+                    <p class="text-sm mb-3">Inaugural ceremony involving eminent academicians to evaluate school functioning and share insights for academic year 2023-24.</p>
+                    <a href="#" class="font-medium text-[var(--accent-color)] hover:text-[var(--accent-color-hover)] text-sm mt-auto pt-2">Discover More &rarr;</a>
+                </div>
+                <div class="info-card" data-aos="fade-up" data-aos-delay="400">
+                     <img src="event3.jpg" alt="Viksit Bharat Initiatives" class="rounded-md mb-5 aspect-[16/10] object-cover">
+                    <span class="text-xs text-[var(--text-secondary)] uppercase font-medium">SERIES OF EVENTS • 31st Mar – 8th Apr 2024</span>
+                    <h3 class="card-title my-2 text-[var(--solid-dark)] hover:text-[var(--accent-color)] transition-colors"><a href="#">Viksit Bharat@2047 Initiatives</a></h3>
+                    <p class="text-sm mb-3">Nine events including workshops and seminars to create awareness and brainstorm ideas for a developed India by 2047.</p>
+                    <a href="#" class="font-medium text-[var(--accent-color)] hover:text-[var(--accent-color-hover)] text-sm mt-auto pt-2">Explore Activities &rarr;</a>
+                </div>
+                 <div class="info-card md:col-span-2 lg:col-span-3" data-aos="fade-up" data-aos-delay="500">
+                     <img src="ki3.jpg" alt="Nurturing Emerging Leaders Workshop" class="rounded-md mb-5 aspect-[16/8] object-cover">
+                    <span class="text-xs text-[var(--text-secondary)] uppercase font-medium">Project Expo • 6th December 2024</span>
+                    <h3 class="card-title my-2 text-[var(--solid-dark)] hover:text-[var(--accent-color)] transition-colors"><a href="#">K-I3 Fest : Frontier Technologies for Viksit Bharat @ 2047</a></h3>
+                    <p class="text-sm mb-3">Organized by Dean's Gold Klub & IQAC</p>
+                    <a href="#" class="font-medium text-[var(--accent-color)] hover:text-[var(--accent-color-hover)] text-sm mt-auto pt-2">Get Details &rarr;</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="accreditations" class="py-16 sm:py-24 bg-white">
+      <div class="container mx-auto px-6 text-center">
+        <h2 class="text-4xl sm:text-5xl section-title mb-5" data-aos="fade-up">Accreditations & Recognitions</h2>
+        <p class="text-lg section-subtitle mb-12 sm:mb-16" data-aos="fade-up" data-aos-delay="100">
+          KIIT's commitment to quality is reflected in its various national and international accreditations and rankings, underscoring our dedication to maintaining the highest standards in education.
+        </p>
+        <div class="flex flex-wrap justify-center items-center gap-x-10 gap-y-8 md:gap-x-16" data-aos="fade-up" data-aos-delay="200">
+            <img src="naac.png" alt="NAAC A++ Logo" class="h-16 md:h-20 opacity-80 hover:opacity-100 transition-opacity duration-300" title="NAAC A++ Accreditation">
+            <img src="nba.png" alt="NBA Logo" class="h-16 md:h-20 opacity-80 hover:opacity-100 transition-opacity duration-300" title="NBA Accreditation">
+            <img src="nirf.png" alt="NIRF Logo" class="h-16 md:h-20 opacity-80 hover:opacity-100 transition-opacity duration-300" title="NIRF Ranked">
+            <img src="iet.png" alt="IET UK Logo" class="h-16 md:h-20 opacity-80 hover:opacity-100 transition-opacity duration-300" title="IET UK Accreditation">
+            <img src="abet.png" alt="ABET Logo" class="h-12 md:h-16 opacity-80 hover:opacity-100 transition-opacity duration-300" title="ABET Accreditation">
+             <img src="ugc.png" alt="UGC Logo" class="h-16 md:h-20 opacity-80 hover:opacity-100 transition-opacity duration-300" title="UGC Recognized">
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer id="contact" class="site-footer font-poppins">
+    <div class="container mx-auto px-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12 text-sm">
+        <div data-aos="fade-up" data-aos-delay="100">
+          <h3 class="font-bebas text-2xl tracking-wide mb-4 text-[var(--solid-white)]">KIIT IQAC</h3>
+          <p class="mb-2">Internal Quality Assurance Cell,</p>
+          <p class="mb-2">Kalinga Institute of Industrial Technology (KIIT)</p>
+          <p class="mb-2">Deemed to be University</p>
+          <p>Bhubaneswar, Odisha, India - 751024</p>
+        </div>
+        <div data-aos="fade-up" data-aos-delay="200">
+          <h3 class="text-lg font-semibold mb-4 text-[var(--solid-white)] uppercase tracking-wider">Quick Links</h3>
+          <ul class="space-y-2.5">
+            <li><a href="#about-iqac">About IQAC</a></li>
+            <li><a href="#documents">AQAR & Reports</a></li>
+            <li><a href="https://kiit.ac.in/nirf/" target="_blank" rel="noopener noreferrer">Rankings (NIRF)</a></li>
+            <li><a href="#accreditations">Accreditations</a></li>
+            <li><a href="#news-events">News & Events</a></li>
+          </ul>
+        </div>
+        <div data-aos="fade-up" data-aos-delay="300">
+          <h3 class="text-lg font-semibold mb-4 text-[var(--solid-white)] uppercase tracking-wider">Contact Us</h3>
+          <ul class="space-y-2.5">
+            <li><p>Email: <a href="mailto:iqac@kiit.ac.in">iqac@kiit.ac.in</a></p></li>
+            <li><p>Phone: <a href="tel:+916742725113">+91-674-2725113</a> (University)</p></li>
+            <li><a href="https://iqac.kiit.ac.in/contact-us/" target="_blank" rel="noopener noreferrer">IQAC Contact Page</a></li>
+            <li><a href="https://kiit.ac.in/contact/" target="_blank" rel="noopener noreferrer">University Contact</a></li>
+          </ul>
+        </div>
+        <div data-aos="fade-up" data-aos-delay="400">
+            <h3 class="text-lg font-semibold mb-4 text-[var(--solid-white)] uppercase tracking-wider">Connect With KIIT</h3>
+            <div class="flex space-x-4">
+                <a href="https://www.facebook.com/KIITUniversity/" target="_blank" rel="noopener noreferrer" aria-label="Facebook" class="text-[var(--ui-bg-light)] hover:text-[var(--accent-color)]">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12Z" clip-rule="evenodd" /></svg>
+                </a>
+                <a href="https://twitter.com/KIITUniversity" target="_blank" rel="noopener noreferrer" aria-label="Twitter" class="text-[var(--ui-bg-light)] hover:text-[var(--accent-color)]">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" /></svg>
+                </a>
+                <a href="https://www.linkedin.com/school/kiituniversity/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" class="text-[var(--ui-bg-light)] hover:text-[var(--accent-color)]">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" clip-rule="evenodd" /></svg>
+                </a>
+                 <a href="https://www.instagram.com/kiituniversity/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="text-[var(--ui-bg-light)] hover:text-[var(--accent-color)]">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 2.163c3.204 0 3.584.012 4.85.07 1.272.058 2.166.29 2.913.588.746.296 1.372.684 1.993 1.305.62.621.996 1.247 1.292 1.993.298.747.53 1.64.588 2.913.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.058 1.272-.29 2.166-.588 2.913-.296.746-.684 1.372-1.305 1.993-.621.62-1.247.996-1.993 1.292-.747.298-1.64.53-2.913.588-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.272-.058-2.166-.29-2.913-.588-.746-.296-1.372-.684-1.993-1.305-.62-.621-.996-1.247-1.292-1.993-.298-.747-.53-1.64-.588-2.913-.058-1.266-.07-1.646-.07-4.85s.012-3.584.07-4.85c.058-1.272.29-2.166.588-2.913.296-.746.684-1.372 1.305-1.993.621-.62 1.247-.996 1.993-1.292.747-.298 1.64.53 2.913.588C8.416 2.175 8.796 2.163 12 2.163Zm0 1.802C8.843 3.965 8.533 3.977 7.28 4.033c-1.184.054-1.91.267-2.524.514-.612.247-1.08.56-1.557 1.037-.477.477-.79 1.015-1.037 1.557-.247.613-.46 1.34-.514 2.524C4.023 8.467 4.01 8.737 4.01 12c0 3.263.012 3.533.068 4.78c.054 1.183.267 1.91.514 2.524.247.612.56 1.08 1.037 1.557.477.477 1.015.79 1.557 1.037.613.247 1.34.46 2.524.514 1.253.056 1.563.068 4.78.068s3.527-.012 4.78-.068c1.183-.054 1.91-.267 2.524-.514.612-.247 1.08-.56 1.557-1.037.477-.477.79-1.015 1.037-1.557.247-.613.46-1.34.514-2.524.056-1.253.068-1.563.068-4.78s-.012-3.527-.068-4.78c-.054-1.183-.267-1.91-.514-2.524-.247-.612-.56-1.08-1.037-1.557-.477-.477-.905-.79-1.557-1.037-.613-.247-1.34-.46-2.524-.514C15.533 3.977 15.157 3.965 12 3.965Zm0 5.838a6.197 6.197 0 1 0 0 12.394 6.197 6.197 0 0 0 0-12.394Zm0 10.333a4.136 4.136 0 1 1 0-8.272 4.136 4.136 0 0 1 0 8.272Zm6.406-11.845a1.44 1.44 0 1 0 0-2.88 1.44 1.44 0 0 0 0 2.88Z" clip-rule="evenodd" /></svg>
+                </a>
+            </div>
+        </div>
+      </div>
+      <div class="copyright-section">
+        <p class="copyright">© <span id="currentYear"></span> | KIIT IQAC | All Rights Reserved.</p>
+        <p class="designer">Website by Manav Choudhary.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    // Initialize AOS
+    AOS.init({
+        duration: 700, // slightly faster
+        once: true, 
+        offset: 50, // trigger animations a bit sooner
+    });
+
+    // Navbar scroll effect
+    const navbar = document.querySelector('.navbar-custom');
+    const navbarHeight = navbar.offsetHeight; // Get navbar height for offset
+    window.addEventListener('scroll', function() {
+      if (window.scrollY > 30) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    });
+
+    // Mobile Menu Toggle
+    const menuButton = document.getElementById('mobile-menu-button');
+    const mobileNavMenu = document.getElementById('mobile-nav-menu');
+    const menuIconOpen = document.getElementById('menu-icon-open');
+    const menuIconClose = document.getElementById('menu-icon-close');
+
+    menuButton.addEventListener('click', () => {
+      const isOpen = mobileNavMenu.classList.toggle('menu-open');
+      menuIconOpen.classList.toggle('hidden', isOpen);
+      menuIconClose.classList.toggle('hidden', !isOpen);
+      document.body.style.overflow = isOpen ? 'hidden' : ''; // Prevent body scroll when menu is open
+    });
+
+    // Mobile dropdown toggle
+    const mobileDropdownToggles = document.querySelectorAll('.mobile-dropdown-toggle');
+    mobileDropdownToggles.forEach(toggle => {
+      toggle.addEventListener('click', function(e) {
+        e.preventDefault();
+        const content = this.nextElementSibling;
+        const arrowIcon = this.querySelector('svg:last-child'); // Target the arrow icon
+
+        // Close other open dropdowns
+        document.querySelectorAll('.mobile-dropdown-content.open').forEach(openContent => {
+            if (openContent !== content) {
+                openContent.classList.remove('open');
+                const otherArrow = openContent.previousElementSibling.querySelector('svg:last-child');
+                if(otherArrow) otherArrow.style.transform = 'rotate(0deg)';
+            }
+        });
+        
+        // Toggle current dropdown
+        content.classList.toggle('open');
+        if (arrowIcon) {
+            arrowIcon.style.transform = content.classList.contains('open') ? 'rotate(180deg)' : 'rotate(0deg)';
+        }
+      });
+    });
+    
+    // Set current year in footer
+    document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            const href = this.getAttribute('href');
+            if (href.length > 1 && document.querySelector(href)) {
+                e.preventDefault();
+                const targetElement = document.querySelector(href);
+                const elementPosition = targetElement.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - (navbar.classList.contains('scrolled') ? (navbarHeight * 0.8) : navbarHeight); // Adjusted offset
+
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
+                
+                // If mobile menu is open, close it
+                if (mobileNavMenu.classList.contains('menu-open')) {
+                    mobileNavMenu.classList.remove('menu-open');
+                    menuIconOpen.classList.remove('hidden');
+                    menuIconClose.classList.add('hidden');
+                    document.body.style.overflow = ''; // Restore body scroll
+                }
+            }
+        });
+    });
+
+  </script>
+
+</body>
+</html>
