@@ -7,8 +7,7 @@
 This repository contains the official website for the Internal Quality Assurance Cell (IQAC) of Kalinga Institute of Industrial Technology (KIIT), Deemed to be University. The website aims to provide comprehensive information about IQAC's functions, objectives, policies, reports, events, and its role in maintaining and enhancing the quality of education and institutional processes at KIIT.
 
 ## Live Site
-
-
+`https://iqac-website.vercel.app/`
 
 ## Features
 
