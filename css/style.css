@@ -1,0 +1,779 @@
+/* style.css */
+:root {
+  /* User Provided Palette */
+  --ui-bg-light: #e4edf2; /* UI Color 1 */
+  --ui-bg-dark: #223d51;  /* UI Color 2 */
+  --ui-accent: #1fc166;   /* UI Color 3 */
+
+  --solid-primary: #17d059;     /* Solid Color 1 */
+  --solid-primary-darker: #0ca750; /* Solid Color 5 (darker green) */
+  --solid-dark: #223d51;      /* Solid Color 2 (same as ui-bg-dark) */
+  --solid-white: #ffffff;      /* Solid Color 3 */
+  --solid-black: #000000;      /* Solid Color 4 */
+
+  --theme-green-1: #17d059; /* Theme Color 1 */
+  --theme-green-2: #11c77e; /* Theme Color 2 */
+  --theme-teal-1: #0cbfa3;  /* Theme Color 3 */
+  --theme-cyan-1: #06b6c8;  /* Theme Color 4 */
+  --theme-cyan-2: #00aded;  /* Theme Color 5 */
+  --theme-text-dark: #444444;/* Theme Color 6 */
+  --theme-bg-light: #f7f7f7; /* Theme Color 7 */
+
+  /* Gradient */
+  --gradient-start: var(--solid-primary);
+  --gradient-end: var(--theme-cyan-2);
+
+  /* Semantic Colors */
+  --background-body: var(--theme-bg-light);
+  --text-primary: var(--theme-text-dark);
+  --text-secondary: #555e68; /* Slightly lighter than primary text */
+  --text-on-dark: var(--ui-bg-light);
+  --accent-color: var(--solid-primary);
+  --accent-color-hover: var(--solid-primary-darker);
+  --card-bg: var(--solid-white);
+  --border-color: #dee2e6; /* Consistent border color */
+  --hero-overlay-start: rgba(23, 208, 89, 0.6); /* From --solid-primary with alpha */
+  --hero-overlay-end: rgba(0, 173, 237, 0.8); /* From --theme-cyan-2 with alpha */
+  --hero-overlay-dark-start: rgba(34, 61, 81, 0.85); /* From --ui-bg-dark with alpha */
+  --hero-overlay-dark-end: rgba(34, 61, 81, 0.95);   /* From --ui-bg-dark with alpha */
+}
+
+.font-bebas {
+  font-family: "Bebas Neue", cursive, sans-serif;
+}
+.font-poppins {
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  background-color: var(--background-body);
+  color: var(--text-primary);
+  font-family: "Poppins", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Navbar Styles */
+.navbar-custom {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: saturate(180%) blur(12px);
+  -webkit-backdrop-filter: saturate(180%) blur(12px);
+  border-bottom: 1px solid transparent;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+  z-index: 1000;
+  transition: all 0.3s ease-in-out;
+}
+.navbar-custom.scrolled {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  background: rgba(255, 255, 255, 0.98);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  border-bottom-color: var(--border-color);
+}
+
+.nav-link {
+  position: relative;
+  color: var(--solid-dark);
+  font-weight: 500;
+  transition: color 0.3s ease;
+  padding: 0.5rem 0.25rem;
+  letter-spacing: 0.3px;
+}
+.nav-link::after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--gradient-start), var(--gradient-end));
+  bottom: -8px;
+  left: 0;
+  border-radius: 3px;
+  transition: width 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+.nav-link:hover,
+.nav-link.active { /* .active class for current page */
+  color: var(--accent-color);
+}
+.nav-link:hover::after,
+.nav-link.active::after {
+  width: 100%;
+}
+
+.external-button {
+  background: linear-gradient(90deg, var(--gradient-start), var(--theme-cyan-1));
+  color: var(--solid-white);
+  font-weight: 500;
+  padding: 0.5rem 1.25rem;
+  border-radius: 0.375rem; /* Tailwind's 'rounded-md' */
+  box-shadow: 0 4px 10px rgba(0,0,0, 0.1);
+  transition: all 0.3s ease;
+}
+.external-button:hover {
+  background: linear-gradient(90deg, var(--accent-color-hover), var(--gradient-start));
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(23, 208, 89, 0.3);
+}
+
+/* Dropdown Menu Styles */
+.dropdown .dropdown-menu {
+  display: none;
+  position: absolute;
+  top: calc(100% + 12px);
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--solid-white);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+  border-radius: 0.5rem;
+  padding: 0.5rem 0;
+  min-width: 220px;
+  opacity: 0;
+  visibility: hidden;
+  transform-origin: top center;
+  animation: fadeInDown 0.3s ease-out forwards;
+  z-index: 999;
+  border: 1px solid var(--border-color);
+}
+.dropdown:hover .dropdown-menu {
+  display: block; opacity: 1; visibility: visible;
+}
+@keyframes fadeInDown {
+  0% { opacity: 0; transform: translateX(-50%) translateY(-10px); }
+  100% { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+.dropdown-menu a {
+  display: block; padding: 0.7rem 1.2rem; white-space: nowrap;
+  font-weight: 500; color: var(--text-primary);
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+.dropdown-menu a:hover {
+  background-color: var(--accent-color); color: var(--solid-white);
+}
+.dropdown-menu a:not(:last-child) {
+  border-bottom: 1px solid var(--ui-bg-light);
+}
+
+/* Hero Section Styles */
+.hero-section {
+  position: relative;
+  min-height: 95vh;
+  background-attachment: fixed; /* Keep parallax effect */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(135deg, var(--hero-overlay-dark-start) 0%, var(--hero-overlay-dark-end) 100%);
+    z-index: 1;
+}
+.hero-section .content-wrapper {
+  position: relative; z-index: 2;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  text-align: center; color: var(--solid-white); padding: 1.5rem;
+}
+.hero-section h1 {
+  font-size: 3rem;
+  text-shadow: 0px 3px 8px rgba(0, 0, 0, 0.5);
+  letter-spacing: 1.5px;
+  line-height: 1.2;
+}
+.hero-section p.subtitle {
+  font-size: 1.1rem;
+  max-width: 700px; text-shadow: 0px 2px 5px rgba(0, 0, 0, 0.4);
+  font-weight: 300; opacity: 0.95;
+  line-height: 1.6;
+}
+.hero-cta-button {
+  margin-top: 2.5rem; background-color: var(--solid-white); color: var(--accent-color);
+  font-weight: 600; padding: 0.9rem 2.2rem; border-radius: 0.375rem;
+  font-size: 1rem; box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  text-transform: uppercase; letter-spacing: 1px;
+  display: inline-flex; align-items: center; gap: 0.6rem;
+}
+.hero-cta-button:hover {
+  background-color: var(--ui-bg-light); color: var(--accent-color-hover);
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 10px 22px rgba(0,0,0,0.2);
+}
+.hero-cta-button svg { width: 1.3em; height: 1.3em; }
+
+/* Running Strip Section Styles */
+.running-strip-section {
+    /* background-color: var(--ui-bg-dark); */ /* Using gradient from HTML */
+    color: var(--solid-white);
+    /* padding: 0.75rem 0; */ /* Adjusted in HTML */
+    overflow: hidden; /* Important for marquee effect */
+    white-space: nowrap; /* Keep content on one line */
+}
+.running-strip-container {
+    display: inline-block; /* Allows animation of the container */
+    padding-left: 100%; /* Start off-screen */
+    animation: marquee 30s linear infinite; /* Adjust duration as needed */
+}
+.running-strip-content span {
+    display: inline-block;
+    padding: 0 2rem; /* Spacing between news items */
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+.running-strip-content span::after {
+    content: "|";
+    margin-left: 2rem;
+    opacity: 0.5;
+}
+.running-strip-content span:last-child::after {
+    content: ""; /* No separator after the last item */
+    margin-left: 0;
+}
+@keyframes marquee {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-100%); } /* Move one full width of the content */
+}
+.running-strip-section:hover .running-strip-container {
+    animation-play-state: paused; /* Pause on hover */
+}
+
+
+/* Accreditation Badges Section Styles */
+.accreditation-card {
+    background-color: var(--solid-white);
+    border-radius: 0.75rem; /* Tailwind 'rounded-lg' */
+    padding: 1.5rem;
+    text-align: center;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.07);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%; /* For equal height cards */
+}
+.accreditation-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 12px 35px rgba(0,0,0,0.1);
+}
+.accreditation-logo {
+    max-height: 70px; /* Adjust as needed */
+    margin-bottom: 1rem;
+    object-fit: contain;
+}
+.accreditation-title {
+    font-family: "Poppins", sans-serif;
+    color: var(--solid-dark);
+    font-weight: 600;
+    font-size: 1.1rem; /* Slightly smaller for cards */
+    margin-bottom: 0.5rem;
+}
+.accreditation-description {
+    color: var(--text-secondary);
+    font-size: 0.85rem; /* Smaller for card content */
+    line-height: 1.5;
+    flex-grow: 1; /* Pushes title and logo up if descriptions vary */
+}
+
+/* Rankings Section Styles */
+.ranking-card {
+    background-color: var(--solid-white);
+    border-radius: 0.75rem;
+    padding: 2rem;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    height: 100%; /* For equal height cards */
+}
+.ranking-card:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 18px 40px rgba(0,0,0,0.12);
+}
+.ranking-logo-container {
+    min-height: 70px; /* Ensure space for logo */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+.ranking-logo {
+    max-height: 60px;
+    max-width: 120px;
+    object-fit: contain;
+}
+.ranking-title {
+    font-family: "Poppins", sans-serif;
+    color: var(--solid-dark);
+    font-weight: 600;
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+}
+.ranking-value {
+    font-family: "Bebas Neue", cursive, sans-serif;
+    font-size: 3.5rem;
+    color: var(--accent-color);
+    line-height: 1;
+    margin-bottom: 0.75rem;
+}
+.ranking-value sup {
+    font-size: 1.5rem;
+    top: -1.2em;
+}
+.ranking-description {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    flex-grow: 1;
+}
+.ranking-link {
+    display: inline-block;
+    color: var(--accent-color);
+    font-weight: 500;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    font-size: 0.9rem;
+    margin-top: auto; /* Pushes link to bottom */
+}
+.ranking-link:hover {
+    color: var(--accent-color-hover);
+    text-decoration: underline;
+}
+
+
+/* Footer Styles */
+.site-footer {
+  background-color: var(--ui-bg-dark); color: var(--text-on-dark);
+  padding-top: 4rem; padding-bottom: 2rem;
+}
+.site-footer h3 { color: var(--solid-white); font-weight: 600; margin-bottom: 1.25rem; }
+.site-footer a { color: var(--ui-bg-light); transition: color 0.3s ease; }
+.site-footer a:hover { color: var(--accent-color); text-decoration: underline; }
+.site-footer .copyright-section {
+  border-top: 1px solid rgba(255,255,255,0.15);
+  padding-top: 2rem; margin-top: 3rem;
+  font-size: 0.9rem; text-align: center;
+}
+.site-footer .copyright-section p { margin-bottom: 0.25rem; }
+.site-footer .designer { color: #a0aec0; /* Tailwind gray-500 */}
+
+/* Responsive Adjustments for Hero */
+@media (min-width: 640px) { /* sm */
+  .hero-section h1 { font-size: 3.8rem; } .hero-section p.subtitle { font-size: 1.2rem; }
+}
+@media (min-width: 768px) { /* md */
+  .hero-section h1 { font-size: 4.5rem; }
+}
+@media (min-width: 1024px) { /* lg */
+  .hero-section h1 { font-size: 5rem; }
+}
+
+/* Mobile Navigation Menu */
+#mobile-nav-menu {
+  display: none; position: fixed; /* Changed to fixed for better overlay */
+  top: 0; /* Start from top */
+  left: 0; right: 0; bottom: 0; /* Full screen */
+  background: rgba(255, 255, 255, 0.98); /* Slightly more opaque */
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+  z-index: 998; /* Below navbar button but above content */
+  padding: 4rem 1rem 1rem; /* More padding at top for navbar space */
+  opacity: 0;
+  transform: translateX(-100%); /* Slide in from left */
+  overflow-y: auto;
+  transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+}
+#mobile-nav-menu.menu-open {
+  display: block; opacity: 1; transform: translateX(0);
+}
+/* Close button for mobile menu */
+/* This is handled by the existing hamburger toggle logic in JS */
+
+#mobile-nav-menu a, #mobile-nav-menu .mobile-dropdown-toggle {
+  display: block; padding: 0.8rem 1rem; color: var(--text-primary);
+  font-weight: 500; border-bottom: 1px solid var(--ui-bg-light);
+  transition: background-color 0.2s ease, color 0.2s ease;
+  font-size: 1.1rem; /* Larger for easier tapping */
+}
+#mobile-nav-menu a:last-child, #mobile-nav-menu div:last-child .mobile-dropdown-toggle { border-bottom: none; }
+#mobile-nav-menu a:hover, #mobile-nav-menu .mobile-dropdown-toggle:hover {
+  background-color: var(--accent-color); color: var(--solid-white);
+}
+.mobile-dropdown-content { display: none; padding-left: 1.5rem; background-color: #f0f4f8; /* Lighter bg for dropdown items */ }
+.mobile-dropdown-content.open { display: block; }
+.mobile-dropdown-content a { font-size: 1rem; border-top: 1px solid var(--ui-bg-light); border-bottom: none; }
+.mobile-dropdown-content a:first-child { border-top: none; }
+
+
+/* General Section Styling */
+.section-title {
+  font-family: "Bebas Neue", cursive, sans-serif;
+  color: var(--ui-bg-dark);
+  letter-spacing: 1px;
+  margin-bottom: 0.75rem;
+}
+.section-subtitle {
+  color: var(--text-secondary);
+  max-width: 750px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.7;
+  font-size: 1.05rem;
+}
+
+/* General Card Styles (can be base for other cards) */
+.info-card {
+  background-color: var(--card-bg);
+  border-radius: 0.75rem; padding: 2rem;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.04);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid var(--ui-bg-light);
+  display: flex; flex-direction: column; height: 100%;
+}
+.info-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 30px rgba(0,0,0,0.07);
+}
+.info-card h3.card-title {
+  color: var(--solid-dark);
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  font-size: 1.3rem;
+}
+ .info-card h3.card-title a:hover {
+    color: var(--accent-color);
+}
+.info-card p { color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6; }
+.info-card .card-icon {
+    font-size: 2.5rem;
+    color: var(--accent-color);
+    margin-bottom: 1rem;
+    line-height: 1;
+}
+@media (min-width: 768px) { /* md */
+    .info-card .card-icon { font-size: 3rem; }
+}
+
+/* Document Prompt Card (can be reused on reports page) */
+.document-prompt-card {
+    background-color: var(--solid-white);
+    border-radius: 0.75rem;
+    padding: 1.75rem;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.05);
+    transition: all 0.3s ease;
+    border-left: 5px solid var(--accent-color);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+}
+.document-prompt-card:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+    border-left-color: var(--solid-primary-darker);
+}
+.document-prompt-card .icon-wrapper {
+    color: var(--accent-color);
+    margin-bottom: 1rem;
+}
+.document-prompt-card .icon-wrapper svg {
+    width: 2.5rem; height: 2.5rem;
+}
+.document-prompt-card h3 {
+    font-family: "Poppins", sans-serif;
+    color: var(--solid-dark);
+    font-weight: 600;
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+}
+.document-prompt-card p {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+    flex-grow: 1;
+}
+.document-prompt-card .view-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: var(--accent-color);
+    color: var(--solid-white);
+    padding: 0.6rem 1.2rem;
+    border-radius: 0.375rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    font-size: 0.9rem;
+    margin-top: auto; /* Pushes button to bottom */
+    
+}
+.document-prompt-card .view-link:hover {
+    background-color: var(--solid-primary-darker);
+    color: var(--solid-white);
+}
+.document-prompt-card .view-link svg {
+    width: 1.1em; height: 1.1em;
+}
+
+/* Utility Classes */
+.list-disc-colored li::marker {
+    color: var(--accent-color);
+}
+.highlight-text {
+    color: var(--accent-color);
+    font-weight: 600;
+}
+
+/* Page specific styles can be added below or in separate files if they grow large */
+/* Example for a generic page header */
+.page-header {
+    background-color: var(--ui-bg-dark);
+    color: var(--solid-white);
+    padding: 4rem 1.5rem 3rem; /* More padding */
+    text-align: center;
+}
+.page-header h1 {
+    font-family: "Bebas Neue", cursive, sans-serif;
+    font-size: 3rem; /* Large title */
+    letter-spacing: 1px;
+    margin-bottom: 0.5rem;
+}
+.page-header p {
+    font-size: 1.1rem;
+    color: var(--ui-bg-light);
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+/* Content section styling for inner pages */
+.content-section {
+    padding: 3rem 1.5rem; /* Standard padding for content areas */
+}
+.content-section h2.section-title-inner { /* For sub-sections within a page */
+    font-size: 2.5rem; /* Slightly smaller than main section titles */
+    color: var(--solid-dark);
+    margin-bottom: 1.5rem;
+    text-align: left; /* Default to left for inner pages */
+}
+.content-section h2.section-title-inner.text-center {
+    text-align: center; /* Allow override */
+}
+.content-section p, .content-section ul, .content-section ol {
+    margin-bottom: 1.25rem;
+    line-height: 1.7;
+    color: var(--text-secondary);
+}
+.content-section ul {
+    list-style: disc;
+    padding-left: 1.5rem;
+}
+.content-section ol {
+    list-style: decimal;
+    padding-left: 1.5rem;
+}
+.content-section strong {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+.content-section a {
+    color: var(--accent-color);
+    text-decoration: underline;
+    transition: color 0.2s ease;
+}
+.content-section a:hover {
+    color: var(--accent-color-hover);
+}
+
+/* Team Card Styles (for About page) */
+.team-card {
+    background-color: var(--solid-white);
+    border-radius: 0.75rem;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.05);
+    overflow: hidden; /* To clip image if needed */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid var(--border-color);
+}
+.team-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 25px rgba(0,0,0,0.1);
+}
+.team-card img {
+    width: 100%;
+    height: 280px; /* Fixed height for consistency */
+    object-fit: cover;
+    object-position: center top; /* Focus on face */
+}
+.team-card-content {
+    padding: 1.5rem;
+    text-align: center;
+}
+.team-card-name {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--solid-dark);
+    margin-bottom: 0.25rem;
+}
+.team-card-designation {
+    font-size: 0.9rem;
+    color: var(--accent-color);
+    font-weight: 500;
+    margin-bottom: 0.75rem;
+}
+.team-card-description {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+/* PDF Viewer/Download Link Styling */
+.pdf-link-card {
+    background-color: var(--ui-bg-light);
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    border: 1px solid var(--border-color);
+    transition: background-color 0.3s ease;
+}
+.pdf-link-card:hover {
+    background-color: #d8e2e9; /* Slightly darker hover */
+}
+.pdf-link-card .pdf-icon svg {
+    width: 2.5rem;
+    height: 2.5rem;
+    color: var(--accent-color);
+}
+.pdf-link-card-info h4 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--solid-dark);
+    margin-bottom: 0.25rem;
+}
+.pdf-link-card-info p {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+}
+.pdf-link-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.pdf-link-actions a {
+    display: inline-block;
+    background: linear-gradient(90deg, var(--gradient-start), var(--theme-cyan-1));
+    color: var(--solid-white);
+    font-weight: 500;
+    padding: 0.5rem 1.25rem;
+    border-radius: 0.375rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+}
+.pdf-link-actions a:hover {
+  background: linear-gradient(90deg, var(--accent-color-hover), var(--gradient-start));
+  color: var(--solid-white);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(23, 208, 89, 0.3);
+}
+
+/* Event Card Styles (for Events page) */
+.event-card {
+    background-color: var(--solid-white);
+    border-radius: 0.75rem;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.05);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+.event-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 25px rgba(0,0,0,0.1);
+}
+.event-card-image {
+    width: 100%;
+    height: 200px; /* Fixed height for event images */
+    object-fit: cover;
+}
+.event-card-content {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1; /* Allows content to fill height */
+}
+.event-card-date {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+}
+.event-card-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--solid-dark);
+    margin-bottom: 0.75rem;
+    line-height: 1.3;
+}
+.event-card-description {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 1rem;
+    flex-grow: 1; /* Pushes button to bottom */
+}
+.event-card-link {
+    display: inline-block;
+    color: var(--accent-color);
+    font-weight: 500;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    font-size: 0.9rem;
+    margin-top: auto; /* Pushes link to bottom */
+}
+.event-card-link:hover {
+    color: var(--accent-color-hover);
+    text-decoration: underline;
+}
+
+/* Year Dropdown for Events Page */
+.year-dropdown-container {
+    margin-bottom: 2rem;
+    text-align: right; /* Align to the right or center as preferred */
+}
+.year-dropdown-container label {
+    margin-right: 0.5rem;
+    font-weight: 500;
+    color: var(--text-primary);
+}
+.year-dropdown-container select {
+    padding: 0.5rem 1rem;
+    border-radius: 0.375rem;
+    border: 1px solid var(--border-color);
+    background-color: var(--solid-white);
+    color: var(--text-primary);
+    font-weight: 500;
+    cursor: pointer;
+}
+.year-dropdown-container select:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 2px rgba(var(--accent-color), 0.2);
+}
+
+
+/* Tailwind Customizations (if any, or can be done via tailwind.config.js) */
+/* Example: If you need to extend Tailwind's color palette with your CSS variables */
+/* This is generally better done in tailwind.config.js if you have one */
