@@ -5,14 +5,31 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Events & Gallery | KIIT IQAC</title>
   <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
   <link
-    href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@300;400;500;600;700&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@300;400;500;600;700&display=swap&family=Roboto+Flex:opsz,wght@8..144,300..700"
     rel="stylesheet"
   />
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
-  <link rel="icon" href="assets/logos/iqac_logo.png" type="image/png">
+  <link rel="icon" href="assets/logos/iqac_logo2.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <style>
+    @font-face {
+      font-family: 'Poppins'; font-style: normal; font-weight: 300; font-display: swap;
+      src: url(https://fonts.gstatic.com/s/poppins/v20/pxiByp8kv8JHgFVrLDz8Z1xlFQ.woff2) format('woff2');
+    }
+     @font-face {
+      font-family: 'Poppins'; font-style: normal; font-weight: 700; font-display: swap;
+      src: url(https://fonts.gstatic.com/s/poppins/v20/pxiByp8kv8JHgFVrLCz7Z1xlFQ.woff2) format('woff2');
+    }
+    @font-face {
+      font-family: 'Bebas Neue'; font-style: normal; font-weight: 400; font-display: swap;
+      src: url(https://fonts.gstatic.com/s/bebasneue/v9/JTUSjIg69CK48gW7PXoo9Wlhyw.woff2) format('woff2');
+    }
+  </style>
 </head>
 <body class="antialiased font-poppins">
 
@@ -26,16 +43,35 @@
 
     <section class="content-section bg-white py-8">
         <div class="container mx-auto px-6">
-            <div class="year-dropdown-container text-center md:text-right" data-aos="fade-up">
-                <label for="eventYearFilter" class="text-lg font-medium">Filter by Year:</label>
-                <select id="eventYearFilter" name="eventYearFilter" class="p-2 border border-gray-300 rounded-md shadow-sm focus:border-[var(--accent-color)] focus:ring-1 focus:ring-[var(--accent-color)]">
-                    <option value="all">All Years</option>
-                    <option value="2025">2025</option>
-                    <option value="2024">2024</option>
-                    <option value="2023">2023</option>
-                    <option value="2022">2022</option>
+            <div class="event-filters-container flex flex-col sm:flex-row justify-center sm:justify-end items-center gap-4 mb-8" data-aos="fade-up">
+                <div class="filter-group">
+                    <label for="eventSearch" class="sr-only">Search Events:</label>
+                    <input type="text" id="eventSearch" placeholder="Search events..." class="styled-input p-2 border border-gray-300 rounded-md shadow-sm focus:border-[var(--accent-color)] focus:ring-1 focus:ring-[var(--accent-color)] w-full sm:w-auto">
+                </div>
+                <div class="filter-group">
+                    <label for="eventYearFilter" class="sr-only">Filter by Year:</label>
+                    <select id="eventYearFilter" name="eventYearFilter" class="styled-select p-2 border border-gray-300 rounded-md shadow-sm focus:border-[var(--accent-color)] focus:ring-1 focus:ring-[var(--accent-color)] w-full sm:w-auto">
+                        <option value="all">All Years</option>
+                        <option value="2025">2025</option>
+                        <option value="2024">2024</option>
+                        <option value="2023">2023</option>
+                        <option value="2022">2022</option>
                     </select>
+                </div>
+                <div class="filter-group">
+                    <label for="eventTypeFilter" class="sr-only">Filter by Type:</label>
+                    <select id="eventTypeFilter" name="eventTypeFilter" class="styled-select p-2 border border-gray-300 rounded-md shadow-sm focus:border-[var(--accent-color)] focus:ring-1 focus:ring-[var(--accent-color)] w-full sm:w-auto">
+                        <option value="all">All Types</option>
+                        <option value="workshop">Workshop</option>
+                        <option value="seminar">Seminar</option>
+                        <option value="initiative">Initiative</option>
+                        <option value="meeting">Meeting</option>
+                        <option value="training">Training</option>
+                        <option value="fest">Fest/Expo</option>
+                    </select>
+                </div>
             </div>
+            <p id="no-events-message" class="text-center text-lg text-gray-500 py-8 hidden" data-aos="fade-up">No events found matching your criteria.</p>
         </div>
     </section>
 
@@ -43,42 +79,54 @@
         <div class="container mx-auto px-6">
             <h2 class="section-title-inner text-center mb-10" data-aos="fade-up">IQAC Events</h2>
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="event-card" data-event-year="2025" data-aos="fade-up" data-aos-delay="100">
-                    <img src="assets/images/event1.jpg" alt="Faculty Enrichment Workshop" class="event-card-image" onerror="this.onerror=null; this.src='https://placehold.co/400x200/223d51/e4edf2?text=Event+Image+1&font=poppins';">
+                <article class="event-card" data-event-year="2025" data-event-type="workshop" data-aos="fade-up" data-aos-delay="100">
+                    <figure>
+                        <img src="assets/images/event1.jpg" alt="Faculty Enrichment Workshop on Digital Transformation" class="event-card-image" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/400x220/cccccc/333333?text=Event+1';">
+                        <figcaption class="sr-only">Digital Transformation Workshop</figcaption>
+                    </figure>
                     <div class="event-card-content">
                         <p class="event-card-date">WORKSHOP • 22nd March 2025</p>
                         <h3 class="event-card-title">Faculty Enrichment: Digital Transformation</h3>
                         <p class="event-card-description">A platform for knowledge sharing on harnessing digital transformation for enhanced teaching and research.</p>
-                        <a href="#" class="event-card-link">Learn More &rarr;</a>
+                        <button class="event-card-link learn-more-btn" data-event-id="event1" aria-label="Learn more about Faculty Enrichment: Digital Transformation">Learn More &rarr;</button>
                     </div>
-                </div>
-                <div class="event-card" data-event-year="2024" data-aos="fade-up" data-aos-delay="150">
-                    <img src="assets/images/event2.jpg" alt="Academic Empowerment Initiative" class="event-card-image" onerror="this.onerror=null; this.src='https://placehold.co/400x200/17d059/ffffff?text=Event+Image+2&font=poppins';">
+                </article>
+                <article class="event-card" data-event-year="2024" data-event-type="initiative" data-aos="fade-up" data-aos-delay="150">
+                     <figure>
+                        <img src="assets/images/event2.jpg" alt="Academic Empowerment Initiative Inauguration" class="event-card-image" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/400x220/cccccc/333333?text=Event+2';">
+                        <figcaption class="sr-only">Academic Empowerment Initiative</figcaption>
+                    </figure>
                     <div class="event-card-content">
                         <p class="event-card-date">INITIATIVE • 9th May 2024</p>
                         <h3 class="event-card-title">Academic Empowerment Initiative 2023-24</h3>
                         <p class="event-card-description">Inaugural ceremony involving eminent academicians to evaluate school functioning and share insights.</p>
-                        <a href="#" class="event-card-link">Discover More &rarr;</a>
+                        <button class="event-card-link learn-more-btn" data-event-id="event2" aria-label="Discover more about Academic Empowerment Initiative 2023-24">Discover More &rarr;</button>
                     </div>
-                </div>
-                <div class="event-card" data-event-year="2024" data-aos="fade-up" data-aos-delay="200">
-                     <img src="assets/images/event3.jpg" alt="Viksit Bharat Initiatives" class="event-card-image" onerror="this.onerror=null; this.src='https://placehold.co/400x200/0cbfa3/ffffff?text=Event+Image+3&font=poppins';">
+                </article>
+                <article class="event-card" data-event-year="2024" data-event-type="seminar" data-aos="fade-up" data-aos-delay="200">
+                     <figure>
+                        <img src="assets/images/event3.jpg" alt="Viksit Bharat@2047 Initiatives Series" class="event-card-image" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/400x220/cccccc/333333?text=Event+3';">
+                        <figcaption class="sr-only">Viksit Bharat@2047 Initiatives</figcaption>
+                    </figure>
                     <div class="event-card-content">
                         <p class="event-card-date">SERIES OF EVENTS • 31st Mar – 8th Apr 2024</p>
                         <h3 class="event-card-title">Viksit Bharat@2047 Initiatives</h3>
                         <p class="event-card-description">Nine events including workshops and seminars to create awareness for a developed India by 2047.</p>
-                        <a href="#" class="event-card-link">Explore Activities &rarr;</a>
+                        <button class="event-card-link learn-more-btn" data-event-id="event3" aria-label="Explore activities of Viksit Bharat@2047 Initiatives">Explore Activities &rarr;</button>
                     </div>
-                </div>
-                 <div class="event-card" data-event-year="2023" data-aos="fade-up" data-aos-delay="250">
-                    <img src="assets/images/ki3.jpg" alt="K-I3 Fest" class="event-card-image" onerror="this.onerror=null; this.src='https://placehold.co/400x200/06b6c8/ffffff?text=K-I3+Fest&font=poppins';">
+                </article>
+                <article class="event-card" data-event-year="2023" data-event-type="fest" data-aos="fade-up" data-aos-delay="250">
+                    <figure>
+                        <img src="assets/images/ki3.jpg" alt="K-I3 Fest: Frontier Technologies Project Expo" class="event-card-image" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/400x220/cccccc/333333?text=K-I3+Fest';">
+                        <figcaption class="sr-only">K-I3 Fest Project Expo</figcaption>
+                    </figure>
                    <div class="event-card-content">
                        <p class="event-card-date">PROJECT EXPO • 6th December 2023</p>
                        <h3 class="event-card-title">K-I3 Fest: Frontier Technologies</h3>
                        <p class="event-card-description">Organized by Dean's Gold Klub & IQAC, showcasing innovative student projects.</p>
-                       <a href="#" class="event-card-link">Get Details &rarr;</a>
+                       <button class="event-card-link learn-more-btn" data-event-id="event4" aria-label="Get details about K-I3 Fest: Frontier Technologies">Get Details &rarr;</button>
                    </div>
-               </div>
+               </article>
                </div>
         </div>
     </section>
@@ -90,33 +138,42 @@
                 IQAC actively engages in various functions and organises activities to promote a quality culture.
             </p>
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="event-card" data-event-year="2024" data-aos="fade-up" data-aos-delay="100">
-                    <img src="activity1.jpg" alt="Activity 1" class="event-card-image" onerror="this.onerror=null; this.src='https://placehold.co/400x200/223d51/e4edf2?text=Activity+1&font=poppins';">
+                <article class="event-card" data-event-year="2024" data-event-type="seminar" data-aos="fade-up" data-aos-delay="100">
+                    <figure>
+                        <img src="https://placehold.co/400x220/223d51/e4edf2?text=NEP+Seminar" alt="Seminar on NEP 2020 Implementation" class="event-card-image" loading="lazy">
+                        <figcaption class="sr-only">Seminar on NEP 2020</figcaption>
+                    </figure>
                     <div class="event-card-content">
                         <p class="event-card-date">SEMINAR • 15th July 2024</p>
                         <h3 class="event-card-title">Seminar on NEP 2020 Implementation</h3>
                         <p class="event-card-description">Discussing strategies and challenges in implementing the National Education Policy 2020.</p>
-                        <a href="#" class="event-card-link">Read More &rarr;</a>
+                        <button class="event-card-link learn-more-btn" data-event-id="activity1" aria-label="Read more about Seminar on NEP 2020 Implementation">Read More &rarr;</button>
                     </div>
-                </div>
-                <div class="event-card" data-event-year="2023" data-aos="fade-up" data-aos-delay="150">
-                    <img src="activity2.jpg" alt="Activity 2" class="event-card-image" onerror="this.onerror=null; this.src='https://placehold.co/400x200/17d059/ffffff?text=Activity+2&font=poppins';">
+                </article>
+                <article class="event-card" data-event-year="2023" data-event-type="meeting" data-aos="fade-up" data-aos-delay="150">
+                    <figure>
+                        <img src="https://placehold.co/400x220/1fc166/ffffff?text=IQAC+Meeting" alt="IQAC Review Meeting with Stakeholders" class="event-card-image" loading="lazy">
+                        <figcaption class="sr-only">IQAC Review Meeting</figcaption>
+                    </figure>
                     <div class="event-card-content">
                         <p class="event-card-date">MEETING • 10th October 2023</p>
                         <h3 class="event-card-title">IQAC Review Meeting with Stakeholders</h3>
                         <p class="event-card-description">Annual review meeting to discuss progress and gather feedback from various stakeholders.</p>
-                        <a href="#" class="event-card-link">View Minutes &rarr;</a>
+                        <button class="event-card-link learn-more-btn" data-event-id="activity2" aria-label="View minutes of IQAC Review Meeting">View Minutes &rarr;</button>
                     </div>
-                </div>
-                 <div class="event-card" data-event-year="2024" data-aos="fade-up" data-aos-delay="200">
-                    <img src="activity3.jpg" alt="Activity 3" class="event-card-image" onerror="this.onerror=null; this.src='https://placehold.co/400x200/0cbfa3/ffffff?text=Activity+3&font=poppins';">
+                </article>
+                <article class="event-card" data-event-year="2024" data-event-type="training" data-aos="fade-up" data-aos-delay="200">
+                    <figure>
+                        <img src="https://placehold.co/400x220/00aded/ffffff?text=OBE+Training" alt="Training on OBE Portal for Faculty" class="event-card-image" loading="lazy">
+                        <figcaption class="sr-only">OBE Portal Training</figcaption>
+                    </figure>
                     <div class="event-card-content">
                         <p class="event-card-date">TRAINING • 5th February 2024</p>
                         <h3 class="event-card-title">Training on OBE Portal for Faculty</h3>
                         <p class="event-card-description">Hands-on training session for faculty members on using the Outcome-Based Education portal.</p>
-                        <a href="#" class="event-card-link">Access Resources &rarr;</a>
+                        <button class="event-card-link learn-more-btn" data-event-id="activity3" aria-label="Access resources for Training on OBE Portal">Access Resources &rarr;</button>
                     </div>
-                </div>
+                </article>
             </div>
         </div>
     </section>
@@ -128,53 +185,67 @@
                 Key initiatives undertaken by IQAC to foster a culture of quality and excellence across the institution.
             </p>
             <div class="grid md:grid-cols-2 gap-8">
-                 <div class="info-card" data-event-year="2024" data-aos="fade-up" data-aos-delay="100">
+                <article class="info-card" data-event-year="2024" data-event-type="initiative" data-aos="fade-up" data-aos-delay="100">
                     <div class="card-icon text-3xl mb-4">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10 h-10"><path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" /></svg>
                     </div>
                     <h3 class="card-title text-xl">Strengthening Feedback Mechanisms (2024)</h3>
                     <p>Revamped the online feedback portal for students, faculty, and alumni to ensure more comprehensive and actionable data collection for continuous improvement of academic programs and support services.</p>
-                </div>
-                <div class="info-card" data-event-year="2023" data-aos="fade-up" data-aos-delay="150">
+                </article>
+                <article class="info-card" data-event-year="2023" data-event-type="initiative" data-aos="fade-up" data-aos-delay="150">
                      <div class="card-icon text-3xl mb-4">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10 h-10"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" /></svg>
                     </div>
                     <h3 class="card-title text-xl">Curriculum Benchmarking Project (2023)</h3>
                     <p>Initiated a comprehensive benchmarking of all academic programs against leading national and international institutions to identify gaps and enhance curriculum relevance and global competitiveness.</p>
-                </div>
-                </div>
-        </div>
-    </section>
-
-    <!-- section id="calendar-activities" class="content-section bg-[var(--theme-bg-light)] py-16">
-        <div class="container mx-auto px-6 text-center">
-            <h2 class="section-title-inner mb-8" data-aos="fade-up">Calendar of Activities</h2>
-            <p class="section-subtitle mb-10" data-aos="fade-up" data-aos-delay="50">
-                Stay updated with our planned events, workshops, and quality-related activities for the academic year.
-            </p>
-            <div class="max-w-md mx-auto" data-aos="zoom-in">
-                <div class="pdf-link-card">
-                    <div class="pdf-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                           <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />
-                        </svg>
-                    </div>
-                    <div class="pdf-link-card-info flex-grow text-left">
-                        <h4>IQAC Academic Calendar [Current Year]</h4>
-                        <p>Download the detailed calendar of IQAC activities and important dates.</p>
-                    </div>
-                    <div class="pdf-link-actions">
-                        <a href="calendar/iqac_calendar_current_year.pdf" target="_blank" class="view-pdf" title="View Calendar PDF">View</a>
-                        <a href="calendar/iqac_calendar_current_year.pdf" download="KIIT_IQAC_Calendar.pdf" class="download-pdf" title="Download Calendar PDF">Download</a>
-                    </div>
-                </div>
+                </article>
             </div>
         </div>
-    </section -->
+    </section>
 
   </main>
 
   <div id="footer-placeholder"></div>
+  <div id="back-to-top-container"></div>
+
+  <div id="event-modal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center p-4 hidden opacity-0 pointer-events-none z-[1050]" role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-hidden="true">
+    <div class="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto p-6 sm:p-8 relative transform scale-95 transition-all duration-300">
+        <button id="close-modal-btn" class="absolute top-4 right-4 text-gray-500 hover:text-gray-800 transition-colors" aria-label="Close event details">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-8 h-8">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+        </button>
+        <h2 id="modal-title" class="text-2xl sm:text-3xl font-bold text-[var(--solid-dark)] mb-3 font-poppins">Event Title</h2>
+        <p id="modal-date" class="text-sm text-[var(--text-secondary)] font-medium uppercase mb-4"></p>
+        <figure class="mb-6">
+            <img id="modal-image" src="https://placehold.co/800x400/cccccc/333333?text=Event+Image" alt="Event Image" class="w-full h-64 object-cover rounded-md shadow-md" loading="lazy">
+            <figcaption id="modal-image-caption" class="sr-only">Main image for the event</figcaption>
+        </figure>
+        
+        <div id="modal-description" class="prose max-w-none text-[var(--text-secondary)] mb-6">
+            <p>Detailed description of the event will go here.</p>
+        </div>
+
+        <h3 class="text-xl font-semibold text-[var(--solid-dark)] mb-3 mt-6 font-poppins">Gallery</h3>
+        <div id="modal-gallery" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 mb-6">
+            </div>
+        
+        <div id="lightbox" class="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center p-4 hidden opacity-0 pointer-events-none z-[1060]" role="dialog" aria-modal="true" aria-labelledby="lightbox-image-alt" aria-hidden="true">
+            <button id="close-lightbox-btn" class="absolute top-6 right-6 text-white hover:text-gray-300 z-10" aria-label="Close image viewer">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-10 h-10"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+            </button>
+            <img id="lightbox-image" src="" alt="Lightbox image" class="max-w-full max-h-[85vh] object-contain rounded-lg shadow-2xl">
+            <span id="lightbox-image-alt" class="sr-only">Enlarged gallery image</span>
+            <button id="prev-lightbox-btn" class="lightbox-nav prev absolute left-4 top-1/2 -translate-y-1/2 text-white p-3 bg-black bg-opacity-50 rounded-full hover:bg-opacity-75 hidden" aria-label="Previous image">&lt;</button>
+            <button id="next-lightbox-btn" class="lightbox-nav next absolute right-4 top-1/2 -translate-y-1/2 text-white p-3 bg-black bg-opacity-50 rounded-full hover:bg-opacity-75 hidden" aria-label="Next image">&gt;</button>
+        </div>
+
+        <div class="text-right mt-8">
+            <button id="close-modal-btn-bottom" class="px-6 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition-colors font-medium">Close</button>
+        </div>
+    </div>
+  </div>
+
 
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script src="js/script.js"></script>
