@@ -10,13 +10,13 @@
   <nav class="hidden lg:flex items-center gap-x-5 xl:gap-x-7 text-[15px] relative main-nav" role="menubar" aria-label="Main navigation">
     <a href="index.html" class="nav-link" role="menuitem">Home</a>
     <div class="relative dropdown" role="none">
-      <a href="about.html" class="nav-link flex items-center gap-1" role="menuitem" aria-haspopup="true" aria-expanded="false" tabindex="0">
+      <button class="nav-link flex items-center gap-1" role="menuitem" aria-haspopup="true" aria-expanded="false" aria-controls="desktop-about-submenu" data-target-href="about.html">
         About IQAC
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4 opacity-60">
           <path fill-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
         </svg>
-      </a>
-      <div class="dropdown-menu" role="menu" aria-label="About IQAC submenu">
+      </button>
+      <div id="desktop-about-submenu" class="dropdown-menu" role="menu" aria-label="About IQAC submenu">
         <a href="about.html#vision-mission" role="menuitem" tabindex="-1">Vision & Mission</a>
         <a href="about.html#objectives" role="menuitem" tabindex="-1">Objectives</a>
         <a href="about.html#brochure" role="menuitem" tabindex="-1">IQAC Brochure</a>
@@ -26,13 +26,13 @@
     </div>
     <a href="policies.html" class="nav-link" role="menuitem">Policies & Guidelines</a>
     <div class="relative dropdown" role="none">
-      <a href="reports.html" class="nav-link flex items-center gap-1" role="menuitem" aria-haspopup="true" aria-expanded="false" tabindex="0">
+      <button class="nav-link flex items-center gap-1" role="menuitem" aria-haspopup="true" aria-expanded="false" aria-controls="desktop-reports-submenu" data-target-href="reports.html">
         Reports & Publications
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4 opacity-60">
           <path fill-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
         </svg>
-      </a>
-      <div class="dropdown-menu" role="menu" aria-label="Reports & Publications submenu">
+      </button>
+      <div id="desktop-reports-submenu" class="dropdown-menu" role="menu" aria-label="Reports & Publications submenu">
         <a href="reports.html#aqar" role="menuitem" tabindex="-1">AQAR Reports</a>
         <a href="reports.html#ssr" role="menuitem" tabindex="-1">SSR Documents</a>
         <a href="reports.html#naac" role="menuitem" tabindex="-1">NAAC Reports</a>
@@ -60,20 +60,24 @@
       </svg>
     </button>
   </div>
-  <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.42/bundled/lenis.min.js"></script>
+  <!-- Lenis script is usually at the end of body, but if it's specifically for header animations, it might be here.
+       However, it's better practice to load it once globally. Assuming it's loaded globally.
+       <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.42/bundled/lenis.min.js"></script> 
+  -->
 </header>
 
-<div id="mobile-nav-menu" class="lg:hidden fixed inset-0 bg-white/95 backdrop-blur-md z-[990] p-6 pt-20 transform -translate-x-full transition-transform duration-300 ease-in-out" role="dialog" aria-modal="true" aria-labelledby="mobile-menu-heading" style="display: none;">
+<div id="mobile-nav-menu" class="lg:hidden fixed inset-0 bg-white/95 backdrop-blur-md z-[990] p-6 pt-20 transform -translate-x-full transition-transform duration-300 ease-in-out overflow-y-auto" role="dialog" aria-modal="true" aria-labelledby="mobile-menu-heading">
   <h2 id="mobile-menu-heading" class="sr-only">Mobile Navigation Menu</h2>
   <a href="index.html" class="nav-link">Home</a>
   <div>
-      <a href="about.html" class="mobile-dropdown-toggle nav-link flex justify-between items-center" aria-haspopup="true" aria-expanded="false" aria-controls="mobile-about-submenu">
+      <button class="mobile-dropdown-toggle nav-link flex justify-between items-center w-full text-left" aria-haspopup="true" aria-expanded="false" aria-controls="mobile-about-submenu">
           About IQAC
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5 opacity-60 transform transition-transform duration-200">
               <path fill-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
           </svg>
-      </a>
+      </button>
       <div id="mobile-about-submenu" class="mobile-dropdown-content" role="menu" aria-label="About IQAC submenu">
+          <a href="about.html" class="nav-link" role="menuitem">Overview</a>
           <a href="about.html#vision-mission" class="nav-link" role="menuitem">Vision & Mission</a>
           <a href="about.html#objectives" class="nav-link" role="menuitem">Objectives</a>
           <a href="about.html#brochure" class="nav-link" role="menuitem">IQAC Brochure</a>
@@ -83,13 +87,14 @@
   </div>
   <a href="policies.html" class="nav-link">Policies & Guidelines</a>
   <div>
-      <a href="reports.html" class="mobile-dropdown-toggle nav-link flex justify-between items-center" aria-haspopup="true" aria-expanded="false" aria-controls="mobile-reports-submenu">
+      <button class="mobile-dropdown-toggle nav-link flex justify-between items-center w-full text-left" aria-haspopup="true" aria-expanded="false" aria-controls="mobile-reports-submenu">
           Reports & Publications
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5 opacity-60 transform transition-transform duration-200">
               <path fill-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
           </svg>
-      </a>
+      </button>
       <div id="mobile-reports-submenu" class="mobile-dropdown-content" role="menu" aria-label="Reports & Publications submenu">
+          <a href="reports.html" class="nav-link" role="menuitem">Overview</a>
           <a href="reports.html#aqar" class="nav-link" role="menuitem">AQAR Reports</a>
           <a href="reports.html#ssr" class="nav-link" role="menuitem">SSR Documents</a>
           <a href="reports.html#naac" class="nav-link" role="menuitem">NAAC Reports</a>
@@ -98,6 +103,7 @@
       </div>
   </div>
   <a href="events.html" class="nav-link">Events & Gallery</a>
+  <a href="sitemap.html" class="nav-link">Sitemap</a>
   <a href="https://kiit.ac.in" target="_blank" class="nav-link mt-4 bg-[var(--ui-accent)] text-white text-center rounded-md hover:bg-[var(--solid-primary-darker)]" rel="noopener noreferrer" aria-label="Visit KIIT Official Website (opens in new tab)">
       KIIT Official Site
   </a>

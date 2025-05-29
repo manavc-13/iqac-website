@@ -81,6 +81,7 @@ body {
 #preloader.preloader-hidden {
   opacity: 0;
   visibility: hidden;
+  pointer-events: none; /* Add this */
 }
 
 .loader-content {
@@ -171,7 +172,7 @@ body.loading-active {
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
-  z-index: 1000;
+  z-index: 1000; 
   transition: all 0.3s ease-in-out;
 }
 .navbar-custom.scrolled {
@@ -189,6 +190,9 @@ body.loading-active {
   transition: color 0.3s ease;
   padding: 0.5rem 0.25rem;
   letter-spacing: 0.3px;
+  background: none; /* Ensure button-styled nav-links in dropdown are reset */
+  border: none; /* Ensure button-styled nav-links in dropdown are reset */
+  cursor: pointer; /* For button elements styled as nav-links */
 }
 .nav-link::after {
   content: "";
@@ -196,13 +200,13 @@ body.loading-active {
   width: 0;
   height: 3px;
   background: linear-gradient(90deg, var(--gradient-start), var(--gradient-end));
-  bottom: -8px;
+  bottom: -8px; 
   left: 0;
   border-radius: 3px;
   transition: width 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 .nav-link:hover,
-.nav-link.active { /* .active class for current page */
+.nav-link.active { 
   color: var(--accent-color);
 }
 .nav-link:hover::after,
@@ -215,7 +219,7 @@ body.loading-active {
   color: var(--solid-white);
   font-weight: 500;
   padding: 0.5rem 1.25rem;
-  border-radius: 0.375rem; /* Tailwind's 'rounded-md' */
+  border-radius: 0.375rem; 
   box-shadow: 0 4px 10px rgba(0,0,0, 0.1);
   transition: all 0.3s ease;
 }
@@ -224,7 +228,7 @@ body.loading-active {
   transform: translateY(-2px);
   box-shadow: 0 6px 15px rgba(23, 208, 89, 0.3);
 }
-/* Basic Button Active State */
+
 .external-button:active,
 .hero-cta-button:active,
 .button-primary:active,
@@ -239,11 +243,11 @@ body.loading-active {
 
 /* Dropdown Menu Styles */
 .dropdown .dropdown-menu {
-  display: none;
+  display: none; /* Controlled by hover/focus-within and JS for aria */
   position: absolute;
-  top: calc(100% + 12px);
+  top: calc(100% + 12px); 
   left: 50%;
-  transform: translateX(-50%);
+  transform: translateX(-50%) translateY(-10px); /* Initial position for animation */
   background-color: var(--solid-white);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
   border-radius: 0.5rem;
@@ -252,16 +256,19 @@ body.loading-active {
   opacity: 0;
   visibility: hidden;
   transform-origin: top center;
-  animation: fadeInDown 0.3s ease-out forwards;
-  z-index: 999;
+  animation: fadeInDownDrop 0.3s ease-out forwards;
+  z-index: 999; 
   border: 1px solid var(--border-color);
 }
-/* Keep hover for dropdowns, JS will handle click for accessibility */
+
 .dropdown:hover .dropdown-menu,
-.dropdown .nav-link[aria-expanded="true"] + .dropdown-menu {
+.dropdown > button.nav-link:focus + .dropdown-menu, /* Show on focus of button */
+.dropdown .dropdown-menu:focus-within /* Keep open if item inside is focused */ {
   display: block; opacity: 1; visibility: visible;
+  transform: translateX(-50%) translateY(0);
 }
-@keyframes fadeInDown {
+
+@keyframes fadeInDownDrop { /* Renamed to avoid conflict if any */
   0% { opacity: 0; transform: translateX(-50%) translateY(-10px); }
   100% { opacity: 1; transform: translateX(-50%) translateY(0); }
 }
@@ -271,7 +278,7 @@ body.loading-active {
   transition: background-color 0.2s ease, color 0.2s ease;
 }
 .dropdown-menu a:hover,
-.dropdown-menu a:focus { /* Added focus style */
+.dropdown-menu a:focus { 
   background-color: var(--accent-color); color: var(--solid-white);
   outline: none;
 }
@@ -283,7 +290,7 @@ body.loading-active {
 .hero-section {
   position: relative;
   min-height: 95vh;
-  background-attachment: fixed; /* Keep parallax effect */
+  background-attachment: fixed; 
   display: flex;
   align-items: center;
   justify-content: center;
@@ -499,43 +506,79 @@ body.loading-active {
 
 /* Mobile Navigation Menu */
 #mobile-nav-menu {
-  display: none; position: fixed; 
-  top: 0; 
-  left: 0; right: 0; bottom: 0; 
-  background: rgba(255, 255, 255, 0.98); 
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-  z-index: 998; 
-  padding: 4rem 1rem 1rem; 
-  opacity: 0;
-  transform: translateX(-100%); 
-  overflow-y: auto;
-  transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+  /* Tailwind classes handle initial state: lg:hidden, transform -translate-x-full */
+  /* JS toggles 'menu-open' class */
+  z-index: 998; /* Ensure it's above content but below the toggle button if needed */
 }
 #mobile-nav-menu.menu-open {
-  display: block; opacity: 1; transform: translateX(0);
+  transform: translateX(0); /* Slide in */
 }
 
-#mobile-nav-menu a, #mobile-nav-menu .mobile-dropdown-toggle {
-  display: block; padding: 0.8rem 1rem; color: var(--text-primary);
-  font-weight: 500; border-bottom: 1px solid var(--ui-bg-light);
+/* Styling for links and dropdown toggles within the mobile menu */
+#mobile-nav-menu .nav-link, 
+#mobile-nav-menu .mobile-dropdown-toggle {
+  display: block; 
+  padding: 0.8rem 1rem; 
+  color: var(--text-primary);
+  font-weight: 500; 
+  border-bottom: 1px solid var(--ui-bg-light);
   transition: background-color 0.2s ease, color 0.2s ease;
   font-size: 1.1rem; 
+  text-decoration: none;
+  width: 100%; /* Ensure full width for tap targets */
 }
-#mobile-nav-menu a:last-child, #mobile-nav-menu div:last-child .mobile-dropdown-toggle { border-bottom: none; }
-#mobile-nav-menu a:hover, 
+#mobile-nav-menu .nav-link:last-of-type, 
+#mobile-nav-menu div:last-of-type > .mobile-dropdown-toggle { 
+  border-bottom: none; 
+}
+
+#mobile-nav-menu .nav-link:hover, 
 #mobile-nav-menu .mobile-dropdown-toggle:hover,
-#mobile-nav-menu a:focus, /* Added focus style */
+#mobile-nav-menu .nav-link:focus, 
 #mobile-nav-menu .mobile-dropdown-toggle:focus {
-  background-color: var(--accent-color); color: var(--solid-white);
+  background-color: var(--accent-color); 
+  color: var(--solid-white);
   outline: none;
 }
-.mobile-dropdown-content { display: none; padding-left: 1.5rem; background-color: #f0f4f8; }
-.mobile-dropdown-content.open { display: block; }
-.mobile-dropdown-content a { font-size: 1rem; border-top: 1px solid var(--ui-bg-light); border-bottom: none; }
-.mobile-dropdown-content a:first-child { border-top: none; }
+#mobile-nav-menu .nav-link.active,
+#mobile-nav-menu .mobile-dropdown-toggle.active {
+    background-color: var(--accent-color);
+    color: var(--solid-white);
+}
 
+
+.mobile-dropdown-content { 
+  display: none; 
+  padding-left: 0; /* Reset padding, items inside will have their own */
+  background-color: #f0f4f8; 
+  border-bottom: 1px solid var(--ui-bg-light); 
+  max-height: 0; /* For smooth transition */
+  overflow: hidden;
+  transition: max-height 0.3s ease-out;
+}
+.mobile-dropdown-content.open { 
+  display: block; /* Or use max-height for animation */
+  max-height: 500px; /* Adjust as needed for content */
+}
+
+.mobile-dropdown-content a.nav-link { 
+  font-size: 1rem; 
+  border-top: 1px solid var(--ui-bg-light); 
+  border-bottom: none; 
+  padding-left: 2.5rem; /* Indent further for sub-items */
+}
+.mobile-dropdown-content a.nav-link:first-child { 
+  border-top: none; 
+}
+.mobile-dropdown-content a.nav-link:hover,
+.mobile-dropdown-content a.nav-link:focus {
+    background-color: var(--accent-color-hover); 
+    color: var(--solid-white);
+}
+.mobile-dropdown-content a.nav-link.active {
+    background-color: var(--accent-color-hover);
+    color: var(--solid-white);
+}
 
 /* General Section Styling */
 .section-title {
@@ -553,7 +596,7 @@ body.loading-active {
   font-size: 1.05rem;
 }
 
-/* General Card Styles (can be base for other cards) */
+/* General Card Styles */
 .info-card {
   background-color: var(--card-bg);
   border-radius: 0.75rem; padding: 2rem;
@@ -586,7 +629,7 @@ body.loading-active {
     .info-card .card-icon { font-size: 3rem; }
 }
 
-/* Document Prompt Card (can be reused on reports page) */
+/* Document Prompt Card */
 .document-prompt-card {
     background-color: var(--solid-white);
     border-radius: 0.75rem;
@@ -637,38 +680,48 @@ body.loading-active {
     transition: all 0.3s ease;
     font-size: 0.9rem;
     text-align: center;
-    color: var(--solid-white);
 }
 
 .button-primary {
     background: linear-gradient(90deg, var(--accent-color, var(--gradient-start)), var(--theme-cyan-1));
-    color: var(--solid-white);
+    color: var(--solid-white); 
     box-shadow: 0 4px 10px rgba(0,0,0, 0.1);
 }
 .button-primary:hover {
     background: linear-gradient(90deg, var(--accent-color-hover, var(--solid-primary-darker)), var(--gradient-start));
-    color: var(--solid-white); /* Ensure text color remains white on hover */
+    color: var(--solid-white); 
     transform: translateY(-2px);
     box-shadow: 0 6px 15px rgba(var(--accent-color, 23, 208, 89), 0.3);
 }
 
 .button-secondary {
     background-color: var(--ui-bg-light);
-    color: var(--solid-dark);
+    color: var(--solid-dark); 
     border: 1px solid var(--border-color);
 }
 .button-secondary:hover {
-    background-color: #d8e2e9; /* Slightly darker */
-    color: var(--solid-dark); /* Ensure text color remains dark on hover */
+    background-color: #d8e2e9; 
+    color: var(--solid-dark); 
     border-color: #c0cad3;
     transform: translateY(-2px);
 }
 
+a.button-primary,
+a.button-primary:hover {
+    color: var(--solid-white) !important; 
+}
+
+a.button-secondary,
+a.button-secondary:hover {
+    color: var(--solid-dark) !important; 
+}
+
+
 .document-actions {
     display: flex;
-    flex-wrap: wrap; /* Allow buttons to wrap on smaller screens */
-    gap: 0.75rem; /* Space between buttons */
-    margin-top: auto; /* Pushes buttons to bottom of card */
+    flex-wrap: wrap; 
+    gap: 0.75rem; 
+    margin-top: auto; 
 }
 .document-actions .button-primary svg,
 .document-actions .button-secondary svg {
@@ -677,22 +730,22 @@ body.loading-active {
 
 
 /* Utility Classes */
-.list-disc-colored { /* Applied to UL */
+.list-disc-colored { 
     list-style: none;
     padding-left: 0;
 }
 .list-disc-colored li {
     position: relative;
-    padding-left: 1.5em; /* Space for custom bullet */
+    padding-left: 1.5em; 
     margin-bottom: 0.5em;
 }
 .list-disc-colored li::before {
     content: '•';
     position: absolute;
     left: 0;
-    color: var(--accent-color); /* Use the CSS variable */
-    font-size: 1.5em; /* Adjust size of bullet */
-    line-height: 1; /* Align bullet properly */
+    color: var(--accent-color); 
+    font-size: 1.5em; 
+    line-height: 1; 
 }
 
 .highlight-text {
@@ -700,8 +753,6 @@ body.loading-active {
     font-weight: 600;
 }
 
-/* Page specific styles can be added below or in separate files if they grow large */
-/* Example for a generic page header */
 .page-header {
     background: linear-gradient(90deg, var(--theme-green-3, var(--gradient-start)), var(--theme-cyan-1), var(--theme-green-3));
     color: var(--solid-white);
@@ -721,7 +772,6 @@ body.loading-active {
     margin: 0 auto;
 }
 
-/* Content section styling for inner pages */
 .content-section {
     padding: 3rem 1.5rem; 
 }
@@ -739,7 +789,7 @@ body.loading-active {
     line-height: 1.7;
     color: var(--text-secondary);
 }
-.content-section ul:not(.list-disc-colored) { /* Apply default disc only if not custom colored */
+.content-section ul:not(.list-disc-colored) { 
     list-style: disc;
     padding-left: 1.5rem;
 }
@@ -751,16 +801,16 @@ body.loading-active {
     color: var(--text-primary);
     font-weight: 600;
 }
-.content-section a {
+.content-section a:not(.button-primary):not(.button-secondary) { 
     color: var(--accent-color);
     text-decoration: underline;
     transition: color 0.2s ease;
 }
-.content-section a:hover {
+.content-section a:not(.button-primary):not(.button-secondary):hover {
     color: var(--accent-color-hover);
 }
 
-/* Team Card Styles (for About page) */
+/* Team Card Styles */
 .team-card {
     background-color: var(--solid-white);
     border-radius: 0.75rem;
@@ -807,15 +857,15 @@ body.loading-active {
     border-radius: 0.5rem;
     padding: 1.5rem;
     display: flex;
-    flex-direction: column; /* Stack items vertically on small screens */
-    align-items: flex-start; /* Align items to start */
+    flex-direction: column; 
+    align-items: flex-start; 
     gap: 1rem;
     border: 1px solid var(--border-color);
     transition: background-color 0.3s ease;
 }
-@media (min-width: 640px) { /* sm and up */
+@media (min-width: 640px) { 
     .pdf-link-card {
-        flex-direction: row; /* Horizontal layout on larger screens */
+        flex-direction: row; 
         align-items: center;
     }
 }
@@ -827,7 +877,7 @@ body.loading-active {
     width: 2.5rem;
     height: 2.5rem;
     color: var(--accent-color);
-    flex-shrink: 0; /* Prevent icon from shrinking */
+    flex-shrink: 0; 
 }
 .pdf-link-card-info h4 {
     font-size: 1.1rem;
@@ -838,65 +888,41 @@ body.loading-active {
 .pdf-link-card-info p {
     font-size: 0.85rem;
     color: var(--text-secondary);
-    margin-bottom: 0; /* Remove default margin for tighter layout */
+    margin-bottom: 0; 
 }
 .pdf-link-actions {
     display: flex;
-    flex-direction: column; /* Stack buttons on small screens */
-    align-items: stretch; /* Make buttons full width of their container */
-    gap: 0.75rem; /* Increased gap */
-    width: 100%; /* Take full width on small screens */
-    margin-top: 1rem; /* Add some space above buttons on small screens */
+    flex-direction: column; 
+    align-items: stretch; 
+    gap: 0.75rem; 
+    width: 100%; 
+    margin-top: 1rem; 
 }
-@media (min-width: 640px) { /* sm and up */
+@media (min-width: 640px) { 
     .pdf-link-actions {
-        flex-direction: row; /* Row layout for buttons on larger screens */
+        flex-direction: row; 
         align-items: center;
         gap: 0.5rem;
-        width: auto; /* Auto width for buttons on larger screens */
-        margin-top: 0; /* Reset margin */
-        margin-left: auto; /* Push to the right on larger screens */
+        width: auto; 
+        margin-top: 0; 
+        margin-left: auto; 
     }
 }
-.pdf-link-actions a { /* Re-styling for consistency with button-primary/secondary */
-    display: inline-flex;
-    align-items: center;
-    justify-content: center; /* Center text in button */
-    gap: 0.5rem;
-    font-weight: 500;
-    padding: 0.6rem 1.2rem;
-    border-radius: 0.375rem;
-    text-decoration: none;
-    transition: all 0.3s ease;
-    font-size: 0.9rem;
-    text-align: center;
-    color: var(--solid-white);
-}
-.pdf-link-actions a.button-primary {
-    background: linear-gradient(90deg, var(--gradient-start), var(--theme-cyan-1));
-    color: var(--solid-white);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-}
-.pdf-link-actions a.button-primary:hover {
-  background: linear-gradient(90deg, var(--accent-color-hover), var(--gradient-start));
-  color: var(--solid-white);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 15px rgba(23, 208, 89, 0.3);
-}
+
 .pdf-link-actions a.button-secondary {
-    background-color: var(--solid-white); /* Different from general button-secondary */
-    color: var(--accent-color);
+    background-color: var(--solid-white); 
+    color: var(--accent-color) !important; 
     border: 1px solid var(--accent-color);
 }
 .pdf-link-actions a.button-secondary:hover {
     background-color: var(--accent-color);
-    color: var(--solid-white);
+    color: var(--solid-white) !important; 
     border-color: var(--accent-color);
     transform: translateY(-2px);
 }
 
 
-/* Event Card Styles (for Events page) */
+/* Event Card Styles */
 .event-card {
     background-color: var(--solid-white);
     border-radius: 0.75rem;
@@ -944,7 +970,7 @@ body.loading-active {
     margin-bottom: 1rem;
     flex-grow: 1; 
 }
-.event-card-link { /* This is a button now */
+.event-card-link { 
     background: none;
     border: none;
     color: var(--accent-color);
@@ -953,7 +979,7 @@ body.loading-active {
     transition: color 0.3s ease;
     font-size: 0.9rem;
     margin-top: auto; 
-    padding: 0.25rem 0; /* Minimal padding for text button look */
+    padding: 0.25rem 0; 
     cursor: pointer;
     text-align: left;
 }
@@ -966,8 +992,7 @@ body.loading-active {
 
 
 /* Event Modal & Lightbox Styles */
-/* Tailwind handles most of this, but some transitions might be custom */
-#event-modal .transform, #lightbox .transform { /* If you add a transform wrapper */
+#event-modal .transform, #lightbox .transform { 
     transition: transform 0.3s ease-out, opacity 0.3s ease-out;
 }
 #event-modal.opacity-0 .transform, #lightbox.opacity-0 .transform {
@@ -982,4 +1007,27 @@ body.loading-active {
 }
 .lightbox-nav {
     transition: background-color 0.2s ease;
+}
+
+/* PDF Viewer Controls Responsive */
+.pdf-controls {
+    flex-wrap: wrap;
+    gap: 0.5rem; 
+}
+
+@media (max-width: 640px) { 
+    .pdf-controls {
+        justify-content: center; 
+    }
+    .pdf-controls > div, 
+    .pdf-controls > a.button-style { 
+        margin-bottom: 0.5rem; 
+    }
+}
+
+/* Ensure mobile menu is visually distinct and usable */
+@media (max-width: 1023px) { /* lg breakpoint */
+    #mobile-nav-menu {
+        padding-top: calc(var(--navbar-height, 4.5rem) + 1rem); /* Adjust based on actual navbar height */
+    }
 }
