@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sitemap | KIIT IQAC</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@300;400;500;600;700&display=swap&family=Roboto+Flex:opsz,wght@8..144,300..700"
+    rel="stylesheet"
+  />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="assets/logos/iqac_logo2.png" type="image/png">
+  <style>
+    .sitemap-section {
+        margin-bottom: 2.5rem;
+        padding: 1.5rem;
+        background-color: var(--solid-white);
+        border-radius: 0.5rem;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+    .sitemap-section h2 {
+        font-family: 'Bebas Neue', cursive;
+        font-size: 2rem;
+        color: var(--accent-color);
+        margin-bottom: 1rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 2px solid var(--ui-bg-light);
+    }
+    .sitemap-list {
+        list-style: none;
+        padding-left: 0;
+    }
+    .sitemap-list li {
+        margin-bottom: 0.75rem;
+    }
+    .sitemap-list li a {
+        color: var(--text-primary);
+        font-weight: 500;
+        text-decoration: none;
+        transition: color 0.3s ease, padding-left 0.3s ease;
+        display: block;
+        padding: 0.25rem 0;
+        border-left: 3px solid transparent;
+    }
+    .sitemap-list li a:hover {
+        color: var(--accent-color-hover);
+        padding-left: 0.5rem;
+        border-left-color: var(--accent-color);
+    }
+    .sitemap-list .sub-list {
+        list-style: none;
+        padding-left: 1.5rem;
+        margin-top: 0.5rem;
+    }
+    .sitemap-list .sub-list li a {
+        font-weight: 400;
+        color: var(--text-secondary);
+    }
+    .sitemap-list .sub-list li a:hover {
+        color: var(--accent-color);
+    }
+  </style>
+</head>
+<body class="antialiased font-poppins">
+
+  <div id="header-placeholder"></div>
+
+  <main>
+    <section class="page-header" data-aos="fade-in">
+        <h1>Site Map</h1>
+        <p>Navigate through the structure of the KIIT IQAC website.</p>
+    </section>
+
+    <section class="content-section bg-[var(--theme-bg-light)]">
+      <div class="container mx-auto px-6 py-12">
+
+        <div class="sitemap-section" data-aos="fade-up">
+          <h2>Main Pages</h2>
+          <ul class="sitemap-list">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About IQAC</a></li>
+            <li><a href="policies.html">Policies & Guidelines</a></li>
+            <li><a href="reports.html">Reports & Publications</a></li>
+            <li><a href="events.html">Events & Gallery</a></li>
+            <li><a href="sitemap.html">Sitemap</a></li>
+          </ul>
+        </div>
+
+        <div class="sitemap-section" data-aos="fade-up" data-aos-delay="100">
+          <h2>About IQAC Sections</h2>
+          <ul class="sitemap-list">
+            <li><a href="about.html#vision-mission">Vision & Mission</a></li>
+            <li><a href="about.html#objectives">Objectives</a></li>
+            <li><a href="about.html#brochure">IQAC Brochure</a></li>
+            <li><a href="about.html#dean-message">Dean's Message</a></li>
+            <li><a href="about.html#composition">Team (Composition)</a></li>
+          </ul>
+        </div>
+
+        <div class="sitemap-section" data-aos="fade-up" data-aos-delay="150">
+          <h2>Policies & Guidelines Sections</h2>
+          <ul class="sitemap-list">
+            <li><a href="policies.html#quality-policy">Quality Policy</a></li>
+            <li><a href="policies.html#teaching-learning-policy">Teaching-Learning Policy</a></li>
+            <li><a href="policies.html#feedback-policy">Feedback Policy</a></li>
+            <li><a href="policies.html#obe-policy">Outcome-Based Education (OBE)</a></li>
+            <li><a href="pdf-viewer.html?file=assets/documents/quality_policy_document.pdf" target="_blank">Full Quality Policy Document (PDF)</a></li>
+            <li><a href="pdf-viewer.html?file=assets/documents/teaching_learning_policy.pdf" target="_blank">Full Teaching-Learning Policy (PDF)</a></li>
+             <li><a href="pdf-viewer.html?file=assets/documents/feedback_policy_document.pdf" target="_blank">Full Feedback Policy (PDF)</a></li>
+            <li><a href="pdf-viewer.html?file=assets/documents/obe_framework_document.pdf" target="_blank">OBE Framework Document (PDF)</a></li>
+          </ul>
+        </div>
+        
+        <div class="sitemap-section" data-aos="fade-up" data-aos-delay="200">
+          <h2>Reports & Publications Sections</h2>
+          <ul class="sitemap-list">
+            <li><a href="reports.html#aqar">Annual Quality Assurance Reports (AQAR)</a>
+                <ul class="sub-list">
+                    <li><a href="pdf-viewer.html?file=assets/documents/reports/aqar_2022_2023.pdf" target="_blank">AQAR 2022-2023 (PDF, approx. 1.2MB)</a></li>
+                    <li><a href="pdf-viewer.html?file=assets/documents/reports/aqar_2021_2022.pdf" target="_blank">AQAR 2021-2022 (PDF, approx. 1.1MB)</a></li>
+                    <li><a href="pdf-viewer.html?file=assets/documents/reports/aqar_2020_2021.pdf" target="_blank">AQAR 2020-2021 (PDF, approx. 1.0MB)</a></li>
+                </ul>
+            </li>
+            <li><a href="reports.html#ssr">Self Study Reports (SSR)</a>
+                <ul class="sub-list">
+                    <li><a href="pdf-viewer.html?file=assets/documents/reports/ssr_naac_latest.pdf" target="_blank">SSR for NAAC (Latest) (PDF, approx. 2.5MB)</a></li>
+                    <li><a href="pdf-viewer.html?file=assets/documents/reports/ssr_nba_cse.pdf" target="_blank">SSR for NBA (CSE Example) (PDF, approx. 1.8MB)</a></li>
+                </ul>
+            </li>
+            <li><a href="reports.html#naac">NAAC Reports & Certificates</a>
+                <ul class="sub-list">
+                    <li><a href="pdf-viewer.html?file=assets/documents/reports/naac_certificate.pdf" target="_blank">NAAC Accreditation Certificate (PDF, approx. 0.5MB)</a></li>
+                    <li><a href="pdf-viewer.html?file=assets/documents/reports/naac_peer_team_report.pdf" target="_blank">NAAC Peer Team Report (PDF, approx. 1.3MB)</a></li>
+                </ul>
+            </li>
+            <li><a href="reports.html#annual-reports">Institutional Annual Reports</a>
+                <ul class="sub-list">
+                     <li><a href="pdf-viewer.html?file=assets/documents/reports/annual_report_2023.pdf" target="_blank">Annual Report 2023 (PDF, approx. 3.0MB)</a></li>
+                     <li><a href="pdf-viewer.html?file=assets/documents/reports/annual_report_2022.pdf" target="_blank">Annual Report 2022 (PDF, approx. 2.8MB)</a></li>
+                </ul>
+            </li>
+            <li><a href="reports.html#feedback">Feedback Collection & Analysis</a>
+                <ul class="sub-list">
+                    <li><a href="pdf-viewer.html?file=assets/documents/feedback/student_feedback_summary.pdf" target="_blank">Student Feedback Summary (PDF, approx. 0.8MB)</a></li>
+                    <li><a href="pdf-viewer.html?file=assets/documents/feedback/faculty_feedback_summary.pdf" target="_blank">Faculty Feedback Summary (PDF, approx. 0.7MB)</a></li>
+                    <li><a href="pdf-viewer.html?file=assets/documents/feedback/alumni_feedback_summary.pdf" target="_blank">Alumni Feedback Summary (PDF, approx. 0.6MB)</a></li>
+                    <li><a href="pdf-viewer.html?file=assets/documents/feedback/feedback_analysis_atr.pdf" target="_blank">Feedback Analysis & ATR (PDF, approx. 1.1MB)</a></li>
+                </ul>
+            </li>
+          </ul>
+        </div>
+
+        <div class="sitemap-section" data-aos="fade-up" data-aos-delay="250">
+          <h2>Events & Gallery Sections</h2>
+          <ul class="sitemap-list">
+            <li><a href="events.html#events-list">IQAC Events</a></li>
+            <li><a href="events.html#functions-activities">Functions & Activities</a></li>
+            <li><a href="events.html#quality-initiatives">Quality Initiatives</a></li>
+            </ul>
+        </div>
+        
+        <div class="sitemap-section" data-aos="fade-up" data-aos-delay="300">
+          <h2>External Links</h2>
+          <ul class="sitemap-list">
+            <li><a href="https://kiit.ac.in" target="_blank" rel="noopener noreferrer">KIIT Official Website</a></li>
+            <li><a href="https://iqac.kiit.ac.in/contact-us/" target="_blank" rel="noopener noreferrer">IQAC Contact Page (Main Site)</a></li>
+            <li><a href="https://kiit.ac.in/contact/" target="_blank" rel="noopener noreferrer">KIIT University Contact</a></li>
+            <li><a href="https://kiit.ac.in/rti/" target="_blank" rel="noopener noreferrer">RTI Information</a></li>
+          </ul>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <div id="footer-placeholder"></div>
+  <div id="back-to-top-container"></div>
+
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script src="js/script.js"></script>
+</body>
+</html>

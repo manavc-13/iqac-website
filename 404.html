@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Page Not Found | KIIT IQAC</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@300;400;500;600;700&display=swap&family=Roboto+Flex:opsz,wght@8..144,300..700"
+    rel="stylesheet"
+  />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="assets/logos/iqac_logo2.png" type="image/png">
+  <style>
+    /* Additional styles specific to 404 page if needed */
+    .fof-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        min-height: calc(100vh - 200px); /* Adjust based on header/footer height */
+        text-align: center;
+    }
+    .fof-title {
+        font-family: 'Bebas Neue', cursive;
+        font-size: 6rem; /* Increased size */
+        color: var(--ui-bg-dark);
+        line-height: 1;
+        margin-bottom: 0.5rem;
+        text-shadow: 2px 2px 0px var(--ui-bg-light), 4px 4px 0px var(--accent-color-hover); /* Added shadow */
+    }
+    .fof-subtitle {
+        font-size: 1.75rem; /* Increased size */
+        color: var(--text-secondary);
+        margin-bottom: 1rem;
+    }
+    .fof-message {
+        font-size: 1.1rem;
+        color: var(--text-secondary);
+        margin-bottom: 2.5rem; /* Increased spacing */
+        max-width: 500px;
+    }
+    .fof-button {
+        background: linear-gradient(90deg, var(--gradient-start), var(--theme-cyan-1));
+        color: var(--solid-white);
+        font-weight: 600; /* Bolder */
+        padding: 0.9rem 2.2rem; /* Consistent with hero button */
+        border-radius: 0.375rem; /* rounded-md */
+        text-decoration: none;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 10px rgba(0,0,0, 0.1);
+        font-size: 1rem; /* Consistent */
+        text-transform: uppercase; /* Uppercase text */
+        letter-spacing: 0.5px;
+    }
+    .fof-button:hover {
+        background: linear-gradient(90deg, var(--accent-color-hover), var(--gradient-start));
+        transform: translateY(-3px) scale(1.03); /* Enhanced hover */
+        box-shadow: 0 6px 15px rgba(23, 208, 89, 0.3);
+    }
+  </style>
+</head>
+<body class="antialiased font-poppins">
+
+  <div id="header-placeholder"></div>
+
+  <main class="container mx-auto px-6 py-12">
+    <section class="fof-container" data-aos="fade-up">
+        <div class="mb-8">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-32 h-32 text-[var(--accent-color)] mx-auto">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m0-10.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.75c0 5.592 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.57-.598-3.75h-.152c-3.196 0-6.1-1.249-8.25-3.286zm0 13.036h.008v.008H12v-.008z" />
+            </svg>
+        </div>
+      <h1 class="fof-title">404</h1>
+      <h2 class="fof-subtitle">Oops! Page Not Found.</h2>
+      <p class="fof-message">
+        The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.
+        Let's get you back on track.
+      </p>
+      <a href="index.html" class="fof-button">
+        Go to Homepage
+      </a>
+      <p class="mt-8 text-sm text-gray-500">If you believe this is an error, please <a href="mailto:iqac@kiit.ac.in" class="text-[var(--accent-color)] hover:underline">contact us</a>.</p>
+    </section>
+  </main>
+
+  <div id="footer-placeholder"></div>
+  <div id="back-to-top-container"></div>
+
+
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script src="js/script.js"></script>
+</body>
+</html>
