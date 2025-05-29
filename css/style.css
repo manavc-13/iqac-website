@@ -13,6 +13,7 @@
 
   --theme-green-1: #17d059; /* Theme Color 1 */
   --theme-green-2: #11c77e; /* Theme Color 2 */
+  --theme-green-3: #0a6631; /* IQAC Green */
   --theme-teal-1: #0cbfa3;  /* Theme Color 3 */
   --theme-cyan-1: #06b6c8;  /* Theme Color 4 */
   --theme-cyan-2: #00aded;  /* Theme Color 5 */
@@ -702,7 +703,7 @@ body.loading-active {
 /* Page specific styles can be added below or in separate files if they grow large */
 /* Example for a generic page header */
 .page-header {
-    background-color: var(--ui-bg-dark);
+    background: linear-gradient(90deg, var(--theme-green-3, var(--gradient-start)), var(--theme-cyan-1), var(--theme-green-3));
     color: var(--solid-white);
     padding: 4rem 1.5rem 3rem; 
     text-align: center;
