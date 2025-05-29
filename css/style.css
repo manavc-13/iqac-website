@@ -17,6 +17,7 @@
   --theme-teal-1: #0cbfa3;  /* Theme Color 3 */
   --theme-cyan-1: #06b6c8;  /* Theme Color 4 */
   --theme-cyan-2: #00aded;  /* Theme Color 5 */
+  --theme-cyan-3: #036c75; /* Theme Color Custom Dark */
   --theme-text-dark: #444444;/* Theme Color 6 */
   --theme-bg-light: #f7f7f7; /* Theme Color 7 */
 
@@ -52,6 +53,13 @@
 .font-poppins {
   font-family: "Poppins", sans-serif;
 }
+
+
+body > main {
+  padding-top: var(--header-height);
+  transition: padding-top 0.3s ease-in-out; /* Smooth transition if header height changes */
+}
+
 
 body {
   background-color: var(--background-body);
@@ -349,7 +357,7 @@ body.loading-active {
 .running-strip-content span {
     display: inline-block;
     padding: 0 2rem; 
-    font-size: 0.9rem;
+    font-size: 1.2rem;
     font-weight: 500;
 }
 .running-strip-content span::after {
@@ -754,7 +762,7 @@ a.button-secondary:hover {
 }
 
 .page-header {
-    background: linear-gradient(90deg, var(--theme-green-3, var(--gradient-start)), var(--theme-cyan-1), var(--theme-green-3));
+    background: linear-gradient(90deg, var(--theme-green-3, var(--gradient-start)), var(--theme-cyan-3), var(--theme-green-3));
     color: var(--solid-white);
     padding: 4rem 1.5rem 3rem; 
     text-align: center;
