@@ -236,6 +236,17 @@ function initializeHeaderSpecificScripts() {
         } else {
             navbar.classList.remove('scrolled');
         }
+        // Add scroll listener for 'scrolled' class, also update height var
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 30) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+            // No need to call updateHeaderHeightVar() here if ResizeObserver is working,
+            // as it will detect height changes from 'scrolled' class.
+            // If not using ResizeObserver, you might need it here.
+        }, { passive: true });
     }
 
     const menuButton = document.getElementById('mobile-menu-button');
@@ -272,6 +283,17 @@ function initializeHeaderSpecificScripts() {
         button.addEventListener('click', (e) => {
             const targetHref = button.dataset.targetHref;
             if (targetHref) {
+                // Check if already on the target page
+                const currentPath = window.location.pathname.split('/').pop() || 'index.html';
+                const targetPath = targetHref.split('#')[0];
+                if (currentPath === targetPath && window.location.hash) {
+                    // If on same page but with a hash, just let Lenis handle scroll to top or specific hash
+                    // Or, if it's a main page link, navigate
+                } else if (currentPath === targetPath) {
+                    // Already on the page, do nothing or scroll to top if desired
+                     if (lenis) lenis.scrollTo(0); else window.scrollTo(0,0);
+                    return; // Avoid redundant navigation
+                }
                 window.location.href = targetHref;
             }
         });
