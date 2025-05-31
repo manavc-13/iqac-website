@@ -14,7 +14,7 @@
   --theme-green-1: #17d059; /* Theme Color 1 */
   --theme-green-2: #11c77e; /* Theme Color 2 */
   --theme-green-3: #0a6631; /* IQAC Green */
-  --theme-teal-1: #0cbfa3; /* Theme Col`or 3 */
+  --theme-teal-1: #0cbfa3; /* Theme Color 3 */
   --theme-cyan-1: #06b6c8; /* Theme Color 4 */
   --theme-cyan-2: #00aded; /* Theme Color 5 */
   --theme-cyan-3: #036c75; /* Theme Color Custom Dark */
@@ -28,48 +28,30 @@
   /* Semantic Colors */
   --background-body: var(--theme-bg-light);
   --text-primary: var(--theme-text-dark);
-  --text-secondary: #555e68; /* Slightly lighter than primary text */
+  --text-secondary: #555e68;
   --text-on-dark: var(--ui-bg-light);
   --accent-color: var(--solid-primary);
   --accent-color-hover: var(--solid-primary-darker);
   --card-bg: var(--solid-white);
-  --border-color: #dee2e6; /* Consistent border color */
-  --hero-overlay-start: rgba(
-    23,
-    208,
-    89,
-    0.6
-  ); /* From --solid-primary with alpha */
-  --hero-overlay-end: rgba(
-    0,
-    173,
-    237,
-    0.8
-  ); /* From --theme-cyan-2 with alpha */
-  --hero-overlay-dark-start: rgba(
-    34,
-    61,
-    81,
-    0.85
-  ); /* From --ui-bg-dark with alpha */
-  --hero-overlay-dark-end: rgba(
-    34,
-    61,
-    81,
-    0.95
-  ); /* From --ui-bg-dark with alpha */
+  --border-color: #dee2e6;
+  --hero-overlay-start: rgba(23,208,89,0.6);
+  --hero-overlay-end: rgba(0,173,237,0.8);
+  --hero-overlay-dark-start: rgba(34,61,81,0.85);
+  --hero-overlay-dark-end: rgba(34,61,81,0.95);
 
   /* Preloader Specific */
   --preloader-bg: var(--ui-bg-dark);
-  --preloader-logo-filter: brightness(0) invert(1); /* To make logos white against dark bg */
+  --preloader-logo-filter: brightness(0) invert(1);
   --preloader-text-color: var(--ui-bg-light);
   --preloader-dot-color: var(--solid-primary);
 
   /* Neumorphism variables */
-  --neumorphic-bg: var(--theme-bg-light); /* Base background for neumorphic elements */
+  --neumorphic-bg: var(--theme-bg-light);
   --neumorphic-shadow-light: rgba(255, 255, 255, 0.7);
-  --neumorphic-shadow-dark: rgba(163, 177, 198, 0.5); /* Adjusted for --theme-bg-light */
+  --neumorphic-shadow-dark: rgba(163, 177, 198, 0.5);
   --neumorphic-shadow-dark-stronger: rgba(163, 177, 198, 0.7);
+
+  /* --header-height: 70px; /* Default fallback, REMOVED as per user request */
 }
 
 .font-bebas {
@@ -79,9 +61,8 @@
   font-family: "Poppins", sans-serif;
 }
 
-body > main {
-  padding-top: var(--header-height); /* Use CSS variable for dynamic header height */
-  transition: padding-top 0.3s ease-in-out; /* Smooth transition if header height changes */
+html, body {
+    overflow-x: clip; 
 }
 
 body {
@@ -92,6 +73,17 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* body > main {
+  padding-top: var(--header-height); /* REMOVED as per user request */
+/* transition: padding-top 0.3s ease-in-out; /* REMOVED as per user request */
+/* } */
+
+
+body.loading-active, body.mobile-menu-open-style {
+  overflow: hidden !important;
+}
+
+
 /* Preloader Styles */
 #preloader {
   position: fixed;
@@ -100,7 +92,7 @@ body {
   width: 100%;
   height: 100%;
   background-color: var(--preloader-bg);
-  z-index: 99999; /* Highest z-index */
+  z-index: 99999;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -113,7 +105,7 @@ body {
 #preloader.preloader-hidden {
   opacity: 0;
   visibility: hidden;
-  pointer-events: none; /* Add this */
+  pointer-events: none;
 }
 
 .loader-content {
@@ -121,29 +113,29 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1.5rem; /* Space between logos and text/dots */
+  gap: 1.5rem;
 }
 
 .loader-logo-container {
   display: flex;
   align-items: center;
-  gap: 1.5rem; /* Space between KIIT and IQAC logos */
-  margin-bottom: 1rem; /* Space below logos */
+  gap: 1.5rem;
+  margin-bottom: 1rem;
 }
 
 .loader-logo {
-  max-height: 60px; /* Adjust as needed */
+  max-height: 60px;
   width: auto;
   opacity: 0;
   animation: fadeInLogo 0.8s ease-out forwards;
 }
 
 .kiit-logo-loader {
-  animation-delay: 0.2s; /* KIIT logo fades in first */
+  animation-delay: 0.2s;
 }
 
 .iqac-logo-loader {
-  animation-delay: 0.5s; /* IQAC logo fades in after KIIT */
+  animation-delay: 0.5s;
 }
 
 @keyframes fadeInLogo {
@@ -218,10 +210,6 @@ body {
   }
 }
 
-body.loading-active {
-  overflow: hidden; /* Prevent scrolling while preloader is active */
-}
-
 /* Navbar Styles */
 .navbar-custom {
   background: rgba(255, 255, 255, 0.85);
@@ -231,13 +219,9 @@ body.loading-active {
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
-  z-index: 1000;
+  z-index: 1000; 
   transition: all 0.3s ease-in-out;
-  /* Ensuring sticky positioning */
-  position: -webkit-sticky; /* For Safari */
-  position: sticky;
-  top: 0;
-  width: 100%; /* Ensure it spans full width */
+  width: 100%;
 }
 .navbar-custom.scrolled {
   padding-top: 0.5rem;
@@ -254,9 +238,9 @@ body.loading-active {
   transition: color 0.3s ease;
   padding: 0.5rem 0.25rem;
   letter-spacing: 0.3px;
-  background: none; /* Ensure button-styled nav-links in dropdown are reset */
-  border: none; /* Ensure button-styled nav-links in dropdown are reset */
-  cursor: pointer; /* For button elements styled as nav-links */
+  background: none;
+  border: none;
+  cursor: pointer;
 }
 .nav-link::after {
   content: "";
@@ -318,11 +302,11 @@ body.loading-active {
 
 /* Dropdown Menu Styles */
 .dropdown .dropdown-menu {
-  display: none; /* Controlled by hover/focus-within and JS for aria */
+  display: none;
   position: absolute;
   top: calc(100% + 12px);
   left: 50%;
-  transform: translateX(-50%) translateY(-10px); /* Initial position for animation */
+  transform: translateX(-50%) translateY(-10px);
   background-color: var(--solid-white);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
   border-radius: 0.5rem;
@@ -337,8 +321,8 @@ body.loading-active {
 }
 
 .dropdown:hover .dropdown-menu,
-.dropdown > button.nav-link:focus + .dropdown-menu, /* Show on focus of button */
-.dropdown .dropdown-menu:focus-within /* Keep open if item inside is focused */ {
+.dropdown > button.nav-link:focus + .dropdown-menu,
+.dropdown .dropdown-menu:focus-within {
   display: block;
   opacity: 1;
   visibility: visible;
@@ -346,7 +330,6 @@ body.loading-active {
 }
 
 @keyframes fadeInDownDrop {
-  /* Renamed to avoid conflict if any */
   0% {
     opacity: 0;
     transform: translateX(-50%) translateY(-10px);
@@ -624,12 +607,11 @@ body.loading-active {
   margin-bottom: 0.25rem;
 }
 .site-footer .designer {
-  color: #a0aec0; /* Tailwind gray-500 */
+  color: #a0aec0;
 }
 
 /* Responsive Adjustments for Hero */
 @media (min-width: 640px) {
-  /* sm */
   .hero-section h1 {
     font-size: 3.8rem;
   }
@@ -638,41 +620,17 @@ body.loading-active {
   }
 }
 @media (min-width: 768px) {
-  /* md */
   .hero-section h1 {
     font-size: 4.5rem;
   }
 }
 @media (min-width: 1024px) {
-  /* lg */
   .hero-section h1 {
     font-size: 5rem;
   }
 }
 
 /* Mobile Navigation Menu */
-
-/* Neumorphic Button Style */
-.neumorphic-button {
-  background: var(--solid-white);
-  box-shadow: 
-    5px 5px 10px rgba(163, 177, 198, 0.3),
-    -5px -5px 10px rgba(255, 255, 255, 0.7),
-    inset 0 0 0 rgba(163, 177, 198, 0),
-    inset 0 0 0 rgba(255, 255, 255, 0);
-  transition: all 0.3s ease;
-}
-
-.neumorphic-button:active {
-  box-shadow: 
-    0 0 0 rgba(163, 177, 198, 0),
-    0 0 0 rgba(255, 255, 255, 0),
-    inset 5px 5px 10px rgba(163, 177, 198, 0.2),
-    inset -5px -5px 10px rgba(255, 255, 255, 0.7);
-}
-
-/* Mobile Navigation Styles */
-
 .mobile-nav-links {
   display: flex;
   flex-direction: column;
@@ -733,9 +691,6 @@ body.loading-active {
 }
 
 #mobile-nav-menu {
-  /* Tailwind classes handle initial state: lg:hidden, transform -translate-x-full */
-  /* JS toggles 'menu-open' class */
-  z-index: 998; /* Ensure it's above content but below the toggle button if needed */
   visibility: hidden;
   opacity: 0;
 }
@@ -746,7 +701,6 @@ body.loading-active {
   transform: translateX(0);
 }
 
-/* Styling for links and dropdown toggles within the mobile menu */
 #mobile-nav-menu .nav-link,
 #mobile-nav-menu .mobile-dropdown-toggle {
   display: block;
@@ -756,19 +710,17 @@ body.loading-active {
   transition: all 0.25s ease;
   font-size: 1.1rem;
   text-decoration: none;
-  width: 100%; /* Ensure full width for tap targets */
+  width: 100%;
   position: relative;
   margin: 0.25rem 0.5rem;
   border-radius: 0.5rem;
 }
 
-/* Remove all borders */
 #mobile-nav-menu .nav-link:last-of-type,
 #mobile-nav-menu div:last-of-type > .mobile-dropdown-toggle {
   border-bottom: none;
 }
 
-/* Hover and focus states with subtle shadow and transform */
 #mobile-nav-menu .nav-link:hover,
 #mobile-nav-menu .mobile-dropdown-toggle:hover,
 #mobile-nav-menu .nav-link:focus,
@@ -780,7 +732,6 @@ body.loading-active {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Active states */
 #mobile-nav-menu .nav-link.active,
 #mobile-nav-menu .mobile-dropdown-toggle.active {
   background-color: var(--accent-color);
@@ -789,7 +740,6 @@ body.loading-active {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
-/* Add subtle left border accent for active items */
 #mobile-nav-menu .nav-link.active::before,
 #mobile-nav-menu .mobile-dropdown-toggle.active::before {
   content: "";
@@ -802,8 +752,6 @@ body.loading-active {
   background-color: var(--solid-white);
   border-radius: 0 2px 2px 0;
 }
-
-/* Dropdown content improvements */
 
 .mobile-dropdown-content {
   display: none;
@@ -822,7 +770,6 @@ body.loading-active {
   max-height: 500px;
 }
 
-/* Dropdown items styling */
 .mobile-dropdown-content a.nav-link {
   font-size: 1rem;
   padding: 0.75rem 1.5rem 0.75rem 2.5rem;
@@ -832,12 +779,10 @@ body.loading-active {
   position: relative;
 }
 
-/* Remove borders from dropdown items */
 .mobile-dropdown-content a.nav-link:first-child {
   border-top: none;
 }
 
-/* Dropdown item hover/focus states */
 .mobile-dropdown-content a.nav-link:hover,
 .mobile-dropdown-content a.nav-link:focus {
   background-color: var(--accent-color-hover);
@@ -846,14 +791,12 @@ body.loading-active {
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* Dropdown item active state */
 .mobile-dropdown-content a.nav-link.active {
   background-color: var(--accent-color-hover);
   color: var(--solid-white);
   transform: translateX(0.125rem);
 }
 
-/* Add small dot indicator for active dropdown items */
 .mobile-dropdown-content a.nav-link.active::before {
   content: "";
   position: absolute;
@@ -866,7 +809,6 @@ body.loading-active {
   border-radius: 50%;
 }
 
-/* Optional: Add subtle separator between main menu sections */
 #mobile-nav-menu > div:not(:last-child) {
   position: relative;
 }
@@ -886,15 +828,7 @@ body.loading-active {
   );
 }
 
-/* ================================
-   Bug Fix: Mobile navbar underline
-   Description: Prevents unwanted underline for active and hovered links in mobile nav.
-   Affected: #mobile-nav-menu .nav-link
-   Date: 2025-05-31
-================================ */
-
 @media (max-width: 1023px) {
-  /* Disable underline animation in mobile */
   #mobile-nav-menu .nav-link::after,
   #mobile-nav-menu .mobile-dropdown-toggle::after,
   #mobile-nav-menu .nav-link:hover::after,
@@ -908,30 +842,6 @@ body.loading-active {
     background: none !important;
   }
 }
-
-/* Ensure correct highlighting of current page only */
-#mobile-nav-menu .nav-link.active,
-#mobile-nav-menu .mobile-dropdown-toggle.active {
-  background-color: var(--accent-color);
-  color: var(--solid-white);
-  transform: translateX(0.25rem);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-}
-
-/* Subtle active border to the left */
-#mobile-nav-menu .nav-link.active::before,
-#mobile-nav-menu .mobile-dropdown-toggle.active::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 4px;
-  height: 60%;
-  background-color: var(--solid-white);
-  border-radius: 0 2px 2px 0;
-}
-
 
 /* General Section Styling */
 .section-title {
@@ -986,7 +896,6 @@ body.loading-active {
   line-height: 1;
 }
 @media (min-width: 768px) {
-  /* md */
   .info-card .card-icon {
     font-size: 3rem;
   }
@@ -1189,64 +1098,72 @@ a.button-secondary:hover {
   color: var(--accent-color-hover);
 }
 
-/* Team Card Styles - Updated for Neumorphism */
+/* Team Card Styles - Mobile Responsive */
 .team-card {
-  background-color: var(--neumorphic-bg); /* Base color for neumorphism */
-  border-radius: 20px; /* Softer radius for neumorphism */
+  background-color: var(--neumorphic-bg);
+  border-radius: 20px;
   box-shadow: 8px 8px 15px var(--neumorphic-shadow-dark),
               -8px -8px 15px var(--neumorphic-shadow-light);
   overflow: hidden;
-  transition: box-shadow 0.3s ease;
-  border: 1px solid rgba(0,0,0,0.02); /* Very subtle border */
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+  border: 1px solid rgba(0,0,0,0.02);
+  display: flex; /* Added for better control if needed */
+  flex-direction: column; /* Ensure content stacks vertically */
 }
 .team-card:hover {
   box-shadow: 10px 10px 20px var(--neumorphic-shadow-dark),
               -10px -10px 20px var(--neumorphic-shadow-light),
-              inset 2px 2px 5px var(--neumorphic-shadow-dark), /* Subtle inset on hover */
+              inset 2px 2px 5px var(--neumorphic-shadow-dark),
               inset -2px -2px 5px var(--neumorphic-shadow-light);
-  transform: translateY(-5px); /* Keep subtle transform */
+  transform: translateY(-5px);
 }
-.team-card figure { /* Ensure figure doesn't break neumorphic feel */
-    margin-bottom: 1rem; /* Add some space if image is directly on card */
-    border-radius: 15px; /* Match parent radius if image is inset */
-    overflow: hidden; /* Clip image to rounded corners */
+.team-card figure {
+    margin-bottom: 1rem;
+    border-radius: 15px;
+    overflow: hidden;
     box-shadow: inset 3px 3px 6px var(--neumorphic-shadow-dark), 
                 inset -3px -3px 6px var(--neumorphic-shadow-light);
 }
 .team-card img {
   width: 100%;
-  height: 280px;
+  height: 220px; /* Adjusted height for mobile */
   object-fit: cover;
   object-position: center top;
-  display: block; /* Remove any extra space below image */
-  border-radius: 15px; /* Rounded corners for the image itself */
+  display: block;
+  border-radius: 15px;
   transition: transform 0.3s ease;
 }
 .team-card:hover img {
-    transform: scale(1.05); /* Slight zoom on image hover */
+    transform: scale(1.05);
 }
 .team-card-content {
-  padding: 1.5rem;
+  padding: 1rem; /* Reduced padding for mobile */
   text-align: center;
+  flex-grow: 1; /* Allow content to take available space */
+  display: flex; /* For vertical centering if needed, or just for structure */
+  flex-direction: column;
 }
 .team-card-name {
-  font-size: 1.25rem;
+  font-size: 1.1rem; /* Adjusted for mobile */
   font-weight: 600;
   color: var(--solid-dark);
   margin-bottom: 0.25rem;
+  word-wrap: break-word; /* Ensure long names wrap */
 }
 .team-card-designation {
-  font-size: 0.9rem;
+  font-size: 0.85rem; /* Adjusted for mobile */
   color: var(--accent-color);
   font-weight: 500;
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.5rem;
+  word-wrap: break-word;
 }
 .team-card-description {
-  font-size: 0.85rem;
+  font-size: 0.8rem; /* Adjusted for mobile */
   color: var(--text-secondary);
-  line-height: 1.6;
+  line-height: 1.5;
+  flex-grow: 1; /* Push to bottom if content is short */
+  word-wrap: break-word; /* Ensure description wraps */
 }
-
 
 /* PDF Viewer/Download Link Styling */
 .pdf-link-card {
@@ -1423,50 +1340,49 @@ a.button-secondary:hover {
   }
 }
 
-/* Ensure mobile menu is visually distinct and usable */
 @media (max-width: 1023px) {
-  /* lg breakpoint */
   #mobile-nav-menu {
-    padding-top: calc(
-      var(--header-height, 4.5rem) + 1rem
-    ); /* Adjust based on actual navbar height */
+    /* padding-top: calc(var(--header-height, 4.5rem) + 1rem); /* REMOVED */
+    padding-top: 5.5rem; /* Fallback fixed padding if header height var is removed */
   }
 }
 
 /* Neumorphic Table Styling */
 .neumorphic-table-wrapper {
   background-color: var(--neumorphic-bg);
-  padding: 1.5rem;
-  border-radius: 20px;
+  padding: 1rem; /* Reduced padding for mobile */
+  border-radius: 15px; /* Slightly smaller radius */
   box-shadow: 8px 8px 15px var(--neumorphic-shadow-dark),
               -8px -8px 15px var(--neumorphic-shadow-light);
-  margin-bottom: 2rem; /* Space below the table wrapper */
-  overflow-x: auto; /* Ensure table is scrollable on small screens */
+  margin-bottom: 2rem;
+  overflow-x: auto;
 }
 
 .responsive-table {
   width: 100%;
   border-collapse: collapse;
-  background-color: var(--solid-white); /* Table background, can be transparent if wrapper is neumorphic bg */
-  border-radius: 10px; /* Rounded corners for the table itself if it has a background */
-  overflow: hidden; /* To make border-radius work on table */
+  background-color: var(--solid-white);
+  border-radius: 10px;
+  overflow: hidden;
   box-shadow: inset 3px 3px 6px var(--neumorphic-shadow-dark), 
-              inset -3px -3px 6px var(--neumorphic-shadow-light); /* Inset shadow for table */
+              inset -3px -3px 6px var(--neumorphic-shadow-light);
 }
 
 .responsive-table th,
 .responsive-table td {
-  padding: 0.75rem 1rem;
+  padding: 0.6rem 0.8rem; /* Adjusted padding */
   text-align: left;
-  border-bottom: 1px solid var(--ui-bg-light); /* Light border for rows */
+  border-bottom: 1px solid var(--ui-bg-light);
   color: var(--text-secondary);
+  font-size: 0.85rem; /* Adjusted font size */
+  word-break: break-word; /* Allow long words to break */
 }
 
 .responsive-table th {
-  background-color: var(--ui-bg-light); /* Header background */
+  background-color: var(--ui-bg-light);
   color: var(--solid-dark);
   font-weight: 600;
-  font-size: 0.9rem;
+  font-size: 0.8rem; 
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
@@ -1476,22 +1392,63 @@ a.button-secondary:hover {
 }
 
 .responsive-table tr:hover {
-  background-color: #f9fafb; /* Subtle hover for rows, Tailwind gray-50 */
+  background-color: #f9fafb;
 }
 
 .responsive-table a {
   color: var(--accent-color);
   text-decoration: underline;
   transition: color 0.2s ease;
+  word-break: break-all; /* Ensure links also break */
 }
 .responsive-table a:hover {
   color: var(--accent-color-hover);
 }
 
+/* Responsive table cells for smaller screens */
+@media (max-width: 768px) {
+    .neumorphic-table-wrapper {
+        padding: 0.5rem; /* Further reduce padding on very small screens */
+    }
+    .responsive-table thead {
+        display: none;
+    }
+    .responsive-table tr {
+        display: block;
+        margin-bottom: 1rem;
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        padding: 0.5rem; /* Add some padding inside the block */
+    }
+    .responsive-table td {
+        display: flex; /* Use flex for better alignment of label and value */
+        flex-direction: column; /* Stack label above value */
+        text-align: left; /* Align text to left for stacked view */
+        padding: 0.5rem 0.25rem; /* Adjust padding */
+        position: relative;
+        border-bottom: 1px dotted var(--ui-bg-light);
+    }
+    .responsive-table td:last-child {
+        border-bottom: none;
+    }
+    .responsive-table td::before {
+        content: attr(data-label);
+        font-weight: 600;
+        color: var(--solid-dark);
+        margin-bottom: 0.25rem; /* Space between label and value */
+        font-size: 0.75rem; /* Smaller label */
+        text-transform: uppercase;
+    }
+    .responsive-table td a { /* Ensure links are easily tappable */
+        padding: 0.25rem 0;
+    }
+}
+
 /* Sub-section titles for team page */
 .team-subsection-title {
     font-family: 'Bebas Neue', cursive;
-    font-size: 2.2rem;
+    font-size: 2rem; /* Adjusted for better mobile scaling */
     color: var(--solid-dark);
     margin-top: 2.5rem;
     margin-bottom: 1.5rem;
@@ -1500,7 +1457,16 @@ a.button-secondary:hover {
     display: inline-block;
 }
 
-/* Ensure section#composition has a compatible background for neumorphism */
 #composition {
-    background-color: var(--theme-bg-light); /* Match --neumorphic-bg */
+    background-color: var(--theme-bg-light);
+}
+
+/* Ensure grid for central team cards stacks to 1 column on small screens */
+@media (max-width: 639px) { /* Tailwind 'sm' breakpoint is 640px */
+    #central-team-container.grid {
+        grid-template-columns: repeat(1, minmax(0, 1fr));
+    }
+    .team-card img {
+        height: 250px; /* Slightly more height if cards are full width */
+    }
 }

@@ -2,7 +2,6 @@
 
 // --- PRELOADER CONSTANTS AND STATE ---
 const MINIMUM_PRELOAD_TIME = 1500; // 1.5 seconds
-const preloaderStartTime = Date.now();
 let windowLoaded = false;
 let minimumTimeElapsed = false;
 
@@ -11,31 +10,31 @@ async function loadHTML(url, elementId) {
     try {
         const response = await fetch(url);
         if (!response.ok) {
-            console.error(`Failed to load ${url}: ${response.status} ${response.statusText}. Check if the file exists at the correct path and is accessible. This might affect page layout or functionality but should not block preloader hiding.`);
+            console.error(`Failed to load ${url}: ${response.status} ${response.statusText}.`);
             const element = document.getElementById(elementId);
             if (element) element.innerHTML = `<p style="color:red; text-align:center;">Error: Could not load content from ${url}.</p>`;
-            return false; // Indicate failure
+            return false;
         }
         const text = await response.text();
         const element = document.getElementById(elementId);
         if (element) {
             element.innerHTML = text;
-            return true; // Indicate success
+            return true;
         } else {
             console.error(`Element with ID #${elementId} not found for ${url}.`);
-            return false; // Indicate failure
+            return false;
         }
     } catch (error) {
         console.error(`Error fetching ${url}:`, error);
         const element = document.getElementById(elementId);
         if (element) element.innerHTML = `<p style="color:red; text-align:center;">Error: Could not load content from ${url}.</p>`;
-        return false; // Indicate failure
+        return false;
     }
 }
 
 // --- PRELOADER LOGIC ---
 function createPreloader() {
-    if (document.getElementById('preloader')) return; // Avoid creating if already exists
+    if (document.getElementById('preloader')) return;
     const preloaderHTML = `
         <div id="preloader">
           <div class="loader-content">
@@ -70,7 +69,7 @@ function attemptToHidePreloader() {
             console.log("Preloader hidden.");
             preloader.addEventListener('transitionend', () => {
                 if (preloader.classList.contains('preloader-hidden')) {
-                    // preloader.remove(); // Uncomment if you want to remove it completely
+                    // preloader.remove(); // Optional: remove from DOM
                 }
             }, { once: true });
         }
@@ -84,7 +83,7 @@ function initializeSmoothScroll() {
         lenis = new Lenis({
             duration: 1.2,
             easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-            smoothTouch: false, // Keep false for better control on touch devices
+            smoothTouch: false,
             touchMultiplier: 2,
         });
 
@@ -95,7 +94,6 @@ function initializeSmoothScroll() {
         requestAnimationFrame(raf);
         console.log("Lenis smooth scroll initialized.");
 
-        // Handle anchor links with Lenis
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             if (anchor.dataset.lenisInitialized === 'true') return;
             anchor.dataset.lenisInitialized = 'true';
@@ -106,15 +104,14 @@ function initializeSmoothScroll() {
                     const targetElement = document.querySelector(href);
                     if (targetElement) {
                         e.preventDefault();
-                        const navbarHeight = document.querySelector('.navbar-custom')?.offsetHeight || 70;
+                        const navbar = document.querySelector('.navbar-custom');
+                        const navbarHeight = navbar ? navbar.offsetHeight : 70; 
                         lenis.scrollTo(targetElement, {
-                            offset: -navbarHeight -20, // Added 20px more offset
+                            offset: -navbarHeight - 20, 
                             duration: 1.5
                         });
-                        // Close mobile menu if open
-                        const mobileNavMenu = document.getElementById('mobile-nav-menu');
-                        if (mobileNavMenu && mobileNavMenu.classList.contains('menu-open')) {
-                            closeMobileMenu(); // Use a dedicated function
+                        if (document.getElementById('mobile-nav-menu')?.classList.contains('menu-open')) {
+                            closeMobileMenu();
                         }
                     }
                 }
@@ -123,7 +120,6 @@ function initializeSmoothScroll() {
 
     } else {
         console.warn('Lenis library not found. Falling back to basic smooth scrolling.');
-        // Fallback for anchor links if Lenis is not available
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             if (anchor.dataset.smoothScrollInitialized === 'true') return;
             anchor.dataset.smoothScrollInitialized = 'true';
@@ -134,13 +130,10 @@ function initializeSmoothScroll() {
                     const targetElement = document.querySelector(href);
                     if (targetElement) {
                         e.preventDefault();
-                        let navHeight = 70;
-                        const currentNavbar = document.querySelector('.navbar-custom');
-                        if (currentNavbar) {
-                           navHeight = currentNavbar.offsetHeight;
-                        }
+                        const navbar = document.querySelector('.navbar-custom');
+                        const navHeight = navbar ? navbar.offsetHeight : 70;
                         const elementPosition = targetElement.getBoundingClientRect().top;
-                        const offsetPosition = elementPosition + window.pageYOffset - navHeight - 20; // Added 20px more offset
+                        const offsetPosition = elementPosition + window.pageYOffset - navHeight - 20;
 
                         window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
 
@@ -155,26 +148,21 @@ function initializeSmoothScroll() {
 }
 
 // --- SCRIPT INITIALIZATION ---
-
-// 1. Create and show preloader immediately
 createPreloader();
 showPreloader();
 
-// 2. Set up timer for minimum preloader display time
 setTimeout(() => {
     minimumTimeElapsed = true;
     console.log("Minimum preloader time elapsed.");
     attemptToHidePreloader();
 }, MINIMUM_PRELOAD_TIME);
 
-// 3. Set up window.load listener to hide preloader
 window.addEventListener('load', () => {
     windowLoaded = true;
     console.log("Window finished loading all resources.");
     attemptToHidePreloader();
 });
 
-// 4. DOMContentLoaded for other initializations
 document.addEventListener('DOMContentLoaded', async function () {
     console.log("DOMContentLoaded event fired.");
 
@@ -183,7 +171,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         console.log("Header loaded successfully.");
         initializeHeaderSpecificScripts();
     } else {
-        console.error("Header loading failed. Some functionalities might be affected.");
+        console.error("Header loading failed.");
     }
 
     const footerLoaded = await loadHTML('_footer.html', 'footer-placeholder');
@@ -191,22 +179,19 @@ document.addEventListener('DOMContentLoaded', async function () {
         console.log("Footer loaded successfully.");
         initializeFooterSpecificScripts();
     } else {
-        console.error("Footer loading failed. Some functionalities might be affected.");
+        console.error("Footer loading failed.");
     }
     
     initializePageScripts(); 
-    initializeSmoothScroll(); // Initialize smooth scroll after header/footer might affect offset calculations
+    initializeSmoothScroll();
 
-    // Fallback: If window.load somehow doesn't fire or is extremely delayed,
-    // and minimum time has passed, try to hide preloader again.
-    // Added a more robust check
     setTimeout(() => {
         if (!windowLoaded && minimumTimeElapsed) {
-            console.warn("Window.load hasn't fired after an additional delay, but minimum time elapsed. Forcing preloader hide attempt.");
-            windowLoaded = true; // Assume loaded for the purpose of hiding preloader
+            console.warn("Window.load fallback: Forcing preloader hide attempt.");
+            windowLoaded = true; 
             attemptToHidePreloader();
         }
-    }, MINIMUM_PRELOAD_TIME + 3000); // e.g., 3 seconds after minimum time
+    }, MINIMUM_PRELOAD_TIME + 3000); 
 });
 
 function closeMobileMenu() {
@@ -220,35 +205,13 @@ function closeMobileMenu() {
         if (menuButton) menuButton.setAttribute('aria-expanded', 'false');
         if (menuIconOpen) menuIconOpen.classList.remove('hidden');
         if (menuIconClose) menuIconClose.classList.add('hidden');
-        document.body.style.overflow = '';
+        document.body.classList.remove('mobile-menu-open-style'); 
         lenis?.start();
         console.log("Mobile menu closed.");
     }
 }
 
-// Initialize scripts specific to the header content
 function initializeHeaderSpecificScripts() {
-    const navbar = document.querySelector('.navbar-custom');
-    if (navbar) {
-        // Set initial state
-        if (window.scrollY > 30) {
-            navbar.classList.add('scrolled');
-        } else {
-            navbar.classList.remove('scrolled');
-        }
-        // Add scroll listener for 'scrolled' class, also update height var
-        window.addEventListener('scroll', function() {
-            if (window.scrollY > 30) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
-            }
-            // No need to call updateHeaderHeightVar() here if ResizeObserver is working,
-            // as it will detect height changes from 'scrolled' class.
-            // If not using ResizeObserver, you might need it here.
-        }, { passive: true });
-    }
-
     const menuButton = document.getElementById('mobile-menu-button');
     const mobileNavMenu = document.getElementById('mobile-nav-menu');
     const menuIconOpen = document.getElementById('menu-icon-open');
@@ -261,12 +224,13 @@ function initializeHeaderSpecificScripts() {
                 menuButton.setAttribute('aria-expanded', isOpen.toString());
                 menuIconOpen.classList.toggle('hidden', isOpen);
                 menuIconClose.classList.toggle('hidden', !isOpen);
-                document.body.style.overflow = isOpen ? 'hidden' : '';
                 
                 if (isOpen) {
+                    document.body.classList.add('mobile-menu-open-style');
                     lenis?.stop();
                     console.log("Mobile menu opened.");
                 } else {
+                    document.body.classList.remove('mobile-menu-open-style');
                     lenis?.start();
                     console.log("Mobile menu closed by button.");
                 }
@@ -275,7 +239,6 @@ function initializeHeaderSpecificScripts() {
         }
     }
 
-    // Desktop dropdown navigation via click
     document.querySelectorAll('.main-nav .dropdown > button.nav-link').forEach(button => {
         if (button.dataset.desktopDropdownInit) return;
         button.dataset.desktopDropdownInit = 'true';
@@ -283,22 +246,18 @@ function initializeHeaderSpecificScripts() {
         button.addEventListener('click', (e) => {
             const targetHref = button.dataset.targetHref;
             if (targetHref) {
-                // Check if already on the target page
                 const currentPath = window.location.pathname.split('/').pop() || 'index.html';
                 const targetPath = targetHref.split('#')[0];
-                if (currentPath === targetPath && window.location.hash) {
-                    // If on same page but with a hash, just let Lenis handle scroll to top or specific hash
-                    // Or, if it's a main page link, navigate
-                } else if (currentPath === targetPath) {
-                    // Already on the page, do nothing or scroll to top if desired
+                if (currentPath === targetPath && !window.location.hash) { 
                      if (lenis) lenis.scrollTo(0); else window.scrollTo(0,0);
-                    return; // Avoid redundant navigation
+                    return; 
                 }
-                window.location.href = targetHref;
+                if (currentPath !== targetPath || targetHref.includes('#')) {
+                    window.location.href = targetHref;
+                }
             }
         });
     });
-
 
     const mobileDropdownToggles = document.querySelectorAll('#mobile-nav-menu .mobile-dropdown-toggle');
     mobileDropdownToggles.forEach(toggle => {
@@ -306,11 +265,10 @@ function initializeHeaderSpecificScripts() {
         toggle.dataset.initialized = 'true';
 
         toggle.addEventListener('click', function(e) {
-            e.preventDefault(); // Keep this to prevent navigation if it's a button
-            const content = this.nextElementSibling; // Should be the div with dropdown items
-            const arrowIcon = this.querySelector('svg:last-child'); // The arrow icon
+            e.preventDefault(); 
+            const content = this.nextElementSibling; 
+            const arrowIcon = this.querySelector('svg:last-child'); 
 
-            // Close other open dropdowns
             document.querySelectorAll('#mobile-nav-menu .mobile-dropdown-content.open').forEach(openContent => {
                 if (openContent !== content) {
                     openContent.classList.remove('open');
@@ -323,7 +281,6 @@ function initializeHeaderSpecificScripts() {
                 }
             });
             
-            // Toggle current dropdown
             if (content && content.classList.contains('mobile-dropdown-content')) {
                 const isOpening = content.classList.toggle('open');
                 this.setAttribute('aria-expanded', isOpening.toString());
@@ -334,33 +291,21 @@ function initializeHeaderSpecificScripts() {
         });
     });
 
-    // Close mobile menu when a link inside it is clicked
     const mobileNavInternalLinks = document.querySelectorAll('#mobile-nav-menu a');
     mobileNavInternalLinks.forEach(link => {
         if (link.dataset.mobileLinkInit) return;
         link.dataset.mobileLinkInit = 'true';
 
         link.addEventListener('click', function() {
-            // For anchor links on the same page, smooth scroll is handled by initializeSmoothScroll
-            // For links to other pages, the menu will close naturally on page load.
-            // We only need to explicitly close for same-page anchors.
-            if (this.getAttribute('href').startsWith('#') || (this.getAttribute('href').includes('.html#'))) {
-                 setTimeout(() => { // Timeout to allow scroll to start
+            const href = this.getAttribute('href');
+            if (href && (href.startsWith('#') || (href.includes('.html#') && window.location.pathname.endsWith(href.split('#')[0])))) {
+                 setTimeout(() => { 
                     closeMobileMenu();
                 }, 100);
-            } else {
-                // For external links or links to different pages, allow default behavior
-                // but still ensure menu closes if it was somehow kept open by browser (e.g. back button)
-                // However, standard navigation will reload the page, resetting the menu.
-                // If it's a link that doesn't cause a full page reload (e.g. SPA, though not the case here)
-                // then explicit close would be more critical.
-                // For this static site, this is mostly for same-page anchors.
             }
         });
     });
 
-
-    // Active Link Highlighting
     const allNavLinks = document.querySelectorAll('.main-nav .nav-link, .main-nav .dropdown-menu a, #mobile-nav-menu .nav-link, #mobile-nav-menu .mobile-dropdown-content a');
     let currentPage = window.location.pathname.split('/').pop();
     if (currentPage === '' || !currentPage.includes('.html')) {
@@ -369,7 +314,7 @@ function initializeHeaderSpecificScripts() {
     const currentHash = window.location.hash;
 
     allNavLinks.forEach(link => {
-        link.classList.remove('active'); // Reset all first
+        link.classList.remove('active');
         const linkHref = link.getAttribute('href');
         if (!linkHref) return;
 
@@ -379,31 +324,25 @@ function initializeHeaderSpecificScripts() {
         if (linkPage === '' && (linkHref.endsWith('/') || linkHref === 'index.html')) {
              linkPage = 'index.html';
         } else if (linkPage === '' && !linkHref.includes('.html') && !linkHref.startsWith('http')) {
-             linkPage = linkHref + ".html"; // For hrefs like "about"
+             linkPage = linkHref + ".html"; 
         }
         
         let isActive = (linkPage === currentPage);
-        if (isActive && currentHash && linkHash) { // If on same page, also check hash for section links
-            isActive = (linkHash === currentHash.substring(1));
-        } else if (isActive && currentHash && !linkHash && (link.closest('.dropdown-menu') || link.closest('.mobile-dropdown-content'))) {
-            // If current URL has a hash, but this specific sub-menu link doesn't,
-            // don't mark it active if it's a sub-menu item, unless it's the main page link.
-            // The main parent link (e.g., "About IQAC") should be active.
-        } else if (isActive && !currentHash && linkHash) {
-            // If current URL has no hash, but link has a hash, don't mark active unless it's the base page.
-            // This case is tricky, usually the link without hash is preferred for page-level active state.
+        if (isActive) {
+            if (currentHash && linkHash) { 
+                isActive = (linkHash === currentHash.substring(1));
+            } else if (currentHash && !linkHash) { 
+            } else if (!currentHash && linkHash) {
+            }
         }
-
 
         if (isActive) {
             link.classList.add('active');
-            // Desktop dropdown parent
             const desktopDropdownMenu = link.closest('.dropdown-menu');
             if (desktopDropdownMenu) {
                 const parentDropdownButton = desktopDropdownMenu.closest('.dropdown').querySelector('button.nav-link');
                 if(parentDropdownButton) parentDropdownButton.classList.add('active');
             }
-            // Mobile dropdown parent
             const mobileDropdownContent = link.closest('.mobile-dropdown-content');
             if (mobileDropdownContent) {
                 const parentMobileDropdownToggle = mobileDropdownContent.previousElementSibling;
@@ -415,7 +354,6 @@ function initializeHeaderSpecificScripts() {
     });
 }
 
-// Initialize scripts specific to the footer content
 function initializeFooterSpecificScripts() {
     const currentYearElement = document.getElementById('currentYear');
     if (currentYearElement) {
@@ -423,34 +361,35 @@ function initializeFooterSpecificScripts() {
     }
 }
 
-// General page initializations
 function initializePageScripts() {
-    // AOS Animation Library
     if (typeof AOS !== 'undefined') {
         AOS.init({
             duration: 700,
             once: true,
-            offset: 50, // Trigger animations a bit sooner
-            disable: 'mobile', // Optionally disable AOS on mobile if it causes issues
+            offset: 50,
+            disable: 'mobile',
         });
         console.log("AOS initialized.");
     } else {
-        console.warn('AOS library not found. Animations will not work.');
+        console.warn('AOS library not found.');
     }
 
-    // Navbar scroll behavior
     const navbar = document.querySelector('.navbar-custom');
     if (navbar) {
+        if (window.scrollY > 30) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
+        }
         window.addEventListener('scroll', function() {
             if (window.scrollY > 30) {
                 navbar.classList.add('scrolled');
             } else {
                 navbar.classList.remove('scrolled');
             }
-        }, { passive: true }); // Use passive listener for scroll
+        }, { passive: true });
     }
 
-    // Back to Top Button
     const backToTopContainer = document.getElementById('back-to-top-container');
     let backToTopBtn;
 
@@ -477,7 +416,7 @@ function initializePageScripts() {
                 backToTopBtn.classList.add('opacity-0', 'translate-y-4', 'pointer-events-none');
             }
         };
-        scrollHandler(); // Call on load
+        scrollHandler(); 
         window.addEventListener('scroll', scrollHandler, { passive: true });
         
         backToTopBtn.addEventListener('click', () => {
@@ -489,17 +428,187 @@ function initializePageScripts() {
         });
     }
 
-    // Event Page Specific Logic: Filters and Modal
-    if (document.getElementById('events-list')) { // Check if on events page
+    if (document.getElementById('events-list')) {
         initializeEventPageLogic();
+    }
+
+    if (document.getElementById('central-team-container') || 
+        document.getElementById('advisory-team-container') ||
+        document.getElementById('fic-team-container')) {
+        loadTeamData(); // This function is now updated
     }
 }
 
+// --- Functions for loading team data on about.html (Updated for separate files) ---
+async function loadTeamData() {
+    // Load Central Team Data
+    try {
+        const response = await fetch('assets/data/centraliqac.json');
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status} for centraliqac.json`);
+        }
+        const centralTeamMembers = await response.json();
+        populateCentralTeam(centralTeamMembers);
+    } catch (error) {
+        console.error("Could not load Central Team data:", error);
+        const centralTeamContainer = document.getElementById('central-team-container');
+        if (centralTeamContainer) centralTeamContainer.innerHTML = '<p class="text-red-500 text-center col-span-full">Failed to load Central Team data. Please check console.</p>';
+    }
+
+    // Load Advisory Team Data
+    try {
+        const response = await fetch('assets/data/advisory.json');
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status} for advisory.json`);
+        }
+        const advisoryTeamMembers = await response.json();
+        populateAdvisoryTeam(advisoryTeamMembers);
+    } catch (error) {
+        console.error("Could not load Advisory Team data:", error);
+        const advisoryTeamContainer = document.getElementById('advisory-team-container');
+        if (advisoryTeamContainer) advisoryTeamContainer.innerHTML = '<p class="text-red-500 text-center">Failed to load Advisory Team data. Please check console.</p>';
+    }
+
+    // Load FIC Team Data
+    try {
+        const response = await fetch('assets/data/ficiqac.json');
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status} for ficiqac.json`);
+        }
+        const ficTeamMembers = await response.json();
+        populateFicTeam(ficTeamMembers);
+    } catch (error) {
+        console.error("Could not load FIC Team data:", error);
+        const ficTeamContainer = document.getElementById('fic-team-container');
+        if (ficTeamContainer) ficTeamContainer.innerHTML = '<p class="text-red-500 text-center">Failed to load FIC Team data. Please check console.</p>';
+    }
+}
+
+
+function populateCentralTeam(members) {
+    const container = document.getElementById('central-team-container');
+    if (!container || !members) {
+        if(container) container.innerHTML = '<p class="text-orange-500 text-center col-span-full">Central team data is missing or container not found.</p>';
+        return;
+    }
+    container.innerHTML = ''; 
+
+    if (members.length === 0) {
+        container.innerHTML = '<p class="text-gray-500 text-center col-span-full">No Central Team members to display.</p>';
+        return;
+    }
+
+    members.forEach(member => {
+        const card = `
+            <article class="team-card" data-aos="fade-up" data-aos-delay="100">
+                <figure>
+                    <img src="${member.image}" alt="${member.alt || member.name}" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/400x300/cccccc/333333?text=Photo';">
+                    <figcaption class="sr-only">Photo of ${member.name}</figcaption>
+                </figure>
+                <div class="team-card-content">
+                    <h4 class="team-card-name">${member.name}</h4>
+                    <p class="team-card-designation">${member.designation}</p>
+                    <p class="team-card-description">${member.description}</p>
+                </div>
+            </article>
+        `;
+        container.insertAdjacentHTML('beforeend', card);
+    });
+}
+
+function populateAdvisoryTeam(members) {
+    const container = document.getElementById('advisory-team-container');
+    if (!container || !members) {
+        if(container) container.innerHTML = '<p class="text-orange-500 text-center">Advisory team data is missing or container not found.</p>';
+        return;
+    }
+    
+    if (members.length === 0) {
+        container.innerHTML = '<p class="text-gray-500 text-center">No Advisory Team members to display.</p>';
+        return;
+    }
+
+    const table = document.createElement('table');
+    table.className = 'responsive-table';
+    table.innerHTML = `
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Title/Department</th>
+                <th>Role in IQAC</th>
+                <th>Email</th>
+                <th>Phone Number</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    `;
+    const tbody = table.querySelector('tbody');
+    members.forEach(member => {
+        const row = `
+            <tr>
+                <td data-label="Name">${member.name}</td>
+                <td data-label="Title/Dept">${member.title}</td>
+                <td data-label="Role">${member.role}</td>
+                <td data-label="Email"><a href="mailto:${member.email}" class="break-all">${member.email}</a></td>
+                <td data-label="Phone"><a href="tel:${member.phone}">${member.phone}</a></td>
+            </tr>
+        `;
+        tbody.insertAdjacentHTML('beforeend', row);
+    });
+    container.innerHTML = ''; 
+    container.appendChild(table);
+}
+
+function populateFicTeam(members) {
+    const container = document.getElementById('fic-team-container');
+     if (!container || !members) {
+        if(container) container.innerHTML = '<p class="text-orange-500 text-center">FIC team data is missing or container not found.</p>';
+        return;
+    }
+
+    if (members.length === 0) {
+        container.innerHTML = '<p class="text-gray-500 text-center">No FIC Team members to display.</p>';
+        return;
+    }
+
+    const table = document.createElement('table');
+    table.className = 'responsive-table';
+    table.innerHTML = `
+        <thead>
+            <tr>
+                <th>School / Department</th>
+                <th>Faculty-in-Charge (FIC)</th>
+                <th>Contact Number</th>
+                <th>Email Address</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    `;
+    const tbody = table.querySelector('tbody');
+    members.forEach(member => {
+        const row = `
+            <tr>
+                <td data-label="School/Dept">${member.school}</td>
+                <td data-label="FIC Name">${member.ficName}</td>
+                <td data-label="Contact"><a href="tel:${member.phone}">${member.phone}</a></td>
+                <td data-label="Email"><a href="mailto:${member.email}" class="break-all">${member.email}</a></td>
+            </tr>
+        `;
+        tbody.insertAdjacentHTML('beforeend', row);
+    });
+    container.innerHTML = ''; 
+    container.appendChild(table);
+}
+
+
+// --- Event Page Specific Logic ---
 function initializeEventPageLogic() {
     const eventSearchInput = document.getElementById('eventSearch');
     const yearFilterSelect = document.getElementById('eventYearFilter');
     const typeFilterSelect = document.getElementById('eventTypeFilter');
-    const eventCards = document.querySelectorAll('#events-list .event-card, #functions-activities .event-card, #quality-initiatives .info-card'); // Include all relevant cards
+    const eventCards = document.querySelectorAll('#events-list .event-card, #functions-activities .event-card, #quality-initiatives .info-card');
     const noEventsMessage = document.getElementById('no-events-message');
 
     function filterEvents() {
@@ -510,18 +619,18 @@ function initializeEventPageLogic() {
 
         eventCards.forEach(card => {
             const title = card.querySelector('.event-card-title, .card-title')?.textContent.toLowerCase() || '';
-            const description = card.querySelector('.event-card-description, .info-card p')?.textContent.toLowerCase() || '';
+            const description = card.querySelector('.event-card-description, .info-card p:not(.event-card-date)')?.textContent.toLowerCase() || '';
             const dateText = card.querySelector('.event-card-date')?.textContent.toLowerCase() || '';
             
             const cardYear = card.dataset.eventYear;
             const cardType = card.dataset.eventType;
 
             const matchesSearch = !searchTerm || title.includes(searchTerm) || description.includes(searchTerm) || dateText.includes(searchTerm);
-            const matchesYear = selectedYear === 'all' || cardYear === selectedYear;
-            const matchesType = selectedType === 'all' || cardType === selectedType;
+            const matchesYear = selectedYear === 'all' || !cardYear || cardYear === selectedYear;
+            const matchesType = selectedType === 'all' || !cardType || cardType === selectedType;
 
             if (matchesSearch && matchesYear && matchesType) {
-                card.style.display = ''; // Or 'flex' if that's your card's display type
+                card.style.display = ''; 
                 visibleCount++;
             } else {
                 card.style.display = 'none';
@@ -537,16 +646,13 @@ function initializeEventPageLogic() {
     if (yearFilterSelect) yearFilterSelect.addEventListener('change', filterEvents);
     if (typeFilterSelect) typeFilterSelect.addEventListener('change', filterEvents);
 
-    // Initial filter call in case of pre-filled values or to show all
     filterEvents();
 
-    // Event Modal Logic
     const eventModal = document.getElementById('event-modal');
     const closeModalBtn = document.getElementById('close-modal-btn');
     const closeModalBtnBottom = document.getElementById('close-modal-btn-bottom');
     const learnMoreButtons = document.querySelectorAll('.learn-more-btn');
 
-    // Lightbox elements
     const lightbox = document.getElementById('lightbox');
     const lightboxImage = document.getElementById('lightbox-image');
     const closeLightboxBtn = document.getElementById('close-lightbox-btn');
@@ -555,13 +661,11 @@ function initializeEventPageLogic() {
     let currentGalleryImages = [];
     let currentLightboxIndex = 0;
 
-
-    // Dummy event data (replace with actual data source or fetch)
     const eventDetails = {
         event1: {
             title: "Faculty Enrichment: Digital Transformation in Pedagogy",
             date: "WORKSHOP • 22nd March 2025",
-            image: "assets/images/event1_large.jpg", // Placeholder for a larger image
+            image: "assets/images/event1_large.jpg",
             description: "<p>This workshop aimed to equip faculty members with the latest digital tools and methodologies to enhance teaching effectiveness and student engagement. Sessions covered innovative e-learning platforms, AI in education, and strategies for blended learning environments. Participants engaged in hands-on activities and collaborative discussions.</p><p>Key takeaways included practical skills in utilizing digital resources, understanding data analytics for student performance, and designing interactive online courses. The event fostered a community of practice among educators committed to leveraging technology for academic excellence.</p>",
             gallery: ["assets/images/gallery/event1_pic1.jpg", "assets/images/gallery/event1_pic2.jpg", "assets/images/gallery/event1_pic3.jpg", "https://placehold.co/400x300/1fc166/ffffff?text=Gallery+4"]
         },
@@ -572,22 +676,71 @@ function initializeEventPageLogic() {
             description: "<p>The inaugural ceremony of the Academic Empowerment Initiative brought together esteemed academicians, university leadership, and faculty members. This initiative focuses on a comprehensive evaluation of school-level functioning, curriculum relevance, and pedagogical innovations. </p><p>Speakers emphasized the importance of continuous quality improvement and shared insights on global best practices in higher education. The initiative aims to foster a culture of academic excellence and accountability across all departments.</p>",
             gallery: ["assets/images/gallery/event2_pic1.jpg", "https://placehold.co/400x300/00aded/ffffff?text=Gallery+2", "assets/images/gallery/event2_pic3.jpg"]
         },
-         // Add more event details here...
+        event3: {
+            title: "Viksit Bharat@2047 Initiatives Series",
+            date: "SERIES OF EVENTS • 31st Mar – 8th Apr 2024",
+            image: "assets/images/event3_large.jpg",
+            description: "<p>KIIT IQAC proudly organized a series of nine impactful events under the Viksit Bharat@2047 banner. These initiatives, including workshops, seminars, and interactive sessions, were designed to foster awareness and dialogue on India's developmental goals leading up to 2047. Faculty, students, and experts participated in discussions covering technology, sustainability, education, and economic growth, contributing to a collective vision for a developed India.</p>",
+            gallery: ["https://placehold.co/400x300/223d51/e4edf2?text=VB+Event+1", "https://placehold.co/400x300/1fc166/ffffff?text=VB+Event+2", "https://placehold.co/400x300/00aded/ffffff?text=VB+Event+3"]
+        },
+        event4: {
+            title: "K-I3 Fest: Frontier Technologies Project Expo",
+            date: "PROJECT EXPO • 6th December 2023",
+            image: "assets/images/ki3_large.jpg",
+            description: "<p>The K-I3 Fest, a collaborative effort by Dean's Gold Klub & IQAC, showcased a vibrant array of innovative student projects focusing on frontier technologies. This project expo provided a platform for students to demonstrate their technical skills, creativity, and problem-solving abilities in areas like AI, IoT, robotics, and sustainable tech. The event was a testament to KIIT's commitment to fostering an innovation-driven academic environment.</p>",
+            gallery: ["https://placehold.co/400x300/E4EDF2/333333?text=KI3+Project+1", "https://placehold.co/400x300/223d51/ffffff?text=KI3+Project+2"]
+        },
+        activity1: {
+            title: "Seminar on NEP 2020 Implementation Strategies",
+            date: "SEMINAR • 15th July 2024",
+            image: "https://placehold.co/800x400/223d51/e4edf2?text=NEP+Seminar+Large",
+            description: "<p>This seminar focused on the practical aspects of implementing the National Education Policy (NEP) 2020 at KIIT. Discussions revolved around curriculum restructuring, multidisciplinary approaches, integration of vocational education, and assessment reforms. Experts shared insights on challenges and best practices for a smooth transition, aiming to align KIIT's educational framework with the transformative goals of NEP 2020.</p>",
+            gallery: []
+        },
+        activity2: {
+            title: "IQAC Review Meeting with Stakeholders",
+            date: "MEETING • 10th October 2023",
+            image: "https://placehold.co/800x400/1fc166/ffffff?text=IQAC+Meeting+Large",
+            description: "<p>The annual IQAC Review Meeting brought together internal and external stakeholders, including faculty, students, alumni, and industry representatives. The meeting served as a platform to discuss the progress of quality assurance initiatives, review feedback, and strategize for future enhancements. Key outcomes included actionable recommendations for academic and administrative improvements, reinforcing KIIT's commitment to transparency and continuous development.</p><p>Minutes of the meeting are available for internal review via the university portal.</p>",
+            gallery: ["https://placehold.co/400x300/cccccc/333333?text=Meeting+Pic+1", "https://placehold.co/400x300/aaaaaa/444444?text=Meeting+Pic+2"]
+        },
+        activity3: {
+            title: "Faculty Training on Outcome-Based Education (OBE) Portal",
+            date: "TRAINING • 5th February 2024",
+            image: "https://placehold.co/800x400/00aded/ffffff?text=OBE+Training+Large",
+            description: "<p>A hands-on training session was conducted for faculty members on effectively utilizing the new Outcome-Based Education (OBE) portal. The training covered defining course outcomes, mapping them to program outcomes, designing assessments aligned with OBE principles, and generating attainment reports. This initiative aims to streamline the OBE process and enhance the quality of academic delivery and assessment across all programs.</p><p>Training materials and portal access details have been shared with all faculty members.</p>",
+            gallery: ["https://placehold.co/400x300/E4EDF2/333333?text=OBE+Session+1", "https://placehold.co/400x300/223d51/ffffff?text=OBE+Session+2", "https://placehold.co/400x300/17d059/ffffff?text=OBE+Session+3"]
+        }
     };
 
     function openModal(eventId) {
         const details = eventDetails[eventId];
-        if (!details || !eventModal) return;
+        if (!details || !eventModal) {
+            console.warn("Event details not found for ID:", eventId, "or modal element missing.");
+            const modalTitle = document.getElementById('modal-title');
+            if (modalTitle) modalTitle.textContent = "Event Details Not Available";
+            document.getElementById('modal-description').innerHTML = "<p>Sorry, the details for this event could not be loaded at this time.</p>";
+            document.getElementById('modal-image').src = 'https://placehold.co/800x400/cccccc/333333?text=Error';
+            document.getElementById('modal-date').textContent = "";
+            document.getElementById('modal-gallery').innerHTML = "";
+            eventModal.classList.remove('hidden', 'opacity-0', 'pointer-events-none');
+            eventModal.classList.add('opacity-100');
+            eventModal.setAttribute('aria-hidden', 'false');
+            document.body.classList.add('mobile-menu-open-style');
+            lenis?.stop();
+            return;
+        }
 
         document.getElementById('modal-title').textContent = details.title;
         document.getElementById('modal-date').textContent = details.date;
-        const modalImage = document.getElementById('modal-image');
-        modalImage.src = details.image || 'https://placehold.co/800x400/cccccc/333333?text=Event+Image';
-        modalImage.alt = details.title + " main image";
+        const modalImageEl = document.getElementById('modal-image');
+        modalImageEl.src = details.image || 'https://placehold.co/800x400/cccccc/333333?text=Event+Image';
+        modalImageEl.alt = details.title + " main image";
+        modalImageEl.onerror = function() { this.src='https://placehold.co/800x400/cccccc/333333?text=Image+Error'; };
         document.getElementById('modal-description').innerHTML = details.description;
         
         const galleryContainer = document.getElementById('modal-gallery');
-        galleryContainer.innerHTML = ''; // Clear previous gallery
+        galleryContainer.innerHTML = ''; 
         currentGalleryImages = details.gallery || [];
 
         if (currentGalleryImages.length > 0) {
@@ -601,20 +754,19 @@ function initializeEventPageLogic() {
                 img.src = imgSrc;
                 img.alt = `${details.title} - Gallery Image ${index + 1}`;
                 img.className = 'w-full h-32 object-cover rounded transition-transform duration-300 group-hover:scale-110';
-                img.onerror = function() { this.src='https://placehold.co/400x300/cccccc/333333?text=Broken+Img'; }; // Fallback
+                img.onerror = function() { this.src='https://placehold.co/400x300/cccccc/333333?text=Broken+Img'; };
                 imgButton.appendChild(img);
                 galleryContainer.appendChild(imgButton);
             });
-            galleryContainer.parentElement.classList.remove('hidden');
+            galleryContainer.closest('div').classList.remove('hidden');
         } else {
-             galleryContainer.parentElement.classList.add('hidden'); // Hide gallery section if no images
+             galleryContainer.closest('div').classList.add('hidden'); 
         }
-
 
         eventModal.classList.remove('hidden', 'opacity-0', 'pointer-events-none');
         eventModal.classList.add('opacity-100');
         eventModal.setAttribute('aria-hidden', 'false');
-        document.body.style.overflow = 'hidden';
+        document.body.classList.add('mobile-menu-open-style');
         lenis?.stop();
     }
 
@@ -623,13 +775,12 @@ function initializeEventPageLogic() {
         eventModal.classList.add('opacity-0', 'pointer-events-none');
         eventModal.classList.remove('opacity-100');
         eventModal.setAttribute('aria-hidden', 'true');
-        // Delay removing hidden to allow transition
         setTimeout(() => {
-            if (eventModal.classList.contains('opacity-0')) { // Check if still intended to be hidden
+            if (eventModal.classList.contains('opacity-0')) {
                  eventModal.classList.add('hidden');
             }
         }, 300);
-        document.body.style.overflow = '';
+        document.body.classList.remove('mobile-menu-open-style');
         lenis?.start();
     }
     
@@ -640,7 +791,6 @@ function initializeEventPageLogic() {
         lightbox.classList.remove('hidden', 'opacity-0', 'pointer-events-none');
         lightbox.classList.add('opacity-100');
         lightbox.setAttribute('aria-hidden', 'false');
-        // Keep body overflow hidden as modal is still technically underneath
     }
 
     function closeLightbox() {
@@ -659,6 +809,7 @@ function initializeEventPageLogic() {
         if (!lightboxImage) return;
         lightboxImage.src = currentGalleryImages[currentLightboxIndex];
         lightboxImage.alt = `Gallery Image ${currentLightboxIndex + 1}`;
+        lightboxImage.onerror = function() { this.src='https://placehold.co/800x600/cccccc/333333?text=Image+Load+Error'; this.alt='Error loading image';};
         document.getElementById('lightbox-image-alt').textContent = `Enlarged image: ${currentLightboxIndex + 1} of ${currentGalleryImages.length}`;
         
         if (prevLightboxBtn) prevLightboxBtn.style.display = currentGalleryImages.length > 1 ? 'block' : 'none';
@@ -686,23 +837,21 @@ function initializeEventPageLogic() {
     if (closeModalBtnBottom) closeModalBtnBottom.addEventListener('click', closeModal);
     if (eventModal) {
         eventModal.addEventListener('click', (e) => {
-            if (e.target === eventModal) { // Click on backdrop
+            if (e.target === eventModal) { 
                 closeModal();
             }
         });
     }
-    // Lightbox event listeners
     if (closeLightboxBtn) closeLightboxBtn.addEventListener('click', closeLightbox);
     if (prevLightboxBtn) prevLightboxBtn.addEventListener('click', showPrevImage);
     if (nextLightboxBtn) nextLightboxBtn.addEventListener('click', showNextImage);
     if (lightbox) {
         lightbox.addEventListener('click', (e) => {
-            if (e.target === lightbox) { // Click on backdrop
+            if (e.target === lightbox) { 
                 closeLightbox();
             }
         });
     }
-     // Keyboard navigation for modal and lightbox
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
             if (lightbox && !lightbox.classList.contains('hidden')) {

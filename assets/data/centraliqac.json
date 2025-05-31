@@ -1,5 +1,4 @@
-{
-  "centralTeam": [
+[
     {
       "image": "https://placehold.co/400x300/E4EDF2/333333?text=Dr.+Siddharth+Swarup+Rautaray",
       "alt": "Dr. Siddharth Swarup Rautaray",
@@ -98,5 +97,4 @@
       "designation": "Content Writer, IQAC",
       "description": "Content Writer for the Internal Quality Assurance Cell."
     }
-  ]
-}
+]

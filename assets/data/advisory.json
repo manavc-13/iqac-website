@@ -1,5 +1,4 @@
-{
-  "advisoryTeam": [
+[
     {
       "name": "Prof. Saranjit Singh",
       "title": "Vice Chancellor",
@@ -147,5 +146,4 @@
       "email": "dean.qa@kiit.ac.in",
       "phone": "9937640447"
     }
-  ]
-}
+]

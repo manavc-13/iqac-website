@@ -1,5 +1,4 @@
-{
-  "ficTeam": [
+[
     {
       "school": "School of Architecture & Planning",
       "ficName": "Prof. Satyam Jyoti",
@@ -144,5 +143,4 @@
       "phone": "8210204152",
       "email": "ramesh.sethi@kls.ac.in"
     }
-  ]
-}
+]
