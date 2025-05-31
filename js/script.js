@@ -1,7 +1,7 @@
 // script.js
 
 // --- PRELOADER CONSTANTS AND STATE ---
-const MINIMUM_PRELOAD_TIME = 1500; // 1.5 seconds
+const MINIMUM_PRELOAD_TIME = 1700; // 1.5 seconds
 let windowLoaded = false;
 let minimumTimeElapsed = false;
 
@@ -508,7 +508,6 @@ function populateCentralTeam(members) {
                 <div class="team-card-content">
                     <h4 class="team-card-name">${member.name}</h4>
                     <p class="team-card-designation">${member.designation}</p>
-                    <p class="team-card-description">${member.description}</p>
                 </div>
             </article>
         `;
