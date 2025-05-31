@@ -1,0 +1,148 @@
+{
+  "ficTeam": [
+    {
+      "school": "School of Architecture & Planning",
+      "ficName": "Prof. Satyam Jyoti",
+      "phone": "7016605989",
+      "email": "satyam.jyotifar@kiit.ac.in"
+    },
+    {
+      "school": "School of Applied Sciences",
+      "ficName": "Prof. Tapas Ranjan Sahoo",
+      "phone": "7978060701",
+      "email": "trsahoofch@kiit.ac.in"
+    },
+    {
+      "school": "School of Biotechnology and Chemical Engineering",
+      "ficName": "Dr. Gopal K. Chowdhary",
+      "phone": "9776873663",
+      "email": "gkchowdhary@kiitbiotech.ac.in"
+    },
+    {
+      "school": "School of Computer Engineering",
+      "ficName": "Prof. Mohit Ranjan Panda",
+      "phone": "9777999330",
+      "email": "mohit.pandafcs@kiit.ac.in"
+    },
+    {
+      "school": "School of Computer Engineering",
+      "ficName": "Prof. Adyasha Dash",
+      "phone": "9853939910",
+      "email": "adyasha.dashfcs@kiit.ac.in"
+    },
+    {
+      "school": "School of Computer Engineering",
+      "ficName": "Prof. Pratyusa Mukherjee",
+      "phone": "9861937376",
+      "email": "pratyusa.mukherjeefcs@kiit.ac.in"
+    },
+    {
+      "school": "School of Civil Engineering",
+      "ficName": "Prof. Chinmaya Ku. Kundu",
+      "phone": "7077538565",
+      "email": "chinmay.kundufce@kiit.ac.in"
+    },
+    {
+      "school": "School of Computer Application",
+      "ficName": "Prof. Rabindra Kumar Barik",
+      "phone": "8763293589",
+      "email": "rabindrafca@kiit.ac.in"
+    },
+    {
+      "school": "School of Economics and Commerce",
+      "ficName": "Dr. Sanjaya Kumar Lenka",
+      "phone": "9993527709",
+      "email": "sanjaya.lenkafcm@kiit.ac.in"
+    },
+    {
+      "school": "Kalinga Institute of Dental Sciences",
+      "ficName": "Prof. Kailash Chandra Dash",
+      "phone": "9437902199",
+      "email": "kailash.das@kids.ac.in"
+    },
+    {
+      "school": "School of Electronics Engineering",
+      "ficName": "Prof. Suman Roy",
+      "phone": "8240443182",
+      "email": "suman.royfet@kiit.ac.in"
+    },
+    {
+      "school": "School of Electrical Engineering",
+      "ficName": "Dr. Padarbinda Samal",
+      "phone": "9437417972",
+      "email": "padarbinda.samalfel@kiit.ac.in"
+    },
+    {
+      "school": "School of Film & Media Sciences",
+      "ficName": "Prof. Ajaya Ku.Mishra",
+      "phone": "7008578505",
+      "email": "akmishra@kiit.ac.in"
+    },
+    {
+      "school": "School of Fashion Technology",
+      "ficName": "Prof. Bauri Raula",
+      "phone": "8763382535",
+      "email": "braula@kiit.ac.in"
+    },
+    {
+      "school": "School of Liberal Studies",
+      "ficName": "Dr. Jayalaxmi Samal",
+      "phone": "7752086258",
+      "email": "jayalaxmi.samalfhu@kiit.ac.in"
+    },
+    {
+      "school": "School of Management",
+      "ficName": "Dr. Asok Sar",
+      "phone": "7978046193",
+      "email": "aksar@ksom.ac.in"
+    },
+    {
+      "school": "School of Mass Communication",
+      "ficName": "Dr. Bidu Bhusan Dash",
+      "phone": "7830666700",
+      "email": "bidu.dashfmc@kiit.ac.in"
+    },
+    {
+      "school": "School of Mechanical Engineering",
+      "ficName": "Dr. Surendra Kumar Ghadai",
+      "phone": "8984929361",
+      "email": "skghadeifme@kiit.ac.in"
+    },
+    {
+      "school": "Kalinga Institute of Medical Sciences",
+      "ficName": "Prof. Ratikanta Tripathy",
+      "phone": "9861330816",
+      "email": "ratikanta.tripathy@kims.ac.in"
+    },
+    {
+      "school": "Kalinga Institute of Nursing Sciences",
+      "ficName": "Prof. Soumya Sonalika",
+      "phone": "8763839526",
+      "email": "soumya.sonalika@kins.ac.in"
+    },
+    {
+      "school": "School of Public Health",
+      "ficName": "Prof. Purnima Bhoi",
+      "phone": "9178889506",
+      "email": "purnima.bhoifph@kiit.ac.in"
+    },
+    {
+      "school": "School of Rural Management",
+      "ficName": "Prof. Jyotiranjan Gochhayat",
+      "phone": "9547144432",
+      "email": "jyotiranjan@ksrm.ac.in"
+    },
+    {
+      "school": "School of Sports and Yogic Sciences",
+      "ficName": "Mr. Ambika Prasad Ray",
+      "phone": "9437170234",
+      "email": "ambika.ray@kiit.ac.in"
+    },
+    {
+      "school": "School of Law",
+      "ficName": "Dr. Ramesh Chandra Sethi",
+      "phone": "8210204152",
+      "email": "ramesh.sethi@kls.ac.in"
+    }
+  ]
+}

@@ -1,0 +1,151 @@
+{
+  "advisoryTeam": [
+    {
+      "name": "Prof. Saranjit Singh",
+      "title": "Vice Chancellor",
+      "role": "Chairperson",
+      "email": "vicechancellor@kiit.ac.in",
+      "phone": "9439362572"
+    },
+    {
+      "name": "Prof. Jnyana Ranjan Mohanty",
+      "title": "Registrar",
+      "role": "Member",
+      "email": "registrar@kiit.ac.in",
+      "phone": "9437306627"
+    },
+    {
+      "name": "Dr. Suresh Chandra Satapathy",
+      "title": "Director Doctoral Research & Publications",
+      "role": "Member",
+      "email": "suresh.satapathyfcs@kiit.ac.in",
+      "phone": "9000249712"
+    },
+    {
+      "name": "Dr. Shyam Sundar Behura",
+      "title": "Additional Registrar",
+      "role": "Member",
+      "email": "shyam.behura@kids.ac.in",
+      "phone": "9178358687"
+    },
+    {
+      "name": "Prof. Santosh Kumar Pani",
+      "title": "Controller of Examination",
+      "role": "Member",
+      "email": "coe@kiit.ac.in",
+      "phone": "9861008635"
+    },
+    {
+      "name": "Prof. Arun Kumar Ray",
+      "title": "Director, Academics",
+      "role": "Member",
+      "email": "akrayfet@kiit.ac.in",
+      "phone": "9178930350"
+    },
+    {
+      "name": "Prof. Samresh Mishra",
+      "title": "Director, Student Affairs",
+      "role": "Member",
+      "email": "director.sa@kiit.ac.in",
+      "phone": "9437189722"
+    },
+    {
+      "name": "Prof. Ashok Kumar Sahoo",
+      "title": "Director, R&D Technology",
+      "role": "Member",
+      "email": "asahoofme@kiit.ac.in",
+      "phone": "9437282982"
+    },
+    {
+      "name": "Dr. (Prof.) Ram Chandra Das",
+      "title": "Dean & Principal, KIMS",
+      "role": "Member",
+      "email": "principalkims@kims.ac.in",
+      "phone": "8411044558"
+    },
+    {
+      "name": "Prof. (Dr.) Rose Varghese",
+      "title": "Director, School of Law",
+      "role": "Member",
+      "email": "director.kls@kiit.ac.in",
+      "phone": "9747747721"
+    },
+    {
+      "name": "Dr. Dipti Ranjan Biswal",
+      "title": "Deputy Director, National Accreditations",
+      "role": "Member",
+      "email": "dipti.biswalfce@kiit.ac.in",
+      "phone": "9583595895"
+    },
+    {
+      "name": "Dr. Sutanu Mangal",
+      "title": "Asst. Registrar, IQAC",
+      "role": "Member",
+      "email": "sutanufpy@kiit.ac.in",
+      "phone": "9439307275"
+    },
+    {
+      "name": "Dr. Kirtikanta Sahoo",
+      "title": "Assistant Director, Rankings",
+      "role": "Member",
+      "email": "kirtikanta.sahoofce@kiit.ac.in",
+      "phone": "9937195845"
+    },
+    {
+      "name": "Prof. Sruti Singh",
+      "title": "Assistant Director, International Accreditations",
+      "role": "Member",
+      "email": "srutisinghfet@kiit.ac.in",
+      "phone": "9861342599"
+    },
+    {
+      "name": "Prof. Nachiketa Tarasia",
+      "title": "Dy. Director, EAM Division",
+      "role": "Member",
+      "email": "ntarasiafcs@kiit.ac.in",
+      "phone": "9437131794"
+    },
+    {
+      "name": "Mr. Manav Amit Choudhary",
+      "title": "School of Computer Engineering, B.Tech",
+      "role": "Student Nominee Member",
+      "email": "23053685@kiit.ac.in",
+      "phone": "8758588488"
+    },
+    {
+      "name": "Dr. Nidhi Mishra",
+      "title": "Assistant Professor, BIT Mesra, India",
+      "role": "Alumni Nominee Member",
+      "email": "nidhimishra@bitmesra.ac.in",
+      "phone": "9971986676"
+    },
+    {
+      "name": "Dr. Shankar M. Venugopal",
+      "title": "Vice President Technology",
+      "role": "Employer Nominee Member",
+      "email": "venugopalshankar@mahindra.com",
+      "phone": "9962646242"
+    },
+    {
+      "name": "Prof. Rama Krushna Padhy",
+      "title": "Professor, IIM Sambalpur",
+      "role": "Parent Nominee Member",
+      "email": "ramakrushnap@iimsambalpur.ac.in",
+      "phone": "8449710030"
+    },
+    {
+      "name": "Dr. Lucy Pattnayak",
+      "title": "Assoc. Professor Acharya Harihar Post Graduate Institute of Cancer",
+      "role": "Parent Nominee Member",
+      "email": "Lucypattanayak2007@gmail.com",
+      "phone": "9937028362"
+    },
+    {
+      "name": "Dr. Siddharth Swarup Rautaray",
+      "title": "Dean, Quality Assurance",
+      "role": "Member Secretary",
+      "email": "dean.qa@kiit.ac.in",
+      "phone": "9937640447"
+    }
+  ]
+}
