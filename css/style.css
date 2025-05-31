@@ -64,6 +64,12 @@
   --preloader-logo-filter: brightness(0) invert(1); /* To make logos white against dark bg */
   --preloader-text-color: var(--ui-bg-light);
   --preloader-dot-color: var(--solid-primary);
+
+  /* Neumorphism variables */
+  --neumorphic-bg: var(--theme-bg-light); /* Base background for neumorphic elements */
+  --neumorphic-shadow-light: rgba(255, 255, 255, 0.7);
+  --neumorphic-shadow-dark: rgba(163, 177, 198, 0.5); /* Adjusted for --theme-bg-light */
+  --neumorphic-shadow-dark-stronger: rgba(163, 177, 198, 0.7);
 }
 
 .font-bebas {
@@ -74,7 +80,7 @@
 }
 
 body > main {
-  padding-top: var(--header-height);
+  padding-top: var(--header-height); /* Use CSS variable for dynamic header height */
   transition: padding-top 0.3s ease-in-out; /* Smooth transition if header height changes */
 }
 
@@ -227,6 +233,11 @@ body.loading-active {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
   z-index: 1000;
   transition: all 0.3s ease-in-out;
+  /* Ensuring sticky positioning */
+  position: -webkit-sticky; /* For Safari */
+  position: sticky;
+  top: 0;
+  width: 100%; /* Ensure it spans full width */
 }
 .navbar-custom.scrolled {
   padding-top: 0.5rem;
@@ -640,13 +651,99 @@ body.loading-active {
 }
 
 /* Mobile Navigation Menu */
+
+/* Neumorphic Button Style */
+.neumorphic-button {
+  background: var(--solid-white);
+  box-shadow: 
+    5px 5px 10px rgba(163, 177, 198, 0.3),
+    -5px -5px 10px rgba(255, 255, 255, 0.7),
+    inset 0 0 0 rgba(163, 177, 198, 0),
+    inset 0 0 0 rgba(255, 255, 255, 0);
+  transition: all 0.3s ease;
+}
+
+.neumorphic-button:active {
+  box-shadow: 
+    0 0 0 rgba(163, 177, 198, 0),
+    0 0 0 rgba(255, 255, 255, 0),
+    inset 5px 5px 10px rgba(163, 177, 198, 0.2),
+    inset -5px -5px 10px rgba(255, 255, 255, 0.7);
+}
+
+/* Mobile Navigation Styles */
+
+.mobile-nav-links {
+  display: flex;
+  flex-direction: column;
+}
+
+.mobile-nav-link,
+.mobile-dropdown-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.25rem;
+  font-size: 1.1rem;
+  color: var(--text-primary);
+  background: var(--solid-white);
+  border-radius: 1rem;
+  box-shadow: 
+    5px 5px 10px rgba(163, 177, 198, 0.2),
+    -5px -5px 10px rgba(255, 255, 255, 0.8);
+  transition: all 0.3s ease;
+}
+
+.mobile-nav-link.active,
+.mobile-dropdown-toggle.active {
+  color: var(--accent-color);
+  box-shadow: 
+    inset 5px 5px 10px rgba(163, 177, 198, 0.2),
+    inset -5px -5px 10px rgba(255, 255, 255, 0.8);
+}
+
+.mobile-nav-sublink {
+  display: block;
+  padding: 0.75rem 1.5rem;
+  color: var(--text-secondary);
+  transition: all 0.3s ease;
+  border-radius: 0.75rem;
+  margin: 0.5rem 0;
+}
+
+.mobile-nav-sublink.active {
+  color: var(--accent-color);
+  background: rgba(var(--accent-color-rgb), 0.1);
+}
+
+.mobile-nav-external {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  padding: 1rem;
+  background: linear-gradient(135deg, var(--gradient-start), var(--theme-cyan-1));
+  color: var(--solid-white);
+  border-radius: 1rem;
+  font-weight: 500;
+  box-shadow: 
+    5px 5px 10px rgba(163, 177, 198, 0.3),
+    -5px -5px 10px rgba(255, 255, 255, 0.7);
+}
+
 #mobile-nav-menu {
   /* Tailwind classes handle initial state: lg:hidden, transform -translate-x-full */
   /* JS toggles 'menu-open' class */
   z-index: 998; /* Ensure it's above content but below the toggle button if needed */
+  visibility: hidden;
+  opacity: 0;
 }
+
 #mobile-nav-menu.menu-open {
-  transform: translateX(0); /* Slide in */
+  visibility: visible;
+  opacity: 1;
+  transform: translateX(0);
 }
 
 /* Styling for links and dropdown toggles within the mobile menu */
@@ -707,16 +804,17 @@ body.loading-active {
 }
 
 /* Dropdown content improvements */
+
 .mobile-dropdown-content {
   display: none;
-  padding: 0.5rem 0;
-  background-color: #f8fafc;
+  padding: 0.5rem 1rem;
+  background-color: var(--ui-bg-light);
   margin: 0.25rem 0.5rem;
-  border-radius: 0.5rem;
+  border-radius: 1rem;
   max-height: 0;
   overflow: hidden;
   transition: all 0.3s ease-out;
-  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+  box-shadow: inset 3px 3px 7px rgba(163, 177, 198, 0.2);
 }
 
 .mobile-dropdown-content.open {
@@ -1091,24 +1189,41 @@ a.button-secondary:hover {
   color: var(--accent-color-hover);
 }
 
-/* Team Card Styles */
+/* Team Card Styles - Updated for Neumorphism */
 .team-card {
-  background-color: var(--solid-white);
-  border-radius: 0.75rem;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.05);
+  background-color: var(--neumorphic-bg); /* Base color for neumorphism */
+  border-radius: 20px; /* Softer radius for neumorphism */
+  box-shadow: 8px 8px 15px var(--neumorphic-shadow-dark),
+              -8px -8px 15px var(--neumorphic-shadow-light);
   overflow: hidden;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  border: 1px solid var(--border-color);
+  transition: box-shadow 0.3s ease;
+  border: 1px solid rgba(0,0,0,0.02); /* Very subtle border */
 }
 .team-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.1);
+  box-shadow: 10px 10px 20px var(--neumorphic-shadow-dark),
+              -10px -10px 20px var(--neumorphic-shadow-light),
+              inset 2px 2px 5px var(--neumorphic-shadow-dark), /* Subtle inset on hover */
+              inset -2px -2px 5px var(--neumorphic-shadow-light);
+  transform: translateY(-5px); /* Keep subtle transform */
+}
+.team-card figure { /* Ensure figure doesn't break neumorphic feel */
+    margin-bottom: 1rem; /* Add some space if image is directly on card */
+    border-radius: 15px; /* Match parent radius if image is inset */
+    overflow: hidden; /* Clip image to rounded corners */
+    box-shadow: inset 3px 3px 6px var(--neumorphic-shadow-dark), 
+                inset -3px -3px 6px var(--neumorphic-shadow-light);
 }
 .team-card img {
   width: 100%;
   height: 280px;
   object-fit: cover;
   object-position: center top;
+  display: block; /* Remove any extra space below image */
+  border-radius: 15px; /* Rounded corners for the image itself */
+  transition: transform 0.3s ease;
+}
+.team-card:hover img {
+    transform: scale(1.05); /* Slight zoom on image hover */
 }
 .team-card-content {
   padding: 1.5rem;
@@ -1131,6 +1246,7 @@ a.button-secondary:hover {
   color: var(--text-secondary);
   line-height: 1.6;
 }
+
 
 /* PDF Viewer/Download Link Styling */
 .pdf-link-card {
@@ -1312,7 +1428,79 @@ a.button-secondary:hover {
   /* lg breakpoint */
   #mobile-nav-menu {
     padding-top: calc(
-      var(--navbar-height, 4.5rem) + 1rem
+      var(--header-height, 4.5rem) + 1rem
     ); /* Adjust based on actual navbar height */
   }
+}
+
+/* Neumorphic Table Styling */
+.neumorphic-table-wrapper {
+  background-color: var(--neumorphic-bg);
+  padding: 1.5rem;
+  border-radius: 20px;
+  box-shadow: 8px 8px 15px var(--neumorphic-shadow-dark),
+              -8px -8px 15px var(--neumorphic-shadow-light);
+  margin-bottom: 2rem; /* Space below the table wrapper */
+  overflow-x: auto; /* Ensure table is scrollable on small screens */
+}
+
+.responsive-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: var(--solid-white); /* Table background, can be transparent if wrapper is neumorphic bg */
+  border-radius: 10px; /* Rounded corners for the table itself if it has a background */
+  overflow: hidden; /* To make border-radius work on table */
+  box-shadow: inset 3px 3px 6px var(--neumorphic-shadow-dark), 
+              inset -3px -3px 6px var(--neumorphic-shadow-light); /* Inset shadow for table */
+}
+
+.responsive-table th,
+.responsive-table td {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid var(--ui-bg-light); /* Light border for rows */
+  color: var(--text-secondary);
+}
+
+.responsive-table th {
+  background-color: var(--ui-bg-light); /* Header background */
+  color: var(--solid-dark);
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.responsive-table tr:last-child td {
+  border-bottom: none;
+}
+
+.responsive-table tr:hover {
+  background-color: #f9fafb; /* Subtle hover for rows, Tailwind gray-50 */
+}
+
+.responsive-table a {
+  color: var(--accent-color);
+  text-decoration: underline;
+  transition: color 0.2s ease;
+}
+.responsive-table a:hover {
+  color: var(--accent-color-hover);
+}
+
+/* Sub-section titles for team page */
+.team-subsection-title {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 2.2rem;
+    color: var(--solid-dark);
+    margin-top: 2.5rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--accent-color);
+    display: inline-block;
+}
+
+/* Ensure section#composition has a compatible background for neumorphism */
+#composition {
+    background-color: var(--theme-bg-light); /* Match --neumorphic-bg */
 }
