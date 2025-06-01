@@ -528,7 +528,7 @@ function populateAdvisoryTeam(members) {
     }
 
     const table = document.createElement('table');
-    table.className = 'responsive-table';
+    table.className = 'responsive-table no-stack-table';
     table.innerHTML = `
         <thead>
             <tr>
@@ -572,7 +572,7 @@ function populateFicTeam(members) {
     }
 
     const table = document.createElement('table');
-    table.className = 'responsive-table';
+    table.className = 'responsive-table no-stack-table';
     table.innerHTML = `
         <thead>
             <tr>

@@ -50,8 +50,6 @@
   --neumorphic-shadow-light: rgba(255, 255, 255, 0.7);
   --neumorphic-shadow-dark: rgba(163, 177, 198, 0.5);
   --neumorphic-shadow-dark-stronger: rgba(163, 177, 198, 0.7);
-
-  /* --header-height: 70px; /* Default fallback, REMOVED as per user request */
 }
 
 .font-bebas {
@@ -72,12 +70,6 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
-/* body > main {
-  padding-top: var(--header-height); /* REMOVED as per user request */
-/* transition: padding-top 0.3s ease-in-out; /* REMOVED as per user request */
-/* } */
-
 
 body.loading-active, body.mobile-menu-open-style {
   overflow: hidden !important;
@@ -1098,7 +1090,7 @@ a.button-secondary:hover {
   color: var(--accent-color-hover);
 }
 
-/* Team Card Styles */
+/* Team Card Styles - Mobile Responsive */
 .team-card {
   background-color: var(--neumorphic-bg);
   border-radius: 20px;
@@ -1107,8 +1099,11 @@ a.button-secondary:hover {
   overflow: hidden;
   transition: box-shadow 0.3s ease, transform 0.3s ease;
   border: 1px solid rgba(0,0,0,0.02);
-  display: flex; /* Added for better control if needed */
-  flex-direction: column; /* Ensure content stacks vertically */
+  display: flex; 
+  flex-direction: column; 
+  visibility: visible; /* Ensure cards are visible */
+  opacity: 1;
+  transform: none;
 }
 .team-card:hover {
   box-shadow: 10px 10px 20px var(--neumorphic-shadow-dark),
@@ -1126,9 +1121,9 @@ a.button-secondary:hover {
 }
 .team-card img {
   width: 100%;
-  height: 220px; /* Adjusted height for mobile */
+  height: 220px; 
   object-fit: cover;
-  object-position: center center;
+  object-position: center top;
   display: block;
   border-radius: 15px;
   transition: transform 0.3s ease;
@@ -1137,149 +1132,32 @@ a.button-secondary:hover {
     transform: scale(1.05);
 }
 .team-card-content {
-  padding: 1rem; /* Reduced padding for mobile */
+  padding: 1rem; 
   text-align: center;
-  flex-grow: 1; /* Allow content to take available space */
-  display: flex; /* For vertical centering if needed, or just for structure */
+  flex-grow: 1; 
+  display: flex; 
   flex-direction: column;
 }
 .team-card-name {
-  font-size: 1.1rem; /* Adjusted for mobile */
+  font-size: 1.1rem; 
   font-weight: 600;
   color: var(--solid-dark);
   margin-bottom: 0.25rem;
-  word-wrap: break-word; /* Ensure long names wrap */
+  word-wrap: break-word; 
 }
 .team-card-designation {
-  font-size: 0.9rem; /* Adjusted for mobile */
+  font-size: 0.85rem; 
   color: var(--accent-color);
-  font-weight: 550;
+  font-weight: 500;
   margin-bottom: 0.5rem;
   word-wrap: break-word;
 }
-
-/* Neumorphic Table Styling */
-.neumorphic-table-wrapper {
-  background-color: var(--neumorphic-bg);
-  padding: 1rem; /* Reduced padding for mobile */
-  border-radius: 15px; /* Slightly smaller radius */
-  box-shadow: 8px 8px 15px var(--neumorphic-shadow-dark),
-              -8px -8px 15px var(--neumorphic-shadow-light);
-  margin-bottom: 2rem;
-  overflow-x: auto;
-}
-
-.responsive-table {
-  width: 100%;
-  border-collapse: collapse;
-  background-color: var(--solid-white);
-  border-radius: 10px;
-  overflow: hidden;
-  box-shadow: inset 3px 3px 6px var(--neumorphic-shadow-dark), 
-              inset -3px -3px 6px var(--neumorphic-shadow-light);
-}
-
-.responsive-table th,
-.responsive-table td {
-  padding: 0.6rem 0.8rem; /* Adjusted padding */
-  text-align: left;
-  border-bottom: 1px solid var(--ui-bg-light);
+.team-card-description {
+  font-size: 0.8rem; 
   color: var(--text-secondary);
-  font-size: 0.88rem; /* Adjusted font size */
-  word-break: break-word; /* Allow long words to break */
-}
-
-.responsive-table th {
-  background-color: var(--ui-bg-light);
-  color: var(--solid-dark);
-  font-weight: 600;
-  font-size: 0.85rem; 
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.responsive-table tr:last-child td {
-  border-bottom: none;
-}
-
-.responsive-table tr:hover {
-  background-color: #f9fafb;
-}
-
-.responsive-table a {
-  color: var(--accent-color);
-  text-decoration: underline;
-  transition: color 0.2s ease;
-  word-break: break-all; /* Ensure links also break */
-}
-.responsive-table a:hover {
-  color: var(--accent-color-hover);
-}
-
-/* Responsive table cells for smaller screens */
-@media (max-width: 768px) {
-    .neumorphic-table-wrapper {
-        padding: 0.5rem; /* Further reduce padding on very small screens */
-    }
-    .responsive-table thead {
-        display: none;
-    }
-    .responsive-table tr {
-        display: block;
-        margin-bottom: 1rem;
-        border: 1px solid var(--border-color);
-        border-radius: 8px;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-        padding: 0.5rem; /* Add some padding inside the block */
-    }
-    .responsive-table td {
-        display: flex; /* Use flex for better alignment of label and value */
-        flex-direction: column; /* Stack label above value */
-        text-align: left; /* Align text to left for stacked view */
-        padding: 0.5rem 0.25rem; /* Adjust padding */
-        position: relative;
-        border-bottom: 1px dotted var(--ui-bg-light);
-    }
-    .responsive-table td:last-child {
-        border-bottom: none;
-    }
-    .responsive-table td::before {
-        content: attr(data-label);
-        font-weight: 600;
-        color: var(--solid-dark);
-        margin-bottom: 0.25rem; /* Space between label and value */
-        font-size: 0.75rem; /* Smaller label */
-        text-transform: uppercase;
-    }
-    .responsive-table td a { /* Ensure links are easily tappable */
-        padding: 0.25rem 0;
-    }
-}
-
-/* Sub-section titles for team page */
-.team-subsection-title {
-    font-family: 'Bebas Neue', cursive;
-    font-size: 2rem; /* Adjusted for better mobile scaling */
-    color: var(--solid-dark);
-    margin-top: 2.5rem;
-    margin-bottom: 1.5rem;
-    padding-bottom: 0.5rem;
-    border-bottom: 2px solid var(--accent-color);
-    display: inline-block;
-}
-
-#composition {
-    background-color: var(--theme-bg-light);
-}
-
-/* Ensure grid for central team cards stacks to 1 column on small screens */
-@media (max-width: 639px) { /* Tailwind 'sm' breakpoint is 640px */
-    #central-team-container.grid {
-        grid-template-columns: repeat(1, minmax(0, 1fr));
-    }
-    .team-card img {
-        height: 250px; /* Slightly more height if cards are full width */
-    }
+  line-height: 1.5;
+  flex-grow: 1; 
+  word-wrap: break-word; 
 }
 
 /* PDF Viewer/Download Link Styling */
@@ -1350,28 +1228,6 @@ a.button-secondary:hover {
   color: var(--solid-white) !important;
   border-color: var(--accent-color);
   transform: translateY(-2px);
-}
-
-/* PDF Viewer Controls Responsive */
-.pdf-controls {
-  flex-wrap: wrap;
-  gap: 0.5rem;
-}
-
-@media (max-width: 640px) {
-  .pdf-controls {
-    justify-content: center;
-  }
-  .pdf-controls > div,
-  .pdf-controls > a.button-style {
-    margin-bottom: 0.5rem;
-  }
-}
-
-@media (max-width: 1023px) {
-  #mobile-nav-menu {
-    padding-top: 5.5rem; /* Fallback fixed padding if header height var is removed */
-  }
 }
 
 /* Event Card Styles */
@@ -1463,3 +1319,162 @@ a.button-secondary:hover {
   transition: background-color 0.2s ease;
 }
 
+/* PDF Viewer Controls Responsive */
+.pdf-controls {
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+@media (max-width: 640px) {
+  .pdf-controls {
+    justify-content: center;
+  }
+  .pdf-controls > div,
+  .pdf-controls > a.button-style {
+    margin-bottom: 0.5rem;
+  }
+}
+
+@media (max-width: 1023px) {
+  #mobile-nav-menu {
+    padding-top: 5.5rem; 
+  }
+}
+
+/* Neumorphic Table Styling */
+.neumorphic-table-wrapper {
+  background-color: var(--neumorphic-bg);
+  padding: 1rem; 
+  border-radius: 15px; 
+  box-shadow: 8px 8px 15px var(--neumorphic-shadow-dark),
+              -8px -8px 15px var(--neumorphic-shadow-light);
+  margin-bottom: 2rem;
+  overflow-x: auto; 
+}
+
+.responsive-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: var(--solid-white);
+  border-radius: 10px;
+  overflow: hidden; 
+  box-shadow: inset 3px 3px 6px var(--neumorphic-shadow-dark), 
+              inset -3px -3px 6px var(--neumorphic-shadow-light);
+}
+
+.responsive-table th,
+.responsive-table td {
+  padding: 0.6rem 0.8rem; 
+  text-align: left;
+  border-bottom: 1px solid var(--ui-bg-light);
+  color: var(--text-secondary);
+  font-size: 0.85rem; 
+  /* word-break: break-word; /* Default, allow wrapping */
+  white-space: normal; 
+}
+
+/* For tables that should NOT stack, but scroll horizontally on mobile */
+.responsive-table.no-stack-table {
+  min-width: 600px; 
+}
+.responsive-table.no-stack-table th,
+.responsive-table.no-stack-table td {
+   white-space: nowrap; /* Prevent text wrapping in cells for scrollable table */
+   word-break: normal; /* Prevent breaking words in nowrap context */
+}
+.responsive-table.no-stack-table td a {
+    white-space: nowrap; /* Ensure links also don't wrap in this context */
+    word-break: normal; /* Prevent breaking links */
+    /* If emails are too long and you MUST break them, consider a very specific class for email cells */
+}
+
+
+.responsive-table th {
+  background-color: var(--ui-bg-light);
+  color: var(--solid-dark);
+  font-weight: 600;
+  font-size: 0.8rem; 
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.responsive-table tr:last-child td {
+  border-bottom: none;
+}
+
+.responsive-table tr:hover {
+  background-color: #f9fafb;
+}
+
+.responsive-table a {
+  color: var(--accent-color);
+  text-decoration: underline;
+  transition: color 0.2s ease;
+}
+.responsive-table a:hover {
+  color: var(--accent-color-hover);
+}
+
+@media (max-width: 768px) {
+    .neumorphic-table-wrapper:not(:has(.no-stack-table)) { 
+        padding: 0.5rem; 
+    }
+    .responsive-table:not(.no-stack-table) thead {
+        display: none;
+    }
+    .responsive-table:not(.no-stack-table) tr {
+        display: block;
+        margin-bottom: 1rem;
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        padding: 0.5rem; 
+    }
+    .responsive-table:not(.no-stack-table) td {
+        display: flex; 
+        flex-direction: column; 
+        text-align: left; 
+        padding: 0.5rem 0.25rem; 
+        position: relative;
+        border-bottom: 1px dotted var(--ui-bg-light);
+        white-space: normal; 
+    }
+    .responsive-table:not(.no-stack-table) td:last-child {
+        border-bottom: none;
+    }
+    .responsive-table:not(.no-stack-table) td::before {
+        content: attr(data-label);
+        font-weight: 600;
+        color: var(--solid-dark);
+        margin-bottom: 0.25rem; 
+        font-size: 0.75rem; 
+        text-transform: uppercase;
+    }
+    .responsive-table:not(.no-stack-table) td a { 
+        padding: 0.25rem 0;
+        white-space: normal; 
+        word-break: break-all;
+    }
+
+    .neumorphic-table-wrapper:has(.no-stack-table) {
+        overflow-x: auto;
+    }
+}
+
+/* Sub-section titles for team page */
+.team-subsection-title {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 2rem;
+    color: var(--solid-dark);
+    margin-top: 2.5rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--accent-color);
+    display: block; 
+    text-align: center; 
+}
+
+
+#composition {
+    background-color: var(--theme-bg-light);
+}
