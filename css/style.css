@@ -1099,11 +1099,11 @@ a.button-secondary:hover {
   overflow: hidden;
   transition: box-shadow 0.3s ease, transform 0.3s ease;
   border: 1px solid rgba(0,0,0,0.02);
-  display: flex; 
+  display: flex !important;
   flex-direction: column; 
-  visibility: visible; /* Ensure cards are visible */
-  opacity: 1;
-  transform: none;
+  visibility: visible !important;
+  opacity: 1 !important;
+  transform: none !important;
 }
 .team-card:hover {
   box-shadow: 10px 10px 20px var(--neumorphic-shadow-dark),
